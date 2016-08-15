@@ -1,0 +1,64 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	
+	.mainPanel {
+		width: 400px;
+		margin: 0 auto;
+		border: 1px solid #20BAAA;
+		border-radius: 10px;
+		background-color: white;
+	}
+	
+	.headerPanel {
+		margin: 0 auto;
+		text-align: center;
+		margin: 10px;
+		font-size: 20px;
+	}
+	
+	.htmlTitle {
+		margin: 0 auto;
+	}
+	.htmlLabel{
+		font-size: 15px;
+    	margin: 5px;
+	}
+	.panelButton{
+		width: 100%;
+	}
+	.button{
+		width: 200px;
+		font-size: 20px;
+        text-align: center;
+        background-color: #CACACA;
+        border-color: #ffffff;
+	}
+	</ui:style>
+	<g:FlowPanel ui:field="mailPanel" styleName="{style.mainPanel}">
+		<g:FlowPanel styleName="{style.headerPanel}">
+			<g:HTML ui:field="htmlTitle" styleName="style.htmlTitle">Add New App</g:HTML>
+		</g:FlowPanel>
+		<g:HorizontalPanel ui:field="panelAppName">
+			<g:HTML styleName="{style.htmlLabel}">AppName</g:HTML>
+			<g:TextBox ui:field="tbAppName"></g:TextBox>
+		</g:HorizontalPanel>
+		<g:HorizontalPanel ui:field="panelPlatform">
+			<g:HTML styleName="{style.htmlLabel}">Platform</g:HTML>
+			<g:ListBox ui:field="lbPlatform"></g:ListBox>
+		</g:HorizontalPanel>
+		<g:HorizontalPanel ui:field="panelPackageName">
+			<g:HTML ui:field="htmlPackageName" styleName="{style.htmlLabel}">PackageName</g:HTML>
+			<g:TextBox ui:field="tbPackageName"></g:TextBox>
+		</g:HorizontalPanel>
+		<g:HorizontalPanel ui:field="panelButton" styleName="{style.panelButton}">
+			<b:Button ui:field="btnCancel" styleName="{style.button}">Cancel</b:Button>
+			<b:Button ui:field="btnAdd" styleName="{style.button}">Add</b:Button>
+		</g:HorizontalPanel>
+
+	</g:FlowPanel>
+</ui:UiBinder> 

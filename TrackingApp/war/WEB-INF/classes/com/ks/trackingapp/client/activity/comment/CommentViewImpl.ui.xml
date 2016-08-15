@@ -1,0 +1,60 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.panel.scroll"
+	xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button"
+	xmlns:r="urn:import:com.googlecode.mgwt.ui.client.widget.input.radio"
+	xmlns:gwtbootstrap3="urn:import:org.gwtbootstrap3.client.ui.gwt"
+	xmlns:gwtbootstrap3ui="urn:import:org.gwtbootstrap3.client.ui"
+	xmlns:c="urn:import:com.google.gwt.user.cellview.client"
+	>
+	<ui:style>
+		.homeView {
+		position: relative;
+		}
+
+		.buttonView {
+		border-radius: 20px !important;
+		}
+
+		.container {
+		background: transparent;
+		}
+
+		.content-primary {
+		text-align: center !important;
+		}
+		.panelTableCustomer {
+    		width: 100%;
+    		text-align: left;
+		}
+		.cellTable {
+      		border-bottom: 1px solid #ccc;
+     		text-align: left;
+     		margin-bottom: 4px;
+    	}
+	</ui:style>
+	<g:FlowPanel styleName="{style.homeView}" width="100%"
+		ui:field="homeViewPanel">
+		<g:VerticalPanel width="100%" ui:field="containerPanel"
+			spacing="10" addStyleNames="{style.container}">
+			<g:ListBox ui:field="lbPlatform"></g:ListBox>
+		</g:VerticalPanel>
+		 <g:HTMLPanel addStyleNames="{style.panelTableCustomer}"
+			ui:field="panelTableCustomer" width="100%">
+			<table cellspacing="0" cellpadding="0" style="width:100%;"
+				heigth="100%">
+				<tr>
+					<td>
+						<gwtbootstrap3:CellTable addStyleNames="{style.cellTable}"
+							ui:field="tableCustomer" />
+					</td>
+				</tr>
+				<tr>
+					<td align="center">
+						<c:SimplePager ui:field="pagerTableCustomer" />
+					</td>
+				</tr>
+			</table>
+		</g:HTMLPanel> 
+	</g:FlowPanel>
+</ui:UiBinder> 
