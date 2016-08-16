@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.ks.trackingapp.shared.AndroidItem;
-import com.ks.trackingapp.shared.AppItem;
-import com.ks.trackingapp.shared.IOSItem;
+import com.ks.trackingapp.shared.model.AndroidItem;
+import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
+import com.ks.trackingapp.shared.model.IOSItem;
+import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 public interface DataServiceAsync {
 
@@ -30,6 +32,13 @@ public interface DataServiceAsync {
 
 	void getListCommentAndroid(int offset, int limit,
 			AsyncCallback<ArrayList<AndroidItem>> callback);
+
+	void userRegister(UserInfo userInfo, AsyncCallback<UserInfo> callback);
+
+	void userLogin(String userName, String password,
+			AsyncCallback<UserInfo> callback);
+
+	void appAddNew(ItemApp itemApp, AsyncCallback<Void> callback);
 
 
 }

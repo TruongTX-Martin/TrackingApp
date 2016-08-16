@@ -3,6 +3,14 @@ package com.ks.trackingapp.client.util;
 
 public class CssToken {
 	
+	public static int ICON_SMALL_SIZE = 20;
+	public static int ICON_MEDIUM_SIZE = 25;
+	public static int ICON_BIG_SIZE = 32;
+	
+	public static final String TAB_HOME_ACTIVE = "ks-tabbutton-home-active";
+	public static final String TAB_ACTIVE = "ks-buttonbar-active";
+	public static final String TAB_RIGHT_BORDER = "ks-buttombar-right-boder";
+	
 	public static final String BUTTONBAR = ClientUtils.isFireFoxBrowser() ? "moz-buttonBar" : "buttonBar";
 	public static final String LAYOUTPANEL = ClientUtils.isFireFoxBrowser() ? "moz-mainLayout" : "mainLayout";
 	public static final String HEADER_PANEL = "bh-header-panel";
@@ -30,7 +38,7 @@ public class CssToken {
 	public static final String SLIDE_DOWN =ClientUtils.isFireFoxBrowser() ? "moz-slideDown" :"slideDown";
 	public static final String SLIDE_UP =  "slideUp";
 	public static final String SLIDE_LEFT = "slideLeft";
-	public static final String SLIDE_RIGHT =ClientUtils.isFireFoxBrowser() ? "moz-slideRight" : "slideRight";
+	public static final String SLIDE_RIGHT = ClientUtils.isFireFoxBrowser() ? "moz-slideRight" : "slideRight";
 	public static final String FADE_IN = "fadeIn";
 	public static final String EXPAND_OPEN = "expandOpen";
 	public static final String BOUNCE = "bounce";

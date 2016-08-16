@@ -1,0 +1,16 @@
+.input-register{
+	background-color: white;
+	border-radius: 5px;
+	display: block !important;
+	border: 1px solid #2B444B;
+	margin-top: 20px;
+	color: #2B444B;
+}
+.input-register input,.input-register textarea {
+	background-color: transparent;
+    width: 100% !important;
+    width: calc(100% - 20px) !important;
+    color: black;
+    padding: 10px;
+    font-style: inherit;
+}

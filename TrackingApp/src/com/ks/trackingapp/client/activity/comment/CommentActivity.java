@@ -14,10 +14,10 @@ import com.ks.trackingapp.client.activity.base.BaseActivity;
 import com.ks.trackingapp.client.event.ReloadCommentEvent;
 import com.ks.trackingapp.client.event.ReloadCommentEventHandler;
 import com.ks.trackingapp.client.util.Toaster;
-import com.ks.trackingapp.shared.AndroidItem;
 import com.ks.trackingapp.shared.Config;
-import com.ks.trackingapp.shared.IOSItem;
+import com.ks.trackingapp.shared.model.AndroidItem;
 import com.ks.trackingapp.shared.model.IBasic;
+import com.ks.trackingapp.shared.model.IOSItem;
 
 public class CommentActivity extends BaseActivity{
 

@@ -1,0 +1,39 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:v="urn:import:com.ks.trackingapp.client.view" 
+	xmlns:f="urn:import:com.googlecode.mgwt.ui.client.widget.panel.flex" 
+	xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button" 
+	xmlns:t="urn:import:com.googlecode.mgwt.ui.client.widget.touch" 
+	xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.panel.scroll">
+	<ui:style>
+		.leftMenuContent{
+		}
+		.slidingPanelContent {
+			font-size:1.6em;	
+		}
+		
+		.leftMenuScroll {
+			background-image: url("images/background_body_pattern.jpg");
+			-webkit-box-shadow: 3px 0px 5px 0px rgba(50, 50, 50, 0.54);
+			-moz-box-shadow:    3px 0px 5px 0px rgba(50, 50, 50, 0.54);
+			box-shadow:         3px 0px 5px 0px rgba(50, 50, 50, 0.54);
+			cursor: default;
+			float: right;
+			background-color: #403F41;
+		}
+		
+		.leftMenuItem {
+			border-bottom: 1px solid #c7c7c7;
+			font-size: 1.5em;
+		}
+	</ui:style>
+	<v:VerticalTouchPanel ui:field="slidingPanel">
+		<s:ScrollPanel ui:field="scrollPanel" width="50%" height="100%" addStyleNames="{style.leftMenuScroll} scrollSliding">
+			<g:VerticalPanel ui:field="mainPanel" width="100%" addStyleNames="{style.slidingPanelContent}">
+				
+			</g:VerticalPanel>
+		</s:ScrollPanel>
+	</v:VerticalTouchPanel>
+	
+</ui:UiBinder> 

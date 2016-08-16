@@ -12,9 +12,12 @@ import java.util.List;
 import java.util.logging.Logger;
 
 import com.googlecode.objectify.ObjectifyService;
-import com.ks.trackingapp.shared.AndroidItem;
-import com.ks.trackingapp.shared.AppItem;
-import com.ks.trackingapp.shared.IOSItem;
+import com.ks.trackingapp.shared.Config;
+import com.ks.trackingapp.shared.model.AndroidItem;
+import com.ks.trackingapp.shared.model.AppItem;
+import com.ks.trackingapp.shared.model.IOSItem;
+import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 public class DAO extends CustomRemoteServiceServlet {
 
@@ -28,6 +31,8 @@ public class DAO extends CustomRemoteServiceServlet {
 		ObjectifyService.register(IOSItem.class);
 		ObjectifyService.register(AppItem.class);
 		ObjectifyService.register(AndroidItem.class);
+		ObjectifyService.register(UserInfo.class);
+		ObjectifyService.register(ItemApp.class);
 	}
 
 	public DAO() {
@@ -181,5 +186,48 @@ public class DAO extends CustomRemoteServiceServlet {
 		date = day + "/" + month + "/" + year;
 		return date;
 	}
+	
+	protected UserInfo registerUser(UserInfo userInfo){
+		UserInfo userResult = ofy().load().type(UserInfo.class).filter("userName", userInfo.getUserName()).first().now();
+		if(userResult != null) {
+			userResult.setIsSuccess(false);
+			userResult.setLoginFailtReason(Config.USER_ACCOUNT_EXITS);
+			return userResult;
+		}
+		UserInfo userEmail = ofy().load().type(UserInfo.class).filter("userEmail", userInfo.getUserEmail()).first().now();
+		if(userEmail != null) {
+			userEmail.setIsSuccess(false);
+			userEmail.setLoginFailtReason(Config.USER_ACCOUNT_EMAIL_EXITS );
+			return userEmail;
+		}
+		saveUserInfo(userInfo);
+		userInfo.setIsSuccess(true);
+		return userInfo;
+	}
+	private void saveUserInfo(UserInfo userInfo){
+		ofy().save().entity(userInfo).now();
+	}
+	protected UserInfo userLogin(String userName,String password){
+		UserInfo userResult = ofy().load().type(UserInfo.class).filter("userName", userName).first().now();
+		if(userResult == null){
+			UserInfo info = new UserInfo();
+			info.setIsSuccess(false);
+			info.setLoginFailtReason(Config.USER_ACCOUNT_NOTEXITS);
+			return info;
+		}
+		if(!userResult.getPassword().equals(password)){
+			userResult.setIsSuccess(false);
+			userResult.setLoginFailtReason(Config.USERT_ACCOUNT_PASSWORD_NOTCORRECT);
+			return userResult;
+		}
+		userResult.setIsSuccess(true);
+		return userResult;
+	}
+	
+	
+	protected void appItemAddNew(ItemApp itemApp){
+		ofy().save().entity(itemApp).now();
+	}
+	
 
 }

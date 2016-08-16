@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ks.trackingapp.client.DataService;
-import com.ks.trackingapp.shared.AndroidItem;
-import com.ks.trackingapp.shared.AppItem;
-import com.ks.trackingapp.shared.IOSItem;
+import com.ks.trackingapp.shared.model.AndroidItem;
+import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
+import com.ks.trackingapp.shared.model.IOSItem;
+import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 @SuppressWarnings("serial")
 public class DataServiceImpl extends DAO implements
@@ -54,6 +56,21 @@ public class DataServiceImpl extends DAO implements
 	@Override
 	public ArrayList<AndroidItem> getListCommentAndroid(int offset, int limit) {
 		return super.getListCommentAndroid(offset, limit);
+	}
+
+	@Override
+	public UserInfo userRegister(UserInfo userInfo) {
+		return super.registerUser(userInfo);
+	}
+
+	@Override
+	public UserInfo userLogin(String userName, String password) {
+		return super.userLogin(userName, password);
+	}
+
+	@Override
+	public void appAddNew(ItemApp itemApp) {
+		super.appItemAddNew(itemApp);
 	}
 
 }

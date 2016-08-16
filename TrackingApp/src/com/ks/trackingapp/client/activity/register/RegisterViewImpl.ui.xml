@@ -1,0 +1,110 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" 
+	xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.panel.scroll"
+	xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button"
+	xmlns:v="urn:import:com.ks.trackingapp.client.view" 
+	xmlns:r="urn:import:com.googlecode.mgwt.ui.client.widget.input.radio">
+	<ui:style>
+	.homeView {
+		position: relative;
+	}
+	.btnAccount{
+		color: #2B444B;
+		font-size: 1.4em;
+		background-color: transparent !important;
+		box-shadow: none !important;
+		margin-top: 20px;
+		font-style: italic;
+	}
+	.btnAccount:ACTIVE,.btnAccount:HOVER {
+		cursor: pointer;
+		text-decoration: underline;
+		background: transparent !important; 
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+	}
+	.btnRegister{
+		color: white;
+		padding: 12px 10px 12px 10px;
+		background-color: #2B444B;
+		font-size: 1.6em;
+		border: 1px solid #F7B9E2;
+		text-align: center;
+		border-radius: 5px; 
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+	}
+	.htmlRegister{
+		font-size: 2.5em;
+		margin-bottom: 10px;
+		margin-top: 40px;
+	}
+	.htmlBB{
+		font-size: 1.1em;
+	    color: #656565;
+	    font-style: italic;
+	    text-align: left;
+	}
+	.panelBB{
+		margin-top: 10px;
+		margin-bottom: 10px;
+}
+ .buttonAnchor {
+		color: #F97DCD;
+		font-size: 1.4em;
+		background-color: transparent !important;
+		box-shadow: none !important;
+		margin-top: 10px;
+		text-decoration: underline;
+	}
+	.buttonAnchor:HOVER{
+		cursor: pointer;
+}
+	.buttonAnchor:ACTIVE {
+		text-decoration: blink;
+		background: transparent !important; 
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+	}
+	.overlook{
+	    background-color: transparent !important;
+    	font-size: 1.5em;
+    	box-shadow: none !important;
+    	text-align: left;
+    	padding-left: 40px;
+    	margin-left: 3%;
+	}
+	
+	.buttonTrail {
+		color: #F97DCD !important;
+		background-image: url("images/quaylai.png");
+		background-repeat: no-repeat;
+		background-position: 0% center;
+		background-size: 30px 30px; 
+	}
+	.overlook:HOVER{
+		cursor: pointer;
+		text-decoration: underline;
+	}
+	.buttonLoginStyle {
+		min-width: 120px;
+		margin-top: 20px;
+	}
+	</ui:style>
+	<g:FlowPanel styleName="{style.homeView}" width="100%" ui:field="topicPanel">
+		<g:VerticalPanel ui:field="containerPanel" verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER" width="100%">
+			<g:HTML ui:field="txtRegister" styleName="{style.htmlRegister}">Đăng kí</g:HTML>
+			<v:KSMTextBox width="70%" ui:field="tbUsername" styleName="input-register" placeHolder="Nhập tên tài khoản (*)"></v:KSMTextBox>
+			<v:KSMTextBox width="70%" ui:field="tbUserview" styleName="input-register" placeHolder="Nhập tên hiển thị (*)"></v:KSMTextBox>
+			<v:KSMTextBox width="70%" ui:field="tbEmail" styleName="input-register" placeHolder="Nhập email để lấy lại mật khẩu."></v:KSMTextBox>
+			<v:KSMPasswordTextBox width="70%" ui:field="tbPassword" styleName="input-register" placeHolder="Mật khẩu (*)"></v:KSMPasswordTextBox>
+			<v:KSMPasswordTextBox width="70%" ui:field="tbRePassword" styleName="input-register" placeHolder="Nhập lại mật khẩu (*)"></v:KSMPasswordTextBox>
+			<g:FlowPanel width="70%" styleName="{style.panelBB}">
+				<g:HTML styleName="{style.htmlBB}">Các mục &#40;&#42;&#41; là bắt buộc</g:HTML>
+			</g:FlowPanel>
+			<b:Button styleName="{style.btnRegister}" width="40%" ui:field="btnRegister">Đăng kí</b:Button>
+			<b:Button text="Đã có tài khoản ?" styleName="{style.btnAccount}" ui:field="btnHasAccount"></b:Button>
+		</g:VerticalPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

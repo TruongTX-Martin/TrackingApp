@@ -1,0 +1,166 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.panel.scroll"
+	xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button"
+	xmlns:v="urn:import:com.ks.trackingapp.client.view" xmlns:r="urn:import:com.googlecode.mgwt.ui.client.widget.input.radio">
+	<ui:style>
+	.homeView {
+		position: relative;
+	}
+	
+	.userTextBox {
+		border: thick;
+		background-color: white !important;
+	}
+	
+	.container {
+		background: transparent;
+	}
+	
+	.content-primary {
+		text-align: center !important;
+	}
+	
+	.appNameImage {
+		margin-bottom: 2%;
+	}
+	
+	.facebookButton {
+		background-repeat: no-repeat;
+		background-size: 25px 25px;
+		background-color: #3b5999 !important;
+		background-position: 5px center;
+		color: #fafafa;
+		margin: 5px;
+		border-radius: 5px;
+		font-size: 1.3em;
+		padding: 10px 10px 10px 30px;
+	}
+	
+	.facebookButton:ACTIVE {
+		zoom: 98%;
+	}
+	
+	.gmailButton {
+		background-repeat: no-repeat;
+		background-size: 25px 25px;
+		background-color: #d40069 !important;
+		background-position: 5px center;
+		color: #fafafa;
+		margin: 5px;
+		border-radius: 5px;
+		font-size: 1.3em;
+		padding: 10px 10px 10px 30px;
+	}
+	
+	.gmailButton:ACTIVE {
+		zoom: 98%;
+	}
+	
+	.buttonAnchor {
+		color: #2B444B;
+		font-size: 1.4em;
+		background-color: transparent !important;
+		box-shadow: none !important;
+		font-style: italic;
+	}
+	
+	.buttonAnchor:ACTIVE, .buttonAnchor:HOVER {
+		cursor: pointer;
+		text-decoration: underline;
+		background: transparent !important;
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+	}
+	
+	.panelRegister {
+		margin-top: 10px;
+		margin-bottom: 20px
+	}
+	
+	.loginWith {
+		color: black;
+		font-size: 1.5em;
+		background-color: transparent !important;
+		box-shadow: none !important;
+	}
+	
+	.buttonTrail {
+		color: #d40069 !important;
+		background-image: url("images/quaylai.png");
+		background-repeat: no-repeat;
+		background-position: 0% center;
+		background-size: 30px 30px;
+		margin-top: 30px;
+	}
+	
+	.buttonLoginStyle {
+		background-color:#2B444B;
+		min-width: 120px;
+		margin-top: 10px;
+		color: white;
+		padding: 10px;
+		font-size: 1.5em;
+		border: 1px solid #2B444B;
+		text-align: center;
+		border-radius: 5px;
+		box-shadow: none !important;
+		-webkit-box-shadow: none !important;
+		max-width: 160px;
+		min-width: 120px;
+		margin-top: 10px;
+	}
+	
+	.htmlLogo {
+		color: #2B444B;
+		font-size: 3.0em;
+		font-family: whimsy;
+	}
+	
+	.overlook {
+		background-color: transparent !important;
+		font-size: 1.5em;
+		box-shadow: none !important;
+		text-align: left;
+		padding-left: 40px;
+		margin-left: 1%;
+	}
+	
+	.tblogin {
+		padding-bottom: 3px;
+		padding-top: 3px;
+	}
+	</ui:style>
+	<g:FlowPanel styleName="{style.homeView}" width="100%"
+		ui:field="homeViewPanel">
+		<g:VerticalPanel ui:field="containerPanel"
+			verticalAlignment="ALIGN_MIDDLE" horizontalAlignment="ALIGN_CENTER"
+			width="100%">
+			<g:VerticalPanel width="100%" spacing="10"
+				addStyleNames="{style.container}" horizontalAlignment="ALIGN_CENTER">
+				<!-- <g:Image url="images/logoAudio-18.png" width="60%" styleName="{style.appNameImage}"></g:Image> -->
+				<g:HTML ui:field="txtHtmlLogo" styleName="{style.htmlLogo}">App Tracker</g:HTML>
+				<v:KSMTextBox width="70%" ui:field="tbUserName"
+					styleName="input-primary {style.tblogin}" placeHolder="Tên đăng nhập"></v:KSMTextBox>
+				<v:KSMPasswordTextBox width="70%" ui:field="tbPassword"
+					styleName="input-primary {style.tblogin}" placeHolder="Mật khẩu"></v:KSMPasswordTextBox>
+				<b:Button ui:field="btnLogin" text="Đăng nhập"
+					styleName="{style.buttonLoginStyle}" width="40%"></b:Button>
+				<g:HorizontalPanel horizontalAlignment="ALIGN_CENTER"
+					verticalAlignment="ALIGN_MIDDLE" styleName="{style.panelRegister}"
+					ui:field="hPanel">
+					<b:Button ui:field="btnForgetPassword" text="Quên mật khẩu?"
+						styleName="{style.buttonAnchor}"></b:Button>
+					<g:cell width="30px">
+						<g:HTML ui:field="htmlAnchor" styleName="{style.buttonAnchor}">|</g:HTML>
+					</g:cell>
+					<b:Button ui:field="btnRegister" text="Đăng ký"
+						styleName="{style.buttonAnchor}"></b:Button>
+				</g:HorizontalPanel>
+				<g:HTML styleName="{style.loginWith}">Hoặc</g:HTML>
+				<b:Button ui:field="btnLoginFacebook" text="Đăng nhập Facebook"
+					styleName="{style.facebookButton}"></b:Button>
+			</g:VerticalPanel>
+		</g:VerticalPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

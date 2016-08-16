@@ -255,7 +255,8 @@ public class KSDialogPanel {
 	public static final ProvidesKey<IBasic> KEY_PROVIDER = new ProvidesKey<IBasic>() {
 	      @Override
 	      public Object getKey(IBasic item) {
-	        return item == null ? null : item.getId() == null ? Config.NULL_ID : item.getId();
+//	        return item == null ? null : item.getId() == null ? Config.NULL_ID : item.getId();
+	    	  return  "";
 	      }
 	};
 	

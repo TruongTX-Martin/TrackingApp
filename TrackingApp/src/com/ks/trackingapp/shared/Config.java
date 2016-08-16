@@ -10,4 +10,12 @@ public class Config {
 	
 	
 	
+	//login failt for reason
+	public static final int USER_ACCOUNT_EXITS = 1;
+	public static final int USER_ACCOUNT_EMAIL_EXITS = 2;
+	public static final int USERT_ACCOUNT_PASSWORD_NOTCORRECT = 3;
+	public static final int USER_ACCOUNT_NOTEXITS = 4;
+	
+	
+	
 }

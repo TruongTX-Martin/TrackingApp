@@ -12,17 +12,20 @@ public class BhHeaderPanel extends HorizontalPanel {
 	private HorizontalPanel leftPanel = new HorizontalPanel();
 	private HorizontalPanel centerPanel = new HorizontalPanel();
 	private HorizontalPanel rightPanel = new HorizontalPanel();
-	private BHTouchImage backButton = new BHTouchImage(BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().back());
-	private BHTouchImage leftMenuButton = new BHTouchImage(BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().menu(),
-			BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().menu_active());
+//	private BHTouchImage backButton = new BHTouchImage(BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().back());
+//	private BHTouchImage leftMenuButton = new BHTouchImage(BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().menu(),
+//			BHClientBundleBaseTheme.IMPL.getBHMGWTClientBundle().menu_active());
+	
+	protected BHTouchImage btnBack = new BHTouchImage("images/ic_back_white.png");
+	protected BHTouchImage btnNavigation = new BHTouchImage("images/ic_navigation.png"); 
 	
 	public static final int height = 50;
 
 	public BhHeaderPanel() {
 		this.addStyleName("bh-header-panel");
 		this.setHeight(height + "px");
-		backButton.setPixelSize(height,height);
-		leftMenuButton.setPixelSize(height,height);
+		btnBack.setPixelSize(height,height);
+		btnNavigation.setPixelSize(height,height);
 		leftPanel.setWidth("50px");
 		rightPanel.setWidth("50px");
 		leftPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
@@ -40,8 +43,8 @@ public class BhHeaderPanel extends HorizontalPanel {
 		this.setCellWidth(leftPanel, "60px");
 		this.setCellWidth(rightPanel, "60px");
 		this.setCellHorizontalAlignment(rightPanel, HasHorizontalAlignment.ALIGN_RIGHT);
-		leftPanel.add(backButton);
-		leftPanel.add(leftMenuButton);
+		leftPanel.add(btnBack);
+		leftPanel.add(btnNavigation);
 //		rightPanel.getElement().getStyle().setProperty("borderLeft", "1px solid #C78100");
 //		leftPanel.getElement().getStyle().setProperty("borderRight", "1px solid #C78100");
 		//leftPanel.add(homeButton);
@@ -64,6 +67,20 @@ public class BhHeaderPanel extends HorizontalPanel {
 		rightPanel.add(right);
 	}
 	
+	public void showNavigation(boolean isNavigation){
+		if(isNavigation) {
+			btnNavigation.setVisible(true);
+			btnBack.setVisible(false);
+		}else{
+			btnNavigation.setVisible(false);
+			btnBack.setVisible(true);
+		}
+	}
+	public void hideAllButton(){
+		btnNavigation.setVisible(false);
+		btnBack.setVisible(false);
+	}
+	
 	public void setCenter(String text) {
 		centerPanel.clear();
 		centerPanel.add(new HTML("<div style='color: #6D1B1a;font-size:18px; text-overflow: ellipsis;overflow: hidden;white-space: nowrap !important; max-width:"+(ClientUtils.getScreenWidth()-120)+"px;'>" + text + "</div>"));
@@ -81,12 +98,12 @@ public class BhHeaderPanel extends HorizontalPanel {
 		return rightPanel;
 	}
 
-	public BHTouchImage getBackButton() {
-		return backButton;
+	public BHTouchImage getButtonBack() {
+		return btnBack;
 	}
 
-	public BHTouchImage getLeftMenuButton() {
-		return leftMenuButton;
+	public BHTouchImage getButtonNavigation() {
+		return btnNavigation;
 	}
 
 }

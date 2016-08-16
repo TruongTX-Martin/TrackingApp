@@ -21,8 +21,8 @@ import com.ks.trackingapp.client.event.ReloadAppEventHandler;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.DialogNewApp;
-import com.ks.trackingapp.shared.AppItem;
 import com.ks.trackingapp.shared.Config;
+import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
 
 public class HomeActivity extends BaseActivity{

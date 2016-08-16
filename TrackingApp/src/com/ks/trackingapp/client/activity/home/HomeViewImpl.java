@@ -25,8 +25,8 @@ import com.ks.trackingapp.client.activity.base.BaseViewImpl;
 import com.ks.trackingapp.client.event.DeleteObjectEvent;
 import com.ks.trackingapp.client.event.ReloadAppEvent;
 import com.ks.trackingapp.client.view.KSDialogPanel;
-import com.ks.trackingapp.shared.AppItem;
 import com.ks.trackingapp.shared.Config;
+import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
 
 public class HomeViewImpl extends BaseViewImpl implements HomeView {
