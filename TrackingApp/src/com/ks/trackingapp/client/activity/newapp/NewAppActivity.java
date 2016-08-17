@@ -16,6 +16,7 @@ import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
+import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemApp;
 import com.ks.trackingapp.shared.model.UserInfo;
 
@@ -40,6 +41,8 @@ public class NewAppActivity extends BasicActivity{
 		super.handleEvent();
 		view.getCheckBoxAndroid().setValue(true);
 		view.getCheckBoxIOS().setValue(true);
+		view.getTextboxPakageName().setVisible(true);
+		view.getTextboxAppleId().setVisible(true);
 		//handle checkbox android
 		addHandlerRegistration(view.getCheckBoxAndroid().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			
@@ -116,19 +119,48 @@ public class NewAppActivity extends BasicActivity{
 			itemApp.setIOS(true);
 			itemApp.setAppleId(appleId);
 		}
-		TrackingApp.dataService.appAddNew(itemApp, new AsyncCallback<Void>() {
+		TrackingApp.dataService.appAddNew(itemApp, new AsyncCallback<ItemApp>() {
 			
 			@Override
-			public void onSuccess(Void result) {
-				Toaster.showToast("Add app success");
+			public void onSuccess(ItemApp itemResult) {
+				if(itemResult.isSuccess()){
+					Toaster.showToast("Add app success");
+					getCommentForApp(itemResult);
+				}else{
+					if(itemResult.getAddFailedForReason() == Config.APPITEM_APPNAME_EXITS){
+						Toaster.showToast("Failed because your App name exits");
+						view.getTextboxAppname().setText("");
+					}else if(itemResult.getAddFailedForReason() == Config.APPITEM_PACKAGENAME_EXITS){
+						Toaster.showToast("Failed because packagename exits");
+						view.getTextboxPakageName().setText("");
+					}else if(itemResult.getAddFailedForReason() == Config.APPITEM_APPLEID_EXITS){
+						Toaster.showToast("Failed because appleid exits");
+						view.getTextboxAppleId().setText("");
+					}
+				}
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
-				Toaster.showToast("Add app failed");
+				Toaster.showToast("Add app failed,please check your network?");
 			}
 		});
 		
+	}
+	
+	private void getCommentForApp(ItemApp itemApp){
+		TrackingApp.dataService.commentGetAppComment(itemApp, new AsyncCallback<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Get comment failed");
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				Toaster.showToast("Get comment success");
+			}
+		});
 	}
 	@Override
 	protected void onBackPress() {

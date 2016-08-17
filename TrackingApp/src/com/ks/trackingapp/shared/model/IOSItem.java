@@ -5,7 +5,7 @@ import java.util.Date;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.ks.trackingapp.client.util.IOSItemBean;
+import com.ks.trackingapp.shared.IOSItemBean;
 
 @SuppressWarnings("serial")
 @Entity

@@ -8,6 +8,7 @@ import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.view.KSMPasswordTextBox;
 import com.ks.trackingapp.client.view.KSMTextBox;
+import com.ks.trackingapp.shared.Config;
 
 public class LoginViewImpl extends BasicViewImpl implements LoginView {
 
@@ -22,6 +23,7 @@ public class LoginViewImpl extends BasicViewImpl implements LoginView {
 	protected @UiField KSMPasswordTextBox tbPassword;
 	public LoginViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
+		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_LOGIN);
 		this.layoutBasic.getHeaderPanel().hideAllButton();
 	}
 	@Override

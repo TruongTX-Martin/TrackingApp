@@ -83,7 +83,7 @@ public class BhHeaderPanel extends HorizontalPanel {
 	
 	public void setCenter(String text) {
 		centerPanel.clear();
-		centerPanel.add(new HTML("<div style='color: #6D1B1a;font-size:18px; text-overflow: ellipsis;overflow: hidden;white-space: nowrap !important; max-width:"+(ClientUtils.getScreenWidth()-120)+"px;'>" + text + "</div>"));
+		centerPanel.add(new HTML("<div style='color: #ffffff;font-size:25px; text-overflow: ellipsis;overflow: hidden;white-space: nowrap !important; max-width:"+(ClientUtils.getScreenWidth()-120)+"px;'>" + text + "</div>"));
 	}
 
 	public HorizontalPanel getLeftPanel() {

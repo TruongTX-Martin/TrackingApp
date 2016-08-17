@@ -9,6 +9,7 @@ import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
 import com.ks.trackingapp.shared.model.IOSItem;
 import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.ItemComment;
 import com.ks.trackingapp.shared.model.UserInfo;
 
 public interface DataServiceAsync {
@@ -38,7 +39,17 @@ public interface DataServiceAsync {
 	void userLogin(String userName, String password,
 			AsyncCallback<UserInfo> callback);
 
-	void appAddNew(ItemApp itemApp, AsyncCallback<Void> callback);
+	void appAddNew(ItemApp itemApp, AsyncCallback<ItemApp> callback);
+
+	void appGetAllItem(AsyncCallback<ArrayList<ItemApp>> callback);
+
+	void commentGetFromAppId(Long appId,
+			AsyncCallback<ArrayList<ItemComment>> callback);
+
+	void commentFilterByPlatform(String platform,
+			AsyncCallback<ArrayList<ItemComment>> callback);
+
+	void commentGetAppComment(ItemApp itemApp, AsyncCallback<Void> callback);
 
 
 }

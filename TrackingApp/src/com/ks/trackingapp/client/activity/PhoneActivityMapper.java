@@ -5,6 +5,8 @@ import com.google.gwt.activity.shared.ActivityMapper;
 import com.google.gwt.place.shared.Place;
 import com.ks.trackingapp.client.activity.allapp.AllAppActivity;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentActivity;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.comment.CommentActivity;
 import com.ks.trackingapp.client.activity.comment.CommentPlace;
 import com.ks.trackingapp.client.activity.home.HomeActivity;
@@ -42,6 +44,8 @@ public class PhoneActivityMapper implements ActivityMapper {
 			return new AllAppActivity(clientFactory, place);
 		} else if (place instanceof NewAppPlace) {
 			return new NewAppActivity(clientFactory, place);
+		}else if (place instanceof AppCommentPlace){
+			return new AppCommentActivity(clientFactory, place);
 		}
 		return null;
 	}

@@ -5,6 +5,8 @@ import com.google.web.bindery.event.shared.EventBus;
 import com.google.web.bindery.event.shared.SimpleEventBus;
 import com.ks.trackingapp.client.activity.allapp.AllAppView;
 import com.ks.trackingapp.client.activity.allapp.AllAppViewImpl;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentView;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentViewImpl;
 import com.ks.trackingapp.client.activity.base.BaseView;
 import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
@@ -36,6 +38,7 @@ public class ClientFactoryImpl implements ClientFactory{
 	private RegisterView registerView;
 	private AllAppView allAppView;
 	private NewAppView newAppView;
+	private AppCommentView appCommentView;
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
 		placeController = new PlaceController(eventBus);
@@ -118,6 +121,14 @@ public class ClientFactoryImpl implements ClientFactory{
 			newAppView = new NewAppViewImpl();
 		}
 		return newAppView;
+	}
+
+	@Override
+	public AppCommentView getAppCommentView() {
+		if(appCommentView == null){
+			appCommentView = new AppCommentViewImpl();
+		}
+		return appCommentView;
 	}
 
 }

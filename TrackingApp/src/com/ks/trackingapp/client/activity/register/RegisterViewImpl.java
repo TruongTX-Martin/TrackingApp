@@ -8,6 +8,7 @@ import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.view.KSMPasswordTextBox;
 import com.ks.trackingapp.client.view.KSMTextBox;
+import com.ks.trackingapp.shared.Config;
 
 public class RegisterViewImpl extends BasicViewImpl implements RegisterView {
 
@@ -24,6 +25,7 @@ public class RegisterViewImpl extends BasicViewImpl implements RegisterView {
 	public RegisterViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(false);
+		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_REGISTER);
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.ks.trackingapp.shared.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
 
 @SuppressWarnings("serial")
@@ -12,13 +13,19 @@ public class ItemApp implements IBasic {
 	Long id;
 	private @Index
 	Long userId;
+	@Index
 	private String appName;
+	@Index
 	private String packageName;
+	@Index
 	private String appleId;
 	@Index
 	private boolean isAndroid;
 	@Index
 	private boolean isIOS;
+	
+	private @Ignore boolean isSuccess;
+	private @Ignore int addFailedForReason =0;
 	
 	public ItemApp() {
 		// TODO Auto-generated constructor stub
@@ -37,6 +44,20 @@ public class ItemApp implements IBasic {
 		this.userId = userId;
 	}
 
+	public void setIsSuccess(boolean input){
+		this.isSuccess = input;
+	}
+	
+	public boolean isSuccess(){
+		return isSuccess;
+	}
+	
+	public void setAddFailedForReason(int addFailedForReason) {
+		this.addFailedForReason = addFailedForReason;
+	}
+	public int getAddFailedForReason() {
+		return addFailedForReason;
+	}
 	public void setAndroid(boolean isAndroid){
 		this.isAndroid = isAndroid;
 	}

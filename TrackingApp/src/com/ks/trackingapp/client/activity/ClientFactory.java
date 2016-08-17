@@ -3,6 +3,7 @@ package com.ks.trackingapp.client.activity;
 import com.google.gwt.place.shared.PlaceController;
 import com.google.web.bindery.event.shared.EventBus;
 import com.ks.trackingapp.client.activity.allapp.AllAppView;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentView;
 import com.ks.trackingapp.client.activity.base.BaseView;
 import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.activity.comment.CommentView;
@@ -31,4 +32,5 @@ public interface ClientFactory {
 	RegisterView getRegisterView();
 	AllAppView getAllAppView();
 	NewAppView getNewAppView();
+	AppCommentView getAppCommentView();
 }

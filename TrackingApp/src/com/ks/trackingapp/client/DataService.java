@@ -10,6 +10,7 @@ import com.ks.trackingapp.shared.model.AppItem;
 import com.ks.trackingapp.shared.model.IBasic;
 import com.ks.trackingapp.shared.model.IOSItem;
 import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.ItemComment;
 import com.ks.trackingapp.shared.model.UserInfo;
 
 @RemoteServiceRelativePath("dataservice")
@@ -29,5 +30,11 @@ public interface DataService extends RemoteService{
 	//new code
 	UserInfo userRegister(UserInfo userInfo);
 	UserInfo userLogin(String userName,String password);
-	void appAddNew(ItemApp itemApp);
+	
+	ItemApp appAddNew(ItemApp itemApp);
+	ArrayList<ItemApp> appGetAllItem();
+
+	void commentGetAppComment(ItemApp itemApp);
+	ArrayList<ItemComment> commentGetFromAppId(Long appId);
+	ArrayList<ItemComment> commentFilterByPlatform(String platform);
 }
