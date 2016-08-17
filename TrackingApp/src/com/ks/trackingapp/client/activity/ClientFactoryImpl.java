@@ -7,13 +7,8 @@ import com.ks.trackingapp.client.activity.allapp.AllAppView;
 import com.ks.trackingapp.client.activity.allapp.AllAppViewImpl;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentView;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentViewImpl;
-import com.ks.trackingapp.client.activity.base.BaseView;
 import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
-import com.ks.trackingapp.client.activity.comment.CommentView;
-import com.ks.trackingapp.client.activity.comment.CommentViewImpl;
-import com.ks.trackingapp.client.activity.home.HomeView;
-import com.ks.trackingapp.client.activity.home.HomeViewImpl;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentView;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentViewImpl;
 import com.ks.trackingapp.client.activity.login.LoginView;
@@ -28,9 +23,6 @@ public class ClientFactoryImpl implements ClientFactory{
 	
 	private SimpleEventBus eventBus;
 	private PlaceController placeController;
-	private BaseView baseView;
-	private HomeView homeView;
-	private CommentView commentView;
 	
 	private BasicView basicView;
 	private HomeCommentView homeCommentView;
@@ -54,26 +46,6 @@ public class ClientFactoryImpl implements ClientFactory{
 		return eventBus;
 	}
 
-	@Override
-	public BaseView getBaseView() {
-		return baseView;
-	}
-
-	@Override
-	public HomeView getHomeView() {
-		if(homeView == null){
-			homeView = new HomeViewImpl();
-		}
-		return homeView;
-	}
-
-	@Override
-	public CommentView getCommentView() {
-		if(commentView == null) {
-			commentView = new CommentViewImpl();
-		}
-		return commentView;
-	}
 
 	@Override
 	public BasicView getBasicView() {
