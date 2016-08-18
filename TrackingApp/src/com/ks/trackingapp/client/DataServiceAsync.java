@@ -16,15 +16,15 @@ public interface DataServiceAsync {
 
 	void appAddNew(ItemApp itemApp, AsyncCallback<ItemApp> callback);
 
-	void appGetAllItem(AsyncCallback<ArrayList<ItemApp>> callback);
+	void appGetAllItem(Long userId,AsyncCallback<ArrayList<ItemApp>> callback);
 
-	void commentGetFromAppId(Long appId,
+	void commentGetFromAppId(Long userId,Long appId,
 			AsyncCallback<ArrayList<ItemComment>> callback);
 
-	void commentFilterByPlatform(String platform,
+	void commentFilterByTag(Long userId,Long appId,String tag,String platform,
 			AsyncCallback<ArrayList<ItemComment>> callback);
 
-	void commentGetAppComment(ItemApp itemApp, AsyncCallback<Void> callback);
+	void commentGetAppComment(Long userId,ItemApp itemApp, AsyncCallback<Void> callback);
 
 
 }

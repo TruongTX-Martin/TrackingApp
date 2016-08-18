@@ -6,7 +6,7 @@ public class TrackingManager {
 	
 	public static TrackingManager instance;
 	
-	private UserInfo currentUser;
+	private UserInfo currentUser = null;
 	public static TrackingManager newInstance(){
 		if(instance == null){
 			instance = new TrackingManager();

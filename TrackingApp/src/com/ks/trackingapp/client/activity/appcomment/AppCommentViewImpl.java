@@ -2,8 +2,6 @@ package com.ks.trackingapp.client.activity.appcomment;
 
 import java.util.ArrayList;
 
-import org.gwtbootstrap3.client.ui.TextBox;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -14,10 +12,12 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.view.BhHeaderPanel;
+import com.ks.trackingapp.client.view.item.FilterPlatformView;
 import com.ks.trackingapp.client.view.item.ItemCommentView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
@@ -33,16 +33,20 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 
 	private int HEIGHT_TEXTBOX = 50;
 	protected @UiField
-	TextBox textbox;
+	MSearchBox searchbox;
 	protected @UiField
 	ScrollPanel scrollPanel;
 	protected @UiField
 	FlowPanel panelComment;
+	private FilterPlatformView filterPlatformView = new FilterPlatformView();
 
 	public AppCommentViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(false);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_APPCOMMENT);
+		this.layoutBasic.getHeaderPanel().getRightPanel().setWidth("100px");
+		this.layoutBasic.getHeaderPanel().getRightPanel().add(filterPlatformView);
+		filterPlatformView.getHtmlPlatform().setText(Config.PLATFORM_ALL);
 		refreshScrollView();
 	}
 
@@ -82,6 +86,16 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	@Override
 	public BhHeaderPanel getBhHeaderPanel() {
 		return this.layoutBasic.getHeaderPanel();
+	}
+
+	@Override
+	public MSearchBox getSearchBox() {
+		return searchbox;
+	}
+
+	@Override
+	public FilterPlatformView getFilterView() {
+		return filterPlatformView;
 	}
 	
 

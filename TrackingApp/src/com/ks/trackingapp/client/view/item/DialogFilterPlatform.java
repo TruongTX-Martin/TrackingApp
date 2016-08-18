@@ -17,7 +17,8 @@ public class DialogFilterPlatform extends KSDialogOverlay {
 	}
 
 	protected @UiField
-	VerticalTouchPanel touchAll, touchAndroid, touchIOS;
+	VerticalTouchPanel touchAll, touchAndroid, touchIOS, touchDate,
+			touchRating;
 
 	public DialogFilterPlatform() {
 		super.add(uiBinder.createAndBindUi(this));
@@ -34,6 +35,14 @@ public class DialogFilterPlatform extends KSDialogOverlay {
 
 	public VerticalTouchPanel getTouchIOS() {
 		return touchIOS;
+	}
+
+	public VerticalTouchPanel getTouchDate() {
+		return touchDate;
+	}
+
+	public VerticalTouchPanel getTouchRating() {
+		return touchRating;
 	}
 
 }

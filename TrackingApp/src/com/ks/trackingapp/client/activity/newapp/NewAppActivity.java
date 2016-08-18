@@ -10,12 +10,14 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
+import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
+import com.ks.trackingapp.client.view.dialog.DialogOpenCommentApp;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemApp;
 import com.ks.trackingapp.shared.model.UserInfo;
@@ -23,6 +25,8 @@ import com.ks.trackingapp.shared.model.UserInfo;
 public class NewAppActivity extends BasicActivity{
 
 	private NewAppView view;
+	private DialogOpenCommentApp dialogComment = new DialogOpenCommentApp();
+	private ItemApp currentItemApp = null;//for go to appcomment app
 	
 	public NewAppActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
@@ -79,6 +83,25 @@ public class NewAppActivity extends BasicActivity{
 				addNewApp();
 			}
 		}));
+		
+		//handle dialog comment
+		dialogComment.getBtNo().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogComment.hide();
+			}
+		});
+		
+		dialogComment.getBtYes().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				ClientUtils.log("AppId:" + currentItemApp.getId());
+				goTo(new AppCommentPlace(currentItemApp.getId()));
+				dialogComment.hide();
+			}
+		});
 	}
 	
 
@@ -148,8 +171,8 @@ public class NewAppActivity extends BasicActivity{
 		
 	}
 	
-	private void getCommentForApp(ItemApp itemApp){
-		TrackingApp.dataService.commentGetAppComment(itemApp, new AsyncCallback<Void>() {
+	private void getCommentForApp(final ItemApp itemApp){
+		TrackingApp.dataService.commentGetAppComment(TrackingManager.newInstance().getCurrentUser().getId(),itemApp, new AsyncCallback<Void>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -158,7 +181,9 @@ public class NewAppActivity extends BasicActivity{
 
 			@Override
 			public void onSuccess(Void result) {
-				Toaster.showToast("Get comment success");
+				//show dialog open comment this app
+				currentItemApp = itemApp;
+				dialogComment.show();
 			}
 		});
 	}

@@ -16,6 +16,7 @@ import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
@@ -31,7 +32,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	interface AllAppViewImplUiBinder extends UiBinder<Widget, AllAppViewImpl> {
 	}
 
-	protected @UiField TextBox textbox;
+	protected @UiField MSearchBox textbox;
 	protected @UiField ScrollPanel scrollPanel;
 	protected @UiField FlowPanel panelApps;
 	private int HEIGHT_TEXTBOX = 50;
@@ -61,6 +62,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 			html.getElement().getStyle().setTextAlign(TextAlign.CENTER);
 			html.getElement().getStyle().setPadding(10, Unit.PX);
 			html.getElement().getStyle().setFontSize(1.4, Unit.EM);
+			html.getElement().getStyle().setColor("#ffffff");
 			panelApps.add(html);
 			return;
 		}else{
@@ -74,7 +76,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	}
 
 	@Override
-	public TextBox getTextBoxSearch() {
+	public MSearchBox getTextBoxSearch() {
 		return textbox;
 	}
 

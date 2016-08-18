@@ -37,8 +37,8 @@ public class SlidingPanel extends FlowPanel {
 		scrollPanel.setShowHorizontalScrollBar(false);
 		scrollPanel.setShowVerticalScrollBar(false);
 		scrollPanel.setBounce(false);
-		slidingPanel.getElement().getStyle().setColor(AppConfig.TEXT_COLOR_LEFTMENU);
-		scrollPanel.getElement().getStyle().setBackgroundColor(AppConfig.TEXT_COLOR_LEFTMENU);
+//		slidingPanel.getElement().getStyle().setColor(AppConfig.THEME_COLOR);
+//		scrollPanel.getElement().getStyle().setBackgroundColor(AppConfig.THEME_COLOR);
 		this.setWidth("100%");
 		this.setVisible(false);
 		this.getElement().getStyle().setZIndex(999);

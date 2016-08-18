@@ -84,9 +84,9 @@ public class LoginActivity extends BasicActivity{
 			@Override
 			public void onSuccess(UserInfo userResult) {
 				if(userResult.isSuccess()){
-					goTo(new HomeCommentPlace());
 					TrackingManager.newInstance().setCurrentUser(userResult);
 					Toaster.showToast("Hello," + userResult.getUserView());
+					goTo(new HomeCommentPlace());
 				}else{
 					if(userResult.getLoginFailtReason() == Config.USER_ACCOUNT_NOTEXITS){
 						Toaster.showToast("Account not exits, please type correct your account or register new account.");

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
-import com.ks.trackingapp.shared.model.IBasic;
 import com.ks.trackingapp.shared.model.ItemApp;
 import com.ks.trackingapp.shared.model.ItemComment;
 import com.ks.trackingapp.shared.model.UserInfo;
@@ -17,9 +16,9 @@ public interface DataService extends RemoteService{
 	UserInfo userLogin(String userName,String password);
 	
 	ItemApp appAddNew(ItemApp itemApp);
-	ArrayList<ItemApp> appGetAllItem();
+	ArrayList<ItemApp> appGetAllItem(Long userId);
 
-	void commentGetAppComment(ItemApp itemApp);
-	ArrayList<ItemComment> commentGetFromAppId(Long appId);
-	ArrayList<ItemComment> commentFilterByPlatform(String platform);
+	void commentGetAppComment(Long userId,ItemApp itemApp);
+	ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId);
+	ArrayList<ItemComment> commentFilterByTag(Long userId,Long appId,String tag,String platform);
 }

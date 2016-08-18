@@ -11,25 +11,25 @@
 		}
 		.slidingPanelContent {
 			font-size:1.6em;	
+			background-color: #152727;
 		}
 		
 		.leftMenuScroll {
-			background-image: url("images/background_body_pattern.jpg");
-			-webkit-box-shadow: 3px 0px 5px 0px rgba(50, 50, 50, 0.54);
-			-moz-box-shadow:    3px 0px 5px 0px rgba(50, 50, 50, 0.54);
-			box-shadow:         3px 0px 5px 0px rgba(50, 50, 50, 0.54);
 			cursor: default;
 			float: right;
-			background-color: #403F41;
+			background-color: #152727;
 		}
 		
 		.leftMenuItem {
 			border-bottom: 1px solid #c7c7c7;
 			font-size: 1.5em;
 		}
+		.leftMenuScroll{
+			background-color: #152727;
+		}
 	</ui:style>
-	<v:VerticalTouchPanel ui:field="slidingPanel">
-		<s:ScrollPanel ui:field="scrollPanel" width="50%" height="100%" addStyleNames="{style.leftMenuScroll} scrollSliding">
+	<v:VerticalTouchPanel ui:field="slidingPanel" >
+		<s:ScrollPanel ui:field="scrollPanel" width="50%" height="100%" addStyleNames="{style.leftMenuScroll}">
 			<g:VerticalPanel ui:field="mainPanel" width="100%" addStyleNames="{style.slidingPanelContent}">
 				
 			</g:VerticalPanel>

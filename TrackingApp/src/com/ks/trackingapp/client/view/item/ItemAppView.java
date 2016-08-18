@@ -19,7 +19,7 @@ public class ItemAppView extends Composite {
 	}
 
 	protected @UiField
-	HTML htmlAppName, htmlAndroid, htmlIOS;
+	HTML htmlAppName, htmlAndroid, htmlIOS,htmlIOSRate,htmlAndroidRate;
 	protected @UiField
 	FlowPanel panelAndroidRating, panelIOSRating;
 	protected StarRating ratingIOS;
@@ -31,8 +31,10 @@ public class ItemAppView extends Composite {
 
 	public void showView(ItemApp itemApp) {
 		htmlAppName.setText(itemApp.getAppName());
-		StarRating ratingAndroid = new StarRating(3, 5);
-		StarRating ratingIOS = new StarRating(3, 5);
+		StarRating ratingAndroid = new StarRating((int)itemApp.getRating(), 5);
+		StarRating ratingIOS = new StarRating((int)itemApp.getRating(), 5);
+		htmlAndroidRate.setText((int)itemApp.getRating()+"/5");
+		htmlIOSRate.setText((int)itemApp.getRating()+"/5");
 		panelAndroidRating.add(ratingAndroid);
 		panelIOSRating.add(ratingIOS);
 	}

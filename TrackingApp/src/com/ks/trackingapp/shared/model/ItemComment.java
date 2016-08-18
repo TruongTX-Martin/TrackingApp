@@ -21,10 +21,12 @@ public class ItemComment implements IBasic {
 	private String appname;
 	private @Index
 	Long appId;
+	private @Index Long userId;
 	private @Index
 	Date date;
 	private @Index
 	int rating;
+	
 
 	public ItemComment() {
 	}
@@ -36,6 +38,13 @@ public class ItemComment implements IBasic {
 		this.date = myBean.getDate();
 		this.comment = myBean.getComment();
 		this.rating = myBean.getRating();
+	}
+	
+	public void setUserId(Long userId) {
+		this.userId = userId;
+	}
+	public Long getUserId() {
+		return userId;
 	}
 
 	public ArrayList<ItemComment> getListItemComment(String json, String appName) {

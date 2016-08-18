@@ -33,6 +33,7 @@ public class KSLeftMenuButton extends HorizontalTouchPanel{
 		this.setCellWidth(descriptionHTML, "18%");
 		titleHTML.getElement().getStyle().setTextAlign(TextAlign.LEFT);
 		setSizeIcon(CssToken.ICON_MEDIUM_SIZE, CssToken.ICON_MEDIUM_SIZE);
+		titleHTML.getElement().getStyle().setColor("#ffffff");
 		this.setHeight(height + "px");
 	}
 	

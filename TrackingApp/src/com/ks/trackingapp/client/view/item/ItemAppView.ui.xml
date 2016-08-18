@@ -36,6 +36,7 @@
 	
 	.panelAndroidRating {
 		display: inline-block;
+		width: 45%
 	}
 	
 	.panelIOS {
@@ -56,6 +57,7 @@
 	
 	.panelIOSRating {
 		display: inline-block;
+		width: 45%;
 	}
 	
 	.flowseparator {
@@ -63,6 +65,15 @@
 		height: 1px;
 		background-color: #ffffff;
 	}
+	.panelIOSRate{
+		display: inline-block;
+		width: 20%;
+	}
+	.htmlIOSRate{
+		color: #ffffff;
+		font-size: 15px;
+		text-align: center;
+}
 	</ui:style>
 
 
@@ -78,6 +89,9 @@
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="panelAndroidRating" styleName="{style.panelAndroidRating}">
 				</g:FlowPanel>
+				<g:FlowPanel ui:field="panelAndroidRate" styleName="{style.panelIOSRate}">
+					<g:HTML ui:field="htmlAndroidRate" styleName="{style.htmlIOSRate}"></g:HTML>
+				</g:FlowPanel>
 			</g:FlowPanel>
 	
 			<g:FlowPanel ui:field="panelIOS" styleName="{style.panelIOS}">
@@ -85,6 +99,9 @@
 					<g:HTML ui:field="htmlIOS" styleName="{style.htmlIOS}">IOS</g:HTML>
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="panelIOSRating" styleName="{style.panelIOSRating}">
+				</g:FlowPanel>
+				<g:FlowPanel ui:field="panelIOSRate" styleName="{style.panelIOSRate}">
+					<g:HTML ui:field="htmlIOSRate" styleName="{style.htmlIOSRate}"></g:HTML>
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowseparator}" />

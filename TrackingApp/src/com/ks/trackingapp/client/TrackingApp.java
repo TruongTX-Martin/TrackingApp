@@ -26,6 +26,7 @@ import com.ks.trackingapp.client.activity.ClientFactoryImpl;
 import com.ks.trackingapp.client.activity.PhoneActivityMapper;
 import com.ks.trackingapp.client.activity.PhoneAnimationMapper;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
+import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.util.ClientUtils;
 
 /**
@@ -101,7 +102,7 @@ public class TrackingApp implements EntryPoint {
 		final PlaceHistoryHandler historyHandler = new PlaceHistoryHandler(
 				historyMapper);
 		historyHandler.register(clientFactory.getPlaceController(),
-				clientFactory.getEventBus(), new HomeCommentPlace());
+				clientFactory.getEventBus(), new LoginPlace());
 		historyHandler.handleCurrentHistory();
 	}
 	private void createDisplay(ClientFactory clientFactory) {

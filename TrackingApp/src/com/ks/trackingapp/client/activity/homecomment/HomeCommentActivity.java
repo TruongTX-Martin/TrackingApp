@@ -13,6 +13,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
+import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.item.DialogFilterPlatform;
 import com.ks.trackingapp.shared.Config;
@@ -40,7 +41,7 @@ public class HomeCommentActivity extends BasicActivity {
 	@Override
 	protected void loadData() {
 		super.loadData();
-		filterData(Config.PLATFORM_ALL);
+		filterData(Config.FILTERBY_ALL,Config.PLATFORM_ALL);
 	}
 	
 	
@@ -59,7 +60,7 @@ public class HomeCommentActivity extends BasicActivity {
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterPlatform(Config.PLATFORM_ALL);
+				handleFilterPlatform(Config.FILTERBY_ALL,Config.PLATFORM_ALL);
 			}
 		});
 		
@@ -67,7 +68,7 @@ public class HomeCommentActivity extends BasicActivity {
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterPlatform(Config.PLATFORM_ANDROID);
+				handleFilterPlatform(Config.FILTERBY_PLATFORM,Config.PLATFORM_ANDROID);
 			}
 		});
 		
@@ -75,7 +76,23 @@ public class HomeCommentActivity extends BasicActivity {
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterPlatform(Config.PLATFORM_IOS);
+				handleFilterPlatform(Config.FILTERBY_PLATFORM,Config.PLATFORM_IOS);
+			}
+		});
+		
+		dialogFilter.getTouchDate().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				handleFilterPlatform(Config.FILTERBY_DATE,Config.FILTERBY_DATE);
+			}
+		});
+		
+		dialogFilter.getTouchRating().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				handleFilterPlatform(Config.FILTERBY_RATE,Config.FILTERBY_RATE);
 			}
 		});
 		
@@ -91,18 +108,18 @@ public class HomeCommentActivity extends BasicActivity {
 		
 	}
 
-	private void handleFilterPlatform(String input){
+	private void handleFilterPlatform(String tag,String input){
 		dialogFilter.hide();
 		String platform = view.getFilterPlatformView().getHtmlPlatform().getText().toString().trim();
 		if(input.equals(platform)){
 			return;
 		}
 		view.getFilterPlatformView().getHtmlPlatform().setText(input);
-		filterData(input);
+		filterData(tag,input);
 	}
 	
-	private void filterData(String filter){
-		TrackingApp.dataService.commentFilterByPlatform(filter, new AsyncCallback<ArrayList<ItemComment>>() {
+	private void filterData(String tag,String filter){
+		TrackingApp.dataService.commentFilterByTag(TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ItemComment> result) {

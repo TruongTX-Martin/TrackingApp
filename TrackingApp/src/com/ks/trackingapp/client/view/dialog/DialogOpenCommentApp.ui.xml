@@ -1,0 +1,67 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui"
+	 xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button"
+	 >
+	<ui:style>
+		.alertDialog {
+		width: 90%;
+		margin: 0 auto;
+		border: 1px solid
+		#20BAAA;
+		border-radius:
+		10px;
+		background-color: white;
+		}
+
+		.buttonLoginStyle
+		{
+		background-color: #d40069;
+		color: white;
+		text-align: center;
+		padding-bottom: 5px;
+		padding-top: 5px;
+		margin: 0 auto;
+		border-radius:
+		7px;
+		font-size: 2.0em;
+		}
+
+		.html {
+		text-align: center;
+		margin-top: 20px;
+		color: #d40069;
+		font-size: 20px;
+		font-weight: bold;		
+		}
+
+		.panelBtnParrent {
+		width: 60%;
+		margin:
+		0 auto;
+		}
+
+		.panelBtn {
+		display: inline-block;
+		width: 50%;
+		margin-bottom:
+		20px;
+		margin-top:
+		20px;
+		}
+	</ui:style>
+	<g:FlowPanel styleName="{style.alertDialog}" ui:field="mainPanel">
+		<g:HTML ui:field="txtTitle" styleName="{style.html}">Get comment success.Do
+			you want open comment this app?</g:HTML>
+		<g:FlowPanel styleName="{style.panelBtnParrent}">
+			<g:FlowPanel styleName="{style.panelBtn}">
+				<b:Button ui:field="btNo" text="No" styleName="{style.buttonLoginStyle}"
+					width="80%"></b:Button>
+			</g:FlowPanel>
+			<g:FlowPanel styleName="{style.panelBtn}">
+				<b:Button ui:field="btYes" text="Yes" styleName="{style.buttonLoginStyle}"
+					width="80%"></b:Button>
+			</g:FlowPanel>
+		</g:FlowPanel>
+	</g:FlowPanel>
+</ui:UiBinder> 

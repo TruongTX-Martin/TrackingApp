@@ -18,8 +18,11 @@ public class Config {
 	public static final String ITEMSCREEN_ADDAPP = "Add New App";
 	public static final String ITEMSCREEN_HOME = "Home Comment";
 	
-	
-	
+	//Tag for filter
+	public static final String FILTERBY_PLATFORM = "Platform";
+	public static final String FILTERBY_DATE = "Date";
+	public static final String FILTERBY_RATE = "Rating";
+	public static final String FILTERBY_ALL = "All";
 	//login failt for reason
 	public static final int USER_ACCOUNT_EXITS = 1;
 	public static final int USER_ACCOUNT_EMAIL_EXITS = 2;

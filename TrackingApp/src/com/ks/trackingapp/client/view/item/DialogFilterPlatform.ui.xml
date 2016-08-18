@@ -8,7 +8,7 @@
 	
 	.mailPanel {
 		width: 200px;
-		height: 150px;
+		height: 250px;
 		vertical-align: middle;
 		background-color: #2B444B;
 		border: 1px solid #ffffff;
@@ -77,6 +77,18 @@
 		<v:VerticalTouchPanel ui:field="touchIOS" width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
 				<g:HTML styleName="{style.htmlIOS}">IOS</g:HTML>
+			</g:FlowPanel>
+		</v:VerticalTouchPanel>
+		<g:FlowPanel styleName="{style.flowsaparator}" />
+		<v:VerticalTouchPanel ui:field="touchDate" width="100%">
+			<g:FlowPanel styleName="{style.flowIOS}">
+				<g:HTML styleName="{style.htmlIOS}">Date</g:HTML>
+			</g:FlowPanel>
+		</v:VerticalTouchPanel>
+		<g:FlowPanel styleName="{style.flowsaparator}" />
+		<v:VerticalTouchPanel ui:field="touchRating" width="100%">
+			<g:FlowPanel styleName="{style.flowIOS}">
+				<g:HTML styleName="{style.htmlIOS}">Rating</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 	</g:FlowPanel>

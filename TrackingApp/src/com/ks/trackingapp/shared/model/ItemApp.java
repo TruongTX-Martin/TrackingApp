@@ -23,6 +23,7 @@ public class ItemApp implements IBasic {
 	private boolean isAndroid;
 	@Index
 	private boolean isIOS;
+	private float rating =0;
 	
 	private @Ignore boolean isSuccess;
 	private @Ignore int addFailedForReason =0;
@@ -48,6 +49,13 @@ public class ItemApp implements IBasic {
 		this.isSuccess = input;
 	}
 	
+	
+	public void setRating(float rating) {
+		this.rating = rating;
+	}
+	public float getRating() {
+		return rating;
+	}
 	public boolean isSuccess(){
 		return isSuccess;
 	}

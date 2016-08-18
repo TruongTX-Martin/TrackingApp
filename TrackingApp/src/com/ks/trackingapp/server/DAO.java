@@ -126,24 +126,60 @@ public class DAO extends CustomRemoteServiceServlet {
 				return appIOS;
 			}
 		}
+		if(itemApp.isAndroid()){
+			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName() ;
+			float rating = getRating(url);
+			itemApp.setRating(rating);
+		}
 		ofy().save().entity(itemApp).now();
 		itemApp.setIsSuccess(true);
+		
 		return itemApp;
 	}
-	
-	protected void getCommentApp(ItemApp itemApp){
+	private float getRating(String url) {
+		float rating = 0.0f;
+		try {
+			URL website = new URL(url);
+			URLConnection connection = website.openConnection();
+			BufferedReader in = new BufferedReader(new InputStreamReader(
+					connection.getInputStream()));
+
+			StringBuilder response = new StringBuilder();
+			String inputLine;
+			String result = "";
+			while ((inputLine = in.readLine()) != null) {
+				result += inputLine.toString() + "\n";
+			}
+			in.close();
+			result = result.substring(result.indexOf("Đánh giá"),
+					result.indexOf("Thông tin bổ sung"));
+			if(result.contains("<div")){
+				String[] array = result.split("<div");
+				for (int i=0; i< array.length; i++) {
+					String item = array[i];
+					if(item.contains("class=\"score\"")) {
+						String rateString = item.substring(item.indexOf(">")+1, item.length()-7).trim();
+						rating = Float.valueOf(rateString.replace(",", "."));
+					}
+				}
+			}
+		} catch (Exception e) {
+		}
+		return rating;
+	}
+	protected void getCommentApp(Long userId,ItemApp itemApp){
 		if(itemApp.isAndroid()){
 			//get comment android
-			getCommentAndroid(itemApp);
+			getCommentAndroid(userId,itemApp);
 		}
 		if(itemApp.isIOS()){
 			//get comment ios
-			getCommentIOS(itemApp);
+			getCommentIOS(userId,itemApp);
 		}
 	}
-	private void getCommentAndroid(ItemApp itemApp){
+	private void getCommentAndroid(Long userId,ItemApp itemApp){
 		try {
-			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName() ;
+			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName()+"&hl=en" ;
 			URL website = new URL(url);
 			URLConnection connection = website.openConnection();
 			BufferedReader in = new BufferedReader(new InputStreamReader(
@@ -195,6 +231,7 @@ public class DAO extends CustomRemoteServiceServlet {
 							itemComment.setRating(getRatingFromString(rating));
 							itemComment.setComment(comment.trim());
 							itemComment.setDate(formatDate.parse(getDateFromString(date)));
+							itemComment.setUserId(userId);
 							saveItemComment(itemComment);
 						}
 						
@@ -207,7 +244,7 @@ public class DAO extends CustomRemoteServiceServlet {
 		}
 	}
 	
-	private void getCommentIOS(ItemApp itemApp){
+	private void getCommentIOS(Long userId,ItemApp itemApp){
 		String result = "";
 		String urlString = "https://itunes.apple.com/us/rss/customerreviews/id="
 				+ itemApp.getAppleId() + "/sortBy=mostRecent/json";
@@ -222,13 +259,13 @@ public class DAO extends CustomRemoteServiceServlet {
 				buffer.append(chars, 0, read);
 			}
 			result = buffer.toString();
-			getItemCommentFromJson(result,itemApp);
+			getItemCommentFromJson(userId,result,itemApp);
 		} catch (Exception e) {
 			log.warning("Exception while get comment ios" + e.getMessage());
 		}
 	}
 	
-	private void getItemCommentFromJson(String jsonString,ItemApp itemApp){
+	private void getItemCommentFromJson(Long userId,String jsonString,ItemApp itemApp){
 		try {
 			JSONObject object = new JSONObject(jsonString);
 			if(object.has("feed")) {
@@ -249,6 +286,7 @@ public class DAO extends CustomRemoteServiceServlet {
 							itemComment.setPlatform(Config.PLATFORM_IOS);
 							itemComment.setAppname(itemApp.getAppName());
 							itemComment.setAppId(itemApp.getId());
+							itemComment.setUserId(userId);
 							saveItemComment(itemComment);
 						}
 					}
@@ -263,8 +301,7 @@ public class DAO extends CustomRemoteServiceServlet {
 		try {
 			if (mJSON != null && mJSON.has("im:rating")) {
 				String rating = getValueLabel(mJSON, "im:rating");
-				rate = Integer.parseInt(rating.substring(1,
-						rating.length() - 1).trim());
+				rate = Integer.parseInt(rating.trim());
 			}
 		} catch (Exception e) {
 		}
@@ -308,21 +345,43 @@ public class DAO extends CustomRemoteServiceServlet {
 	}
 	
 	private void saveItemComment(ItemComment comment){
+		ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).first().now();
+		if(itemComment != null){
+			return;
+		}
 		ofy().save().entity(comment).now();
 	}
-	protected ArrayList<ItemApp> appGetAllItem(){
-		return new ArrayList<>(ofy().load().type(ItemApp.class).list());
+	
+	protected ArrayList<ItemApp> appGetAllItem(Long userId){
+		return new ArrayList<>(ofy().load().type(ItemApp.class).filter("userId", userId).list());
 	}
 	
-	protected ArrayList<ItemComment> commentGetFromAppId(Long appId){
+	protected ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId){
 		return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).list());
 	}
-	protected ArrayList<ItemComment> commentFilterByFlatform(String platform){
-		if(platform.equals(Config.PLATFORM_ALL)){
-			return new ArrayList<>(ofy().load().type(ItemComment.class).list());
-		}else {
-			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("platform", platform).list());
+	protected ArrayList<ItemComment> commentFilterByTag(Long userId,Long appId,String tag,String platform){
+		if(appId != -1){
+			if(tag.equals(Config.FILTERBY_ALL)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).list());
+			}else if(tag.equals(Config.FILTERBY_PLATFORM)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).filter("platform", platform).list());
+			}else if(tag.equals(Config.FILTERBY_DATE)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).order("-date").list());
+			}else if(tag.equals(Config.FILTERBY_RATE)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).order("-rating").list());
+			}
+		}else{
+			if(tag.equals(Config.FILTERBY_ALL)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).list());
+			}else if(tag.equals(Config.FILTERBY_PLATFORM)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("platform", platform).list());
+			}else if(tag.equals(Config.FILTERBY_DATE)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).order("-date").list());
+			}else if(tag.equals(Config.FILTERBY_RATE)){
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).order("-rating").list());
+			}
 		}
+		return new ArrayList<>(ofy().load().type(ItemComment.class).list()); 
 	}
 		
 }

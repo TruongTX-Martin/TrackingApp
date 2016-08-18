@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?><permutations>
+<permutation name="4DD26122CBA968749700382CF9013641">
+<phonegap.env>no</phonegap.env>
+<mgwt.density>xhigh</mgwt.density>
+</permutation>
+<permutation name="2E4C13663F5A24B7098943C60B219D59">
+<mgwt.density>mid</mgwt.density>
+<phonegap.env>no</phonegap.env>
+</permutation>
+<permutation name="C6603784606AA036D80EF34B4D80A321">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>mid</mgwt.density>
+</permutation>
+<permutation name="518129B10CB77FEDD83C7ABBF8719AB6">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="CEF2E172AC36F8A181369017886C52C3">
+<phonegap.env>no</phonegap.env>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="9E98DCAC1D2DE27A835D25B329E1028D">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>xhigh</mgwt.density>
+</permutation>
+</permutations>

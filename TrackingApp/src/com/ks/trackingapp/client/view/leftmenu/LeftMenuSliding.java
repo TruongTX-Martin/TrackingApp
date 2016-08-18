@@ -33,7 +33,7 @@ public class LeftMenuSliding extends SlidingPanel{
 		userInfoPanel.setWidth("100%");
 		mainTopicsPanel = new VerticalPanel();
 		mainPanel.add(userInfoPanel);
-		mainPanel.add(btnHome);
+//		mainPanel.add(btnHome);
 		mainPanel.add(btnAddApp);
 		mainPanel.add(btnAllApp);
 		mainPanel.add(btnLogout);
@@ -41,6 +41,7 @@ public class LeftMenuSliding extends SlidingPanel{
 		mainTopicsPanel.setWidth("100%");
 		scrollPanel.refresh();
 		hide();
+		this.getElement().getStyle().setBackgroundColor("#152727");
 	}
 	
 	@Override
