@@ -1,26 +1,92 @@
 <?xml version="1.0" encoding="UTF-8"?><permutations>
-<permutation name="4DD26122CBA968749700382CF9013641">
+<permutation name="D87DF4FDF3612F87EB9DD7ACD1B48465">
+<mgwt.density>mid</mgwt.density>
+<phonegap.env>no</phonegap.env>
+<locale>en</locale>
+</permutation>
+<permutation name="F328F156BAD513E78B3CB5AB8B03C62C">
+<phonegap.env>yes</phonegap.env>
+<locale>en</locale>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="656C581C8DBBB62BE3FBF5C7F5E84A20">
+<phonegap.env>no</phonegap.env>
+<locale>en</locale>
+<mgwt.density>xhigh</mgwt.density>
+</permutation>
+<permutation name="966A7C190A9BE6349928956CA3A7FD55">
+<phonegap.env>yes</phonegap.env>
+<locale>default</locale>
+<mgwt.density>xhigh</mgwt.density>
+</permutation>
+<permutation name="F726D62D6B251EADDE3CDDCEE283C312">
+<mgwt.density>mid</mgwt.density>
+<locale>default</locale>
+<phonegap.env>no</phonegap.env>
+</permutation>
+<permutation name="6B622B7BCDE6E380043EBB08C6D511A1">
+<phonegap.env>yes</phonegap.env>
+<locale>zh</locale>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="991B4D968D8C3683267A841952FB51D1">
+<locale>default</locale>
 <phonegap.env>no</phonegap.env>
 <mgwt.density>xhigh</mgwt.density>
 </permutation>
-<permutation name="2E4C13663F5A24B7098943C60B219D59">
-<mgwt.density>mid</mgwt.density>
-<phonegap.env>no</phonegap.env>
-</permutation>
-<permutation name="C6603784606AA036D80EF34B4D80A321">
+<permutation name="01F88D553601174D1E11CF1C4B1B75CA">
 <phonegap.env>yes</phonegap.env>
-<mgwt.density>mid</mgwt.density>
-</permutation>
-<permutation name="518129B10CB77FEDD83C7ABBF8719AB6">
-<phonegap.env>yes</phonegap.env>
+<locale>default</locale>
 <mgwt.density>high</mgwt.density>
 </permutation>
-<permutation name="CEF2E172AC36F8A181369017886C52C3">
-<phonegap.env>no</phonegap.env>
-<mgwt.density>high</mgwt.density>
+<permutation name="3818A4B00D2A1164EF16AF3B3F2A2D3E">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>mid</mgwt.density>
+<locale>en</locale>
 </permutation>
-<permutation name="9E98DCAC1D2DE27A835D25B329E1028D">
+<permutation name="37682C744574A123F93CF39A54F7F740">
 <phonegap.env>yes</phonegap.env>
 <mgwt.density>xhigh</mgwt.density>
+<locale>zh</locale>
+</permutation>
+<permutation name="BB1C8AA48D1DFCE767E9EC9011941907">
+<locale>default</locale>
+<phonegap.env>no</phonegap.env>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="E4F7A9B71EE7E1A87A5953EE9EF95296">
+<phonegap.env>no</phonegap.env>
+<locale>zh</locale>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="13DC910E7DD028628B89BC67056F2B8D">
+<phonegap.env>no</phonegap.env>
+<locale>en</locale>
+<mgwt.density>high</mgwt.density>
+</permutation>
+<permutation name="5006407375AD74F525B1873F714AACC0">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>mid</mgwt.density>
+<locale>zh</locale>
+</permutation>
+<permutation name="F1A9FB7B3A6F79F6C78339924A6048D5">
+<phonegap.env>yes</phonegap.env>
+<locale>en</locale>
+<mgwt.density>xhigh</mgwt.density>
+</permutation>
+<permutation name="764FF000192FF412F23327FD5566DEC7">
+<mgwt.density>mid</mgwt.density>
+<phonegap.env>no</phonegap.env>
+<locale>zh</locale>
+</permutation>
+<permutation name="A2595A99827FBB2668ACFF79A3091D10">
+<phonegap.env>yes</phonegap.env>
+<mgwt.density>mid</mgwt.density>
+<locale>default</locale>
+</permutation>
+<permutation name="36750FD5E0AAB0D1ADB7A8F7A291FD95">
+<phonegap.env>no</phonegap.env>
+<mgwt.density>xhigh</mgwt.density>
+<locale>zh</locale>
 </permutation>
 </permutations>

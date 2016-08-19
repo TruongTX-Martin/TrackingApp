@@ -1,4 +1,4 @@
 # Module trackingapp
 # RPC service class, partial path of RPC policy file
-com.ks.trackingapp.client.DataService, 96F9CE7A35281BF50FDBFDDE8405A96F.gwt.rpc
+com.ks.trackingapp.client.DataService, B05FDB11AD1BBFEFB2E9BC452D886F2B.gwt.rpc
 com.googlecode.gwtphonegap.client.log.shared.PhoneGapLogService, A71599ED2C7DF62C363FBFE67B47386E.gwt.rpc

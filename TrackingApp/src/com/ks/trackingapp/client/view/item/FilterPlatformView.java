@@ -20,24 +20,28 @@ public class FilterPlatformView extends Composite {
 			UiBinder<Widget, FilterPlatformView> {
 	}
 	
-	protected @UiField HTML htmlPlatform;
+	protected @UiField HTML htmlPlatform,htmlLanguage;
 	protected @UiField FlowPanel flowImage;
-	protected  BHTouchImage imageFilter = new BHTouchImage("images/ic_filter.png");
-	protected @UiField VerticalTouchPanel panelMail;
+	protected @UiField VerticalTouchPanel touchPlatform,touchLanguage;
 
 	public FilterPlatformView() {
 		initWidget(uiBinder.createAndBindUi(this));
-		imageFilter.setSize("25px", "25px");
-		flowImage.add(imageFilter);
 	}
 	
 	public HTML getHtmlPlatform() {
 		return htmlPlatform;
 	}
 	
-	public VerticalTouchPanel getTouchPanel(){
-		return panelMail;
+	public HTML getHtmlLanguage(){
+		return htmlLanguage;
 	}
-
+	
+	public VerticalTouchPanel getTouchFilter(){
+		return touchPlatform;
+	}
+		
+	public VerticalTouchPanel getTouchLanguage(){
+		return touchLanguage;
+	}
 
 }

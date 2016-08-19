@@ -55,6 +55,8 @@
 	<set-property name="gwt.logging.systemHandler" value="DISABLED" />
 	<set-property name="gwt.logging.simpleRemoteHandler"
 		value="DISABLED" />
+	<extend-property name="locale" values="en" />
+	<extend-property name="locale" values="zh" />
 	<!-- Specify the paths for translatable code -->
 	<source path='client' />
 	<source path='shared' />

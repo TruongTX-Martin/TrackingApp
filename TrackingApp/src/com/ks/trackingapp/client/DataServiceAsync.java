@@ -21,10 +21,12 @@ public interface DataServiceAsync {
 	void commentGetFromAppId(Long userId,Long appId,
 			AsyncCallback<ArrayList<ItemComment>> callback);
 
-	void commentFilterByTag(Long userId,Long appId,String tag,String platform,
+	void commentFilterByTag(String language,Long userId,Long appId,String tag,String platform,
 			AsyncCallback<ArrayList<ItemComment>> callback);
 
 	void commentGetAppComment(Long userId,ItemApp itemApp, AsyncCallback<Void> callback);
+
+//	void appGetFromId(Long appId, AsyncCallback<ItemApp> callback);
 
 
 }

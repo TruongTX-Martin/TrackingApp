@@ -1,6 +1,7 @@
 package com.ks.trackingapp.client.activity.homecomment;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
@@ -15,7 +16,9 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.Toaster;
-import com.ks.trackingapp.client.view.item.DialogFilterPlatform;
+import com.ks.trackingapp.client.view.VerticalTouchPanel;
+import com.ks.trackingapp.client.view.dialog.DialogFilterPlatform;
+import com.ks.trackingapp.client.view.dialog.DialogSelectLanguage;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
 
@@ -23,7 +26,12 @@ public class HomeCommentActivity extends BasicActivity {
 
 	private HomeCommentView view;
 	private DialogFilterPlatform dialogFilter = new DialogFilterPlatform();
+	private DialogSelectLanguage dialogLanguage = new DialogSelectLanguage();
 	private ArrayList<ItemComment> listItemComment = new ArrayList<>();
+	
+	
+	private String TAG = "";
+	private String INPUT = "";
 	
 	public HomeCommentActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
@@ -41,18 +49,42 @@ public class HomeCommentActivity extends BasicActivity {
 	@Override
 	protected void loadData() {
 		super.loadData();
-		filterData(Config.FILTERBY_ALL,Config.PLATFORM_ALL);
+		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		String valueLanguage = Config.getLanguage().get(language);
+		filterData(valueLanguage,Config.FILTERBY_ALL,Config.PLATFORM_ALL);
 	}
 	
 	
 	@Override
 	protected void handleEvent() {
 		super.handleEvent();
-		view.getFilterPlatformView().getTouchPanel().addTapHandler(new TapHandler() {
+		view.getFilterPlatformView().getTouchFilter().addTapHandler(new TapHandler() {
 			
 			@Override
 			public void onTap(TapEvent event) {
 				dialogFilter.show();
+			}
+		});
+		
+		if(dialogLanguage.getMapTouchPanel().size() > 0){
+			for(final Map.Entry<String,VerticalTouchPanel> map : dialogLanguage.getMapTouchPanel().entrySet()){
+				final String key = map.getKey();
+				VerticalTouchPanel itemAppView = map.getValue();
+				itemAppView.addTapHandler(new TapHandler() {
+					
+					@Override
+					public void onTap(TapEvent event) {
+						filterLanguage(key);
+					}
+				});
+			}
+		}
+		
+		view.getFilterPlatformView().getTouchLanguage().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogLanguage.show();
 			}
 		});
 		
@@ -107,6 +139,19 @@ public class HomeCommentActivity extends BasicActivity {
 		});
 		
 	}
+	
+	private void filterLanguage(String filter){
+		dialogLanguage.hide();
+		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		if(filter.equals(language)){
+			return;
+		}
+		view.getFilterPlatformView().getHtmlLanguage().setText(filter);
+		String laguageCode = Config.getLanguage().get(filter);
+		filterData(laguageCode,TAG,INPUT);
+		
+		
+	}
 
 	private void handleFilterPlatform(String tag,String input){
 		dialogFilter.hide();
@@ -115,11 +160,15 @@ public class HomeCommentActivity extends BasicActivity {
 			return;
 		}
 		view.getFilterPlatformView().getHtmlPlatform().setText(input);
-		filterData(tag,input);
+		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		String valueLanguage = Config.getLanguage().get(language);
+		filterData(valueLanguage,tag,input);
 	}
 	
-	private void filterData(String tag,String filter){
-		TrackingApp.dataService.commentFilterByTag(TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
+	private void filterData(String language,String tag,String filter){
+		this.TAG = tag;
+		this.INPUT = filter;
+		TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ItemComment> result) {

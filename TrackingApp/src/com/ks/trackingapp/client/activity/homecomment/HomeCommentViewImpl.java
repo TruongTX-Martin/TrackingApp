@@ -43,10 +43,11 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 	public HomeCommentViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(true);
-		this.layoutBasic.getHeaderPanel().getRightPanel().setWidth("100px");
+		this.layoutBasic.getHeaderPanel().getRightPanel().setWidth("120px");
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_HOME);
 		this.layoutBasic.getHeaderPanel().getRightPanel().add(filterPlatformView);
 		filterPlatformView.getHtmlPlatform().setText(Config.PLATFORM_ALL);
+		filterPlatformView.getHtmlLanguage().setText(Config.LANGUAGE_ENGLISH);
 		refreshScrollView();
 	}
 

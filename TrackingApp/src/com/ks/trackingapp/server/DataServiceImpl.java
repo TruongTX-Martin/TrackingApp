@@ -40,13 +40,18 @@ public class DataServiceImpl extends DAO implements
 	}
 
 	@Override
-	public ArrayList<ItemComment> commentFilterByTag(Long userId,Long appId,String tag,String platform) {
-		return super.commentFilterByTag(userId,appId,tag,platform);
+	public ArrayList<ItemComment> commentFilterByTag(String language,Long userId,Long appId,String tag,String platform) {
+		return super.commentFilterByTag(language,userId,appId,tag,platform);
 	}
 
 	@Override
 	public void commentGetAppComment(Long userId,ItemApp itemApp) {
 		super.getCommentApp(userId,itemApp);
 	}
+
+//	@Override
+//	public ItemApp appGetFromId(Long appId) {
+//		return super.appGetFromAppId(appId);
+//	}
 
 }

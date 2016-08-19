@@ -1,12 +1,8 @@
 package com.ks.trackingapp.shared.model;
 
-import java.util.ArrayList;
-import java.util.Date;
-
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
-import com.ks.trackingapp.shared.IOSItemBean;
 
 @SuppressWarnings("serial")
 @Entity
@@ -23,22 +19,15 @@ public class ItemComment implements IBasic {
 	Long appId;
 	private @Index Long userId;
 	private @Index
-	Date date;
+	String date;
 	private @Index
 	int rating;
-	
+	private @Index String language;
 
 	public ItemComment() {
 	}
 
-	public ItemComment(String json) {
-		System.out.println("JSON IOS:" + json);
-		IOSItemBean myBean = new IOSItemBean(json);
-		this.title = myBean.getTitle();
-		this.date = myBean.getDate();
-		this.comment = myBean.getComment();
-		this.rating = myBean.getRating();
-	}
+
 	
 	public void setUserId(Long userId) {
 		this.userId = userId;
@@ -47,18 +36,19 @@ public class ItemComment implements IBasic {
 		return userId;
 	}
 
-	public ArrayList<ItemComment> getListItemComment(String json, String appName) {
-		ArrayList<ItemComment> list = new IOSItemBean().getListItemComment(
-				json, appName);
-		System.out.println(list);
-		return list;
-	}
 
 	public Long getId() {
 		return id;
 	}
+	
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+	public String getLanguage() {
+		return language;
+	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -70,7 +60,7 @@ public class ItemComment implements IBasic {
 		return appId;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 

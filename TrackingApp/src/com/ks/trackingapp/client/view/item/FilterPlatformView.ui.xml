@@ -13,7 +13,7 @@
 	}
 	
 	.flowPlatform {
-		width: 60%;
+		width:50%;
 		display: inline-block;;
 	}
 	
@@ -24,21 +24,28 @@
 	}
 	
 	.flowImage {
-		width: 40%;
+		width: 50%;
 		display: inline-block;
 		padding-right: 5px;
+		padding-left: 5px;
 	}
 	</ui:style>
-	<f:VerticalTouchPanel ui:field="panelMail" width="100%">
+	
 		<g:FlowPanel styleName="{style.flowMain}">
 			<g:FlowPanel styleName="{style.flowPlatform}">
-				<g:HTML styleName="{style.htmlPlatform}" ui:field="htmlPlatform">
-				</g:HTML>
+				<f:VerticalTouchPanel ui:field="touchPlatform" width="100%">
+					<g:HTML styleName="{style.htmlPlatform}" ui:field="htmlPlatform">
+					</g:HTML>
+				</f:VerticalTouchPanel>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowImage}" ui:field="flowImage">
+				<f:VerticalTouchPanel ui:field="touchLanguage" width="100%">
+					<g:HTML styleName="{style.htmlPlatform}" ui:field="htmlLanguage">
+					</g:HTML>
+				</f:VerticalTouchPanel>
 			</g:FlowPanel>
 		</g:FlowPanel>
-	</f:VerticalTouchPanel>
+	
 
 
 </ui:UiBinder> 
