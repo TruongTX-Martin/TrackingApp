@@ -17,6 +17,7 @@ import com.ks.trackingapp.client.activity.newapp.NewAppView;
 import com.ks.trackingapp.client.activity.newapp.NewAppViewImpl;
 import com.ks.trackingapp.client.activity.register.RegisterView;
 import com.ks.trackingapp.client.activity.register.RegisterViewImpl;
+import com.ks.trackingapp.client.view.dialog.LoadingDialog;
 
 public class ClientFactoryImpl implements ClientFactory{
 
@@ -31,6 +32,7 @@ public class ClientFactoryImpl implements ClientFactory{
 	private AllAppView allAppView;
 	private NewAppView newAppView;
 	private AppCommentView appCommentView;
+	private LoadingDialog loadingDialog;
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
 		placeController = new PlaceController(eventBus);
@@ -101,6 +103,14 @@ public class ClientFactoryImpl implements ClientFactory{
 			appCommentView = new AppCommentViewImpl();
 		}
 		return appCommentView;
+	}
+
+	@Override
+	public LoadingDialog getLoadingDialog() {
+		if(loadingDialog == null) {
+			loadingDialog = new LoadingDialog();
+		}
+		return loadingDialog;
 	}
 
 }

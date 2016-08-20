@@ -8,8 +8,10 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
+import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
@@ -27,9 +29,11 @@ public class NewAppActivity extends BasicActivity{
 	private NewAppView view;
 	private DialogOpenCommentApp dialogComment = new DialogOpenCommentApp();
 	private ItemApp currentItemApp = null;//for go to appcomment app
+	private boolean isFromAll;
 	
 	public NewAppActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
+		isFromAll = ((NewAppPlace)place).isFromAll();
 	}
 	
 	
@@ -47,6 +51,9 @@ public class NewAppActivity extends BasicActivity{
 		view.getCheckBoxIOS().setValue(true);
 		view.getTextboxPakageName().setVisible(true);
 		view.getTextboxAppleId().setVisible(true);
+		view.getTextboxAppname().setText("");
+		view.getTextboxPakageName().setText("");
+		view.getTextboxAppleId().setText("");
 		//handle checkbox android
 		addHandlerRegistration(view.getCheckBoxAndroid().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			
@@ -102,6 +109,22 @@ public class NewAppActivity extends BasicActivity{
 				dialogComment.hide();
 			}
 		});
+		
+		view.getButtonCancel().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				goTo(new HomeCommentPlace());
+			}
+		});
+		
+		view.getButtonOk().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				addNewApp();
+			}
+		});
 	}
 	
 
@@ -133,7 +156,7 @@ public class NewAppActivity extends BasicActivity{
 			goTo(new LoginPlace());
 			return;
 		}
-		ItemApp itemApp = new ItemApp(appName, currentUser.getId());
+		final ItemApp itemApp = new ItemApp(appName, currentUser.getId());
 		if(isAndroid){
 			itemApp.setAndroid(true);
 			itemApp.setPackageName(packageName);
@@ -142,12 +165,17 @@ public class NewAppActivity extends BasicActivity{
 			itemApp.setIOS(true);
 			itemApp.setAppleId(appleId);
 		}
-		TrackingApp.dataService.appAddNew(itemApp, new AsyncCallback<ItemApp>() {
-			
+		TrackingApp.dataService.appAddNew(itemApp,new AsyncCallback<ItemApp>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Add app failed,please check your network?");
+			}
+
 			@Override
 			public void onSuccess(ItemApp itemResult) {
 				if(itemResult.isSuccess()){
-					Toaster.showToast("Add app success");
+					Toaster.showToast("Add app success,get comment this app.");
 					getCommentForApp(itemResult);
 				}else{
 					if(itemResult.getAddFailedForReason() == Config.APPITEM_APPNAME_EXITS){
@@ -162,17 +190,12 @@ public class NewAppActivity extends BasicActivity{
 					}
 				}
 			}
-			
-			@Override
-			public void onFailure(Throwable caught) {
-				Toaster.showToast("Add app failed,please check your network?");
-			}
 		});
 		
 	}
 	
 	private void getCommentForApp(final ItemApp itemApp){
-		TrackingApp.dataService.commentGetAppComment(TrackingManager.newInstance().getCurrentUser().getId(),itemApp, new AsyncCallback<Void>() {
+		new RPCCall<Void>() {
 
 			@Override
 			public void onFailure(Throwable caught) {
@@ -181,15 +204,23 @@ public class NewAppActivity extends BasicActivity{
 
 			@Override
 			public void onSuccess(Void result) {
-				//show dialog open comment this app
 				currentItemApp = itemApp;
 				dialogComment.show();
 			}
-		});
+
+			@Override
+			protected void callService(AsyncCallback<Void> cb) {
+				TrackingApp.dataService.commentGetAppComment(TrackingManager.newInstance().getCurrentUser().getId(),itemApp,cb);
+			}
+		}.retry(0);;
 	}
 	@Override
 	protected void onBackPress() {
 		super.onBackPress();
+		if(isFromAll){
+			goTo(new AllAppPlace());
+			return;
+		}
 		goTo(new HomeCommentPlace());
 	}
 

@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gwtbootstrap3="urn:import:org.gwtbootstrap3.client.ui" xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.input.search">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:gwtbootstrap3="urn:import:org.gwtbootstrap3.client.ui"
+	xmlns:s="urn:import:com.googlecode.mgwt.ui.client.widget.input.search" xmlns:scroll="urn:import:com.googlecode.mgwt.ui.client.widget.panel.scroll">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -19,11 +20,40 @@
 	
 	.scrollPanel {
 		background-color: #2B444B;
+		overflow: hidden;
+		overflow-y: hidden;
 	}
 	
 	.textbox {
 		width: 100%;
 		height: 50px;
+	}
+	
+	.flowBottom {
+		background-color: #152727;
+		width: 100%;
+		position: absolute;
+	}
+	
+	.flowBottomLeft {
+		background-color: #152727;
+		width: 30%;
+		height:100%;
+		display: inline-block;
+	}
+	
+	.flowBottomCenter {
+		background-color: #152727;
+		width: 40%;
+		height:100%;
+		display: inline-block;
+	}
+	
+	.flowBottomRight {
+		background-color: #152727;
+		width: 30%;
+		height:100%;
+		display: inline-block;
 	}
 	</ui:style>
 
@@ -31,13 +61,18 @@
 	<g:FlowPanel styleName="{style.homeView}" width="100%"
 		ui:field="pagePanel">
 		<g:FlowPanel styleName="{style.panelSearch}">
-				<s:MSearchBox ui:field="textbox"
-				 styleName="{style.textbox}"></s:MSearchBox>
+			<s:MSearchBox ui:field="textbox" styleName="{style.textbox}"></s:MSearchBox>
 		</g:FlowPanel>
-		<g:ScrollPanel ui:field="scrollPanel" styleName="{style.scrollPanel}">
+		<scroll:ScrollPanel ui:field="scrollPanel" styleName="{style.scrollPanel}">
 			<g:FlowPanel width="100%" ui:field="panelComment">
 			</g:FlowPanel>
-		</g:ScrollPanel>
+		</scroll:ScrollPanel>
+		<g:FlowPanel styleName="{style.flowBottom}" ui:field="flowBottom">
+			<g:FlowPanel styleName="{style.flowBottomLeft}" ui:field="flowBottomLeft"></g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowBottomCenter}"></g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowBottomRight}"
+				ui:field="flowBottomRight"></g:FlowPanel>
+		</g:FlowPanel>
 	</g:FlowPanel>
 
 </ui:UiBinder> 

@@ -29,10 +29,6 @@ public class DAO extends CustomRemoteServiceServlet {
 	private final String TAG_RATING = "class=\"tiny-star star-rating-non-editable-container\"";
 	
 	
-//	private final String TAG_START = "class=\"review-row-header heading\"";
-//	private final String TAG_START = "<h1 class=\"details-scroll-anchor\" id=\"details-reviews\"></h1> <h1 class=\"heading\">";
-//	private final String TAG_END = "class=\"details-section-heading\"> <h1 class=\"heading\">";
-//	private final String TAG_CONTAINS = "<a class=\"id-no-nav play-button tiny\" href=\"#\" target=\"_blank\">";
 	
 	private final String TAG_START = "<div class=\"details-section-body expandable\" data-load";
 	private final String TAG_END = "<div class=\"details-section metadata\">";
@@ -101,22 +97,22 @@ public class DAO extends CustomRemoteServiceServlet {
 			appName.setAddFailedForReason(Config.APPITEM_APPNAME_EXITS);
 			return appName;
 		}
-		if(itemApp.isAndroid()) {
-			ItemApp appAndroid = ofy().load().type(ItemApp.class).filter("packageName", itemApp.getPackageName()).first().now();
-			if(appAndroid != null){
-				appAndroid.setIsSuccess(false);
-				appAndroid.setAddFailedForReason(Config.APPITEM_PACKAGENAME_EXITS);
-				return appAndroid;
-			}
-		}
-		if(itemApp.isIOS()){
-			ItemApp appIOS = ofy().load().type(ItemApp.class).filter("appleId", itemApp.getAppleId()).first().now();
-			if(appIOS != null){
-				appIOS.setIsSuccess(false);
-				appIOS.setAddFailedForReason(Config.APPITEM_APPLEID_EXITS);
-				return appIOS;
-			}
-		}
+//		if(itemApp.isAndroid()) {
+//			ItemApp appAndroid = ofy().load().type(ItemApp.class).filter("packageName", itemApp.getPackageName()).first().now();
+//			if(appAndroid != null){
+//				appAndroid.setIsSuccess(false);
+//				appAndroid.setAddFailedForReason(Config.APPITEM_PACKAGENAME_EXITS);
+//				return appAndroid;
+//			}
+//		}
+//		if(itemApp.isIOS()){
+//			ItemApp appIOS = ofy().load().type(ItemApp.class).filter("appleId", itemApp.getAppleId()).first().now();
+//			if(appIOS != null){
+//				appIOS.setIsSuccess(false);
+//				appIOS.setAddFailedForReason(Config.APPITEM_APPLEID_EXITS);
+//				return appIOS;
+//			}
+//		}
 		if(itemApp.isAndroid()){
 			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName() ;
 			float rating = getRating(url);
@@ -171,7 +167,7 @@ public class DAO extends CustomRemoteServiceServlet {
 		}
 	}
 	protected ItemApp appGetFromAppId(Long appId){
-		return ofy().load().type(ItemApp.class).filterKey(appId).first().now();
+		return ofy().load().type(ItemApp.class).id(appId).now();
 	}
 	private void getCommentAndroid(Long userId,ItemApp itemApp,String language){
 		try {

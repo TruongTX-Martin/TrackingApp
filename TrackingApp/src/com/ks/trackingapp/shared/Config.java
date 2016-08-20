@@ -22,7 +22,7 @@ public class Config {
 	public static final String ITEMSCREEN_ALLAPP = "All App";
 	public static final String ITEMSCREEN_APPCOMMENT = "App's Comment";
 	public static final String ITEMSCREEN_ADDAPP = "Add New App";
-	public static final String ITEMSCREEN_HOME = "Home Comment";
+	public static final String ITEMSCREEN_HOME = "Home";
 	
 	//Tag for filter
 	public static final String FILTERBY_PLATFORM = "Platform";

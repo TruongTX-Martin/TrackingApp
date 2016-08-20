@@ -2,6 +2,7 @@ package com.ks.trackingapp.client.activity.allapp;
 
 import java.util.ArrayList;
 import java.util.Map;
+
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -15,6 +16,7 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
+import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.item.ItemAppView;
@@ -92,6 +94,13 @@ public class AllAppActivity extends BasicActivity{
 				}
 			}
 		});
+		addHandlerRegistration(view.getButtonAddNew().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				goTo(new NewAppPlace(true));
+			}
+		}));
 	}
 	
 	@Override

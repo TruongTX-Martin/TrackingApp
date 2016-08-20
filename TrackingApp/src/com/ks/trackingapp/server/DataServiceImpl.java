@@ -49,9 +49,9 @@ public class DataServiceImpl extends DAO implements
 		super.getCommentApp(userId,itemApp);
 	}
 
-//	@Override
-//	public ItemApp appGetFromId(Long appId) {
-//		return super.appGetFromAppId(appId);
-//	}
+	@Override
+	public ItemApp appGetFromId(Long appId) {
+		return super.appGetFromAppId(appId);
+	}
 
 }

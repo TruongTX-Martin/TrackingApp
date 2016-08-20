@@ -51,8 +51,7 @@
 		}
 	</ui:style>
 	<g:FlowPanel styleName="{style.alertDialog}" ui:field="mainPanel">
-		<g:HTML ui:field="txtTitle" styleName="{style.html}">Get comment success.Do
-			you want open comment this app?</g:HTML>
+		<g:HTML ui:field="txtTitle" styleName="{style.html}">Open comment this app?</g:HTML>
 		<g:FlowPanel styleName="{style.panelBtnParrent}">
 			<g:FlowPanel styleName="{style.panelBtn}">
 				<b:Button ui:field="btNo" text="No" styleName="{style.buttonLoginStyle}"

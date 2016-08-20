@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
@@ -50,33 +51,38 @@ public class AppCommentActivity extends BasicActivity{
 	protected void loadData() {
 		super.loadData();
 		if(appId != -1L){
-			TrackingApp.dataService.commentGetFromAppId(TrackingManager.newInstance().getCurrentUser().getId(),appId, new AsyncCallback<ArrayList<ItemComment>>() {
-				
-				@Override
-				public void onSuccess(ArrayList<ItemComment> result) {
-					showItemComments(result);
-				}
-				
+			new RPCCall<ArrayList<ItemComment>>() {
+
 				@Override
 				public void onFailure(Throwable caught) {
 					Toaster.showToast("Get comment failed");
 				}
-			});
+
+				@Override
+				public void onSuccess(ArrayList<ItemComment> result) {
+					showItemComments(result);
+				}
+
+				@Override
+				protected void callService(AsyncCallback<ArrayList<ItemComment>> callback) {
+					TrackingApp.dataService.commentGetFromAppId(TrackingManager.newInstance().getCurrentUser().getId(),appId, callback);
+				}
+			}.retry(0);;
 			//get App name
-//			TrackingApp.dataService.appGetFromId(appId, new AsyncCallback<ItemApp>() {
-//
-//				@Override
-//				public void onFailure(Throwable caught) {
-//					Toaster.showToast("Get app item failed");
-//				}
-//
-//				@Override
-//				public void onSuccess(ItemApp result) {
-//					if(result != null) {
-//						view.getBhHeaderPanel().setCenter(result.getAppName());
-//					}
-//				}
-//			});
+			TrackingApp.dataService.appGetFromId(appId, new AsyncCallback<ItemApp>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Toaster.showToast("Get app item failed");
+				}
+
+				@Override
+				public void onSuccess(ItemApp result) {
+					if(result != null) {
+						view.getBhHeaderPanel().setCenter(result.getAppName());
+					}
+				}
+			});
 		}
 	}
 	@Override
@@ -101,7 +107,7 @@ public class AppCommentActivity extends BasicActivity{
 			}
 		});
 		
-		view.getFilterView().getTouchFilter().addTapHandler(new TapHandler() {
+		view.getFilterView().getTouchPanel().addTapHandler(new TapHandler() {
 			
 			@Override
 			public void onTap(TapEvent event) {
@@ -109,7 +115,7 @@ public class AppCommentActivity extends BasicActivity{
 			}
 		});
 		
-		view.getFilterView().getTouchLanguage().addTapHandler(new TapHandler() {
+		view.getFilterLanguage().getTouchPanel().addTapHandler(new TapHandler() {
 			
 			@Override
 			public void onTap(TapEvent event) {
@@ -176,42 +182,47 @@ public class AppCommentActivity extends BasicActivity{
 	
 	private void filterLanguage(String filter){
 		dialogLanguage.hide();
-		String language = view.getFilterView().getHtmlLanguage().getText().toString();
+		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		if(filter.equals(language)){
 			return;
 		}
-		view.getFilterView().getHtmlLanguage().setText(filter);
+		view.getFilterLanguage().getHTMLFilter().setText(filter);
 		String laguageCode = Config.getLanguage().get(filter);
 		filterComment(laguageCode,appId, TAG, INPUT);
 	}
 	
 	private void handleFilterComment(String tag,String input){
 		dialogFilter.hide();
-		String platform = view.getFilterView().getHtmlPlatform().getText().toString().trim();
+		String platform = view.getFilterView().getHTMLFilter().getText().toString().trim();
 		if(input.equals(platform)){
 			return;
 		}
-		view.getFilterView().getHtmlPlatform().setText(input);
-		String language = view.getFilterView().getHtmlLanguage().getText().toString();
+		view.getFilterView().getHTMLFilter().setText(input);
+		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		String valueLanguage = Config.getLanguage().get(language);
 		filterComment(valueLanguage,appId, tag, input);
 	}
 	
-	private void filterComment(String language,Long appId,String tag,String filter) {
+	private void filterComment(final String language,final Long appId,final String tag,final String filter) {
 		this.TAG = tag;
 		this.INPUT = filter;
-		TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),appId,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<ItemComment> result) {
-				showItemComments(result);
-			}
-			
+		new RPCCall<ArrayList<ItemComment>>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
 				Toaster.showToast("Get comment failed,please check your connection");
 			}
-		});
+
+			@Override
+			public void onSuccess(ArrayList<ItemComment> result) {
+				showItemComments(result);
+			}
+
+			@Override
+			protected void callService(AsyncCallback<ArrayList<ItemComment>> cb) {
+				TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),appId,tag,filter,cb);
+			}
+		}.retry(0);;
 	}
 	private void showItemComments(ArrayList<ItemComment> list){
 		listComment.clear();

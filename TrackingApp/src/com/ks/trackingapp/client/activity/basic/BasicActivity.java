@@ -57,17 +57,8 @@ public class BasicActivity extends MGWTAbstractActivity {
 					onBackPress();
 				}
 			}));
-			
-			//handle button home
-			addHandlerRegistration(basicView.getSlidingMenu().getButtonHome().addTapHandler(new TapHandler() {
-				
-				@Override
-				public void onTap(TapEvent event) {
-					goTo(new HomeCommentPlace());
-				}
-			}));
 			//handle button new app
-			addHandlerRegistration(basicView.getSlidingMenu().getButtonAddApp().addTapHandler(new TapHandler() {
+			addHandlerRegistration(basicView.getSlidingMenu().getButtonAddApp().getTouchPanel().addTapHandler(new TapHandler() {
 				
 				@Override
 				public void onTap(TapEvent event) {
@@ -76,7 +67,7 @@ public class BasicActivity extends MGWTAbstractActivity {
 			}));
 			
 			//handle  button all app
-			addHandlerRegistration(basicView.getSlidingMenu().getButtonAllApp().addTapHandler(new TapHandler() {
+			addHandlerRegistration(basicView.getSlidingMenu().getButtonAllApp().getTouchPanel().addTapHandler(new TapHandler() {
 				
 				@Override
 				public void onTap(TapEvent event) {
@@ -85,7 +76,7 @@ public class BasicActivity extends MGWTAbstractActivity {
 			}));
 			
 			//handle  button logout
-			addHandlerRegistration(basicView.getSlidingMenu().getButtonLogout().addTapHandler(new TapHandler() {
+			addHandlerRegistration(basicView.getSlidingMenu().getButtonLogout().getTouchPanel().addTapHandler(new TapHandler() {
 				
 				@Override
 				public void onTap(TapEvent event) {

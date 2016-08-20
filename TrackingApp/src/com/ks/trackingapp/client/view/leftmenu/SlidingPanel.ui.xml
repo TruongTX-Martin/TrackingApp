@@ -17,7 +17,7 @@
 		.leftMenuScroll {
 			cursor: default;
 			float: right;
-			background-color: #152727;
+			background-color: #152727 !important;
 		}
 		
 		.leftMenuItem {

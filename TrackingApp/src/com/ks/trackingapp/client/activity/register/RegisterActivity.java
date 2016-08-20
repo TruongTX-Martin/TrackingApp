@@ -6,6 +6,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
@@ -89,7 +90,7 @@ public class RegisterActivity extends BasicActivity{
 			return;
 		}
 		
-		UserInfo userInfo = new UserInfo(userName, userView, userEmail, password);
+		final UserInfo userInfo = new UserInfo(userName, userView, userEmail, password);
 		String key = ClientUtils.md5(userName.toLowerCase() +"."+password);
 		String	passwordEncrypt = "";
 		try {
@@ -98,8 +99,14 @@ public class RegisterActivity extends BasicActivity{
 			ClientUtils.log("Exception : " + e.toString());
 		}
 		userInfo.setPassword(passwordEncrypt);
-		TrackingApp.dataService.userRegister(userInfo, new AsyncCallback<UserInfo>() {
-			
+		Toaster.showToast("Start register");
+		new RPCCall<UserInfo>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Register account failed, please check your network.");
+			}
+
 			@Override
 			public void onSuccess(UserInfo userResult) {
 				if(userResult.isSuccess()){
@@ -115,12 +122,38 @@ public class RegisterActivity extends BasicActivity{
 					}
 				}
 			}
-			
+
 			@Override
-			public void onFailure(Throwable caught) {
-				Toaster.showToast("Register account failed, please check your network.");
+			protected void callService(AsyncCallback<UserInfo> cb) {
+				TrackingApp.dataService.userRegister(userInfo, cb);
 			}
-		});
+		}.retry(0);;
+		
+//		
+//		
+//		TrackingApp.dataService.userRegister(userInfo, new AsyncCallback<UserInfo>() {
+//			
+//			@Override
+//			public void onSuccess(UserInfo userResult) {
+//				if(userResult.isSuccess()){
+//					userResult.setPassword(password);
+//					goTo(new LoginPlace(userResult));
+//					Toaster.showToast("Register success.");
+//				}else{
+//					if(userResult.getLoginFailtReason() == Config.USER_ACCOUNT_EXITS){
+//						Toaster.showToast("Account exits,please register another account.");
+//					}
+//					if(userResult.getLoginFailtReason() == Config.USER_ACCOUNT_EMAIL_EXITS){
+//						Toaster.showToast("Email has registed, please register another email.");
+//					}
+//				}
+//			}
+//			
+//			@Override
+//			public void onFailure(Throwable caught) {
+//				Toaster.showToast("Register account failed, please check your network.");
+//			}
+//		});
 	}
 	
 	

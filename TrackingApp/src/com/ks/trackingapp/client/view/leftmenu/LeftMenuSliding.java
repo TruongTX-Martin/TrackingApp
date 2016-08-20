@@ -9,17 +9,17 @@ import com.google.gwt.user.client.ui.RootPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 import com.googlecode.mgwt.ui.client.util.CssUtil;
 import com.ks.trackingapp.client.util.ClientUtils;
+import com.ks.trackingapp.client.view.item.ItemNavigation;
 import com.ks.trackingapp.shared.AppConfig;
 
 public class LeftMenuSliding extends SlidingPanel{
 	private int heghtButton = 50;
 	
-	private KSLeftMenuButton btnHome = new KSLeftMenuButton("images/ic_home.png", "Home", "",heghtButton);
-	private KSLeftMenuButton btnAllApp = new KSLeftMenuButton("images/ic_allapp.png", "All App", "",heghtButton);
-	private KSLeftMenuButton btnAddApp = new KSLeftMenuButton("images/ic_allapp.png", "Add App", "",heghtButton);
-	private KSLeftMenuButton btnLogout = new KSLeftMenuButton("images/ic_signout.png", "Logout", "",heghtButton);
 	private VerticalPanel mainTopicsPanel;
 	private HorizontalPanel userInfoPanel;
+	private ItemNavigation btnAddApp = new ItemNavigation("images/ic_allapp.png", "Add New App");
+	private ItemNavigation btnAllApp = new ItemNavigation("images/ic_allapp.png", "All App");
+	private ItemNavigation btnLogout = new ItemNavigation("images/ic_signout.png", "Logout");
 	
 	public LeftMenuSliding() {
 		super(ClientUtils.getScreenWidth() * 3/5);
@@ -76,19 +76,16 @@ public class LeftMenuSliding extends SlidingPanel{
 		this.getElement().getStyle().setTop(0, Unit.PX);
 		this.getElement().getStyle().setLeft(-widthPanel, Unit.PX);
 	}
-	public KSLeftMenuButton getButtonHome(){
-		return btnHome;
-	}
 	
-	public KSLeftMenuButton getButtonAddApp() {
+	public ItemNavigation getButtonAddApp() {
 		return btnAddApp;
 	}
 	
-	public KSLeftMenuButton getButtonAllApp() {
+	public ItemNavigation getButtonAllApp() {
 		return btnAllApp;
 	}
 	
-	public KSLeftMenuButton getButtonLogout() {
+	public ItemNavigation getButtonLogout() {
 		return btnLogout;
 	}
 	

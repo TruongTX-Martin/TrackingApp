@@ -26,7 +26,7 @@ public interface DataServiceAsync {
 
 	void commentGetAppComment(Long userId,ItemApp itemApp, AsyncCallback<Void> callback);
 
-//	void appGetFromId(Long appId, AsyncCallback<ItemApp> callback);
+	void appGetFromId(Long appId, AsyncCallback<ItemApp> callback);
 
 
 }

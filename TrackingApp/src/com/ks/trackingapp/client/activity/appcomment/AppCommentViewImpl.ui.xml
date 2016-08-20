@@ -21,11 +21,39 @@
 	
 	.scrollPanel {
 		background-color: #2B444B;
+		overflow: hidden;
+		overflow-y: hidden;
 	}
 	
 	.textbox {
 		width: 100%;
 		height: 45px;
+	}
+	.flowBottom {
+		background-color: #152727;
+		width: 100%;
+		position: absolute;
+	}
+	
+	.flowBottomLeft {
+		background-color: #152727;
+		width: 30%;
+		height:100%;
+		display: inline-block;
+	}
+	
+	.flowBottomCenter {
+		background-color: #152727;
+		width: 40%;
+		height:100%;
+		display: inline-block;
+	}
+	
+	.flowBottomRight {
+		background-color: #152727;
+		width: 30%;
+		height:100%;
+		display: inline-block;
 	}
 	</ui:style>
 
@@ -39,6 +67,12 @@
 			<g:FlowPanel width="100%" ui:field="panelComment">
 			</g:FlowPanel>
 		</s:ScrollPanel>
+		<g:FlowPanel styleName="{style.flowBottom}" ui:field="flowBottom">
+			<g:FlowPanel styleName="{style.flowBottomLeft}" ui:field="flowBottomLeft"></g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowBottomCenter}"></g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowBottomRight}"
+				ui:field="flowBottomRight"></g:FlowPanel>
+		</g:FlowPanel>
 	</g:FlowPanel>
 
 </ui:UiBinder> 

@@ -7,6 +7,7 @@ import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.Widget;
+import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.view.BHTouchImage;
 import com.ks.trackingapp.shared.Config;
@@ -22,13 +23,13 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 	
 	protected @UiField TextBox tbAppName,tbPackageName,tbAppleId;
 	protected @UiField CheckBox cbAndroid,cbIOS;
+	protected @UiField Button btnCancel,btnOk;
 
 	public NewAppViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(false);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_ADDAPP);
 		btnCheck.setPixelSize(40, 40);
-		this.layoutBasic.getHeaderPanel().getRightPanel().add(btnCheck);
 	}
 
 	@Override
@@ -59,6 +60,16 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 	@Override
 	public BHTouchImage getButtonCheck() {
 		return btnCheck;
+	}
+
+	@Override
+	public Button getButtonCancel() {
+		return btnCancel;
+	}
+
+	@Override
+	public Button getButtonOk() {
+		return btnOk;
 	}
 
 

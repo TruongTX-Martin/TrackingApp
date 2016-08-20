@@ -17,7 +17,7 @@ public interface DataService extends RemoteService{
 	
 	ItemApp appAddNew(ItemApp itemApp);
 	ArrayList<ItemApp> appGetAllItem(Long userId);
-//	ItemApp appGetFromId(Long appId);
+	ItemApp appGetFromId(Long appId);
 
 	void commentGetAppComment(Long userId,ItemApp itemApp);
 	ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId);

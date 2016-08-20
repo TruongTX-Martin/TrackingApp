@@ -9,6 +9,7 @@ import com.ks.trackingapp.client.activity.homecomment.HomeCommentView;
 import com.ks.trackingapp.client.activity.login.LoginView;
 import com.ks.trackingapp.client.activity.newapp.NewAppView;
 import com.ks.trackingapp.client.activity.register.RegisterView;
+import com.ks.trackingapp.client.view.dialog.LoadingDialog;
 
 public interface ClientFactory {
 	PlaceController getPlaceController();
@@ -23,4 +24,5 @@ public interface ClientFactory {
 	AllAppView getAllAppView();
 	NewAppView getNewAppView();
 	AppCommentView getAppCommentView();
+	LoadingDialog getLoadingDialog();
 }

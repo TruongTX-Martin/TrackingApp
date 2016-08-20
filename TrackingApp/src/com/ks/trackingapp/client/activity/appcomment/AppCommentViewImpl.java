@@ -17,7 +17,9 @@ import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.view.BhHeaderPanel;
+import com.ks.trackingapp.client.view.item.FilterLanguage;
 import com.ks.trackingapp.client.view.item.FilterPlatformView;
+import com.ks.trackingapp.client.view.item.FilterView;
 import com.ks.trackingapp.client.view.item.ItemCommentView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
@@ -31,23 +33,26 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 			UiBinder<Widget, AppCommentViewImpl> {
 	}
 
-	private int HEIGHT_TEXTBOX = 50;
 	protected @UiField
 	MSearchBox searchbox;
 	protected @UiField
 	ScrollPanel scrollPanel;
 	protected @UiField
-	FlowPanel panelComment;
-	private FilterPlatformView filterPlatformView = new FilterPlatformView();
+	FlowPanel panelComment,flowBottom;
+	protected @UiField FlowPanel flowBottomLeft,flowBottomRight;
+	
+	private FilterView filterView = new FilterView();
+	private FilterLanguage filterLanguage = new FilterLanguage();
 
 	public AppCommentViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(false);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_APPCOMMENT);
 		this.layoutBasic.getHeaderPanel().getRightPanel().setWidth("120px");
-		this.layoutBasic.getHeaderPanel().getRightPanel().add(filterPlatformView);
-		filterPlatformView.getHtmlPlatform().setText(Config.PLATFORM_ALL);
-		filterPlatformView.getHtmlLanguage().setText(Config.LANGUAGE_ENGLISH);
+		filterView.getHTMLFilter().setText(Config.PLATFORM_ALL);
+		filterLanguage.setImageLanguageSource(Config.LANGUAGE_ENGLISH);
+		flowBottomLeft.add(filterView);
+		flowBottomRight.add(filterLanguage);
 		refreshScrollView();
 	}
 
@@ -55,7 +60,7 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 		Scheduler.get().scheduleDeferred(new ScheduledCommand() {
 			@Override
 			public void execute() {
-				scrollPanel.setHeight((ClientUtils.getScreenHeight() - HEIGHT_TEXTBOX)
+				scrollPanel.setHeight((ClientUtils.getScreenHeight() - searchbox.getOffsetHeight() - flowBottom.getOffsetHeight())
 						+ "px");
 			}
 		});
@@ -95,8 +100,13 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	}
 
 	@Override
-	public FilterPlatformView getFilterView() {
-		return filterPlatformView;
+	public FilterLanguage getFilterLanguage() {
+		return filterLanguage;
+	}
+
+	@Override
+	public FilterView getFilterView() {
+		return filterView;
 	}
 	
 

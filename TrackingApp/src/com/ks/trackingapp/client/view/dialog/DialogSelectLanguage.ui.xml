@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view"
+	xmlns:gwtbootstrap3="urn:import:org.gwtbootstrap3.client.ui">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -25,6 +26,8 @@
 		margin-left: 10px;
 		margin-top: 9px;
 		margin-bottom: 9px;
+		display: inline-block;
+		width: 70%;
 	}
 	
 	.flowAndroid {
@@ -38,6 +41,8 @@
 		margin-left: 10px;
 		margin-top: 9px;
 		margin-bottom: 9px;
+		display: inline-block;
+		width: 70%;
 	}
 	
 	.flowIOS {
@@ -51,6 +56,8 @@
 		margin-left: 10px;
 		margin-top: 9px;
 		margin-bottom: 9px;
+		display: inline-block;
+		width: 70%;
 	}
 	
 	.flowsaparator {
@@ -58,82 +65,119 @@
 		height: 1px;
 		background-color: #ffffff;
 	}
+	
+	.imgLanguage {
+		display: inline-block;
+		width: 30%;
+		float: left;
+		margin-top: 7px;
+		margin-left: 3px;
+	}
 	</ui:style>
 
 
 	<g:FlowPanel styleName="{style.mailPanel}">
-	    
-		<v:VerticalTouchPanel ui:field="touchEnglish" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchEnglish"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowAll}">
+				<gwtbootstrap3:Image ui:field="imgEnglish"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlAll}">Enlish</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchMalay" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchMalay"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowAndroid}">
+				<gwtbootstrap3:Image ui:field="imgMalay"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlAndroid}">Malay</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
+
 		<v:VerticalTouchPanel ui:field="touchIndo" width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgIndo"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Indonesia</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchPortuge" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchPortuge"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgPortuguese"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Portuguese</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchBengali" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchBengali"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgBengali"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Bengali</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchArabic" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchArabic"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowAll}">
+				<gwtbootstrap3:Image ui:field="imgArabic"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlAll}">Arabic</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchRussian" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchRussian"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowAndroid}">
+				<gwtbootstrap3:Image ui:field="imgRussian"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlAndroid}">Russian</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchSpanish" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchSpanish"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgSpanish"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Spanish</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchChinese" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchChinese"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgChinese"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Chinese</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		<v:VerticalTouchPanel ui:field="touchVietnam" width="100%">
+
+		<v:VerticalTouchPanel ui:field="touchVietnam"
+			width="100%">
 			<g:FlowPanel styleName="{style.flowIOS}">
+				<gwtbootstrap3:Image ui:field="imgVietnam"
+					styleName="{style.imgLanguage}"></gwtbootstrap3:Image>
 				<g:HTML styleName="{style.htmlIOS}">Vietnamese</g:HTML>
 			</g:FlowPanel>
 		</v:VerticalTouchPanel>
 		<g:FlowPanel styleName="{style.flowsaparator}" />
-		
-		
+
+
 	</g:FlowPanel>
 
 </ui:UiBinder> 

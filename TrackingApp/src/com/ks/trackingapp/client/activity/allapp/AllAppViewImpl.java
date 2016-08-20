@@ -20,6 +20,7 @@ import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
+import com.ks.trackingapp.client.view.BHTouchImage;
 import com.ks.trackingapp.client.view.item.ItemAppView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemApp;
@@ -35,12 +36,16 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	protected @UiField MSearchBox textbox;
 	protected @UiField ScrollPanel scrollPanel;
 	protected @UiField FlowPanel panelApps;
+	private BHTouchImage btnAdd = new BHTouchImage("images/ic_addnew.png");
 	private int HEIGHT_TEXTBOX = 50;
 	private Map<Long, ItemAppView> mapItemApp = new HashMap<Long, ItemAppView>();
 	public AllAppViewImpl() {
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.getBhHeaderPanel().showNavigation(false);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_ALLAPP);
+		btnAdd.setSize("35px", "35px");
+		btnAdd.getElement().getStyle().setMarginRight(10, Unit.PX);
+		this.layoutBasic.getHeaderPanel().getRightPanel().add(btnAdd);
 		refreshScrollView();
 	}
 	
@@ -83,6 +88,11 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	@Override
 	public Map<Long, ItemAppView> getMapItemApp() {
 		return mapItemApp;
+	}
+
+	@Override
+	public BHTouchImage getButtonAddNew() {
+		return btnAdd;
 	}
 
 }

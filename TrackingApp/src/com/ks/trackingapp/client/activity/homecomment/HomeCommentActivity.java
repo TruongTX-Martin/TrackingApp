@@ -49,7 +49,7 @@ public class HomeCommentActivity extends BasicActivity {
 	@Override
 	protected void loadData() {
 		super.loadData();
-		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		String valueLanguage = Config.getLanguage().get(language);
 		filterData(valueLanguage,Config.FILTERBY_ALL,Config.PLATFORM_ALL);
 	}
@@ -58,13 +58,22 @@ public class HomeCommentActivity extends BasicActivity {
 	@Override
 	protected void handleEvent() {
 		super.handleEvent();
-		view.getFilterPlatformView().getTouchFilter().addTapHandler(new TapHandler() {
+		view.getFilterView().getTouchPanel().addTapHandler(new TapHandler() {
 			
 			@Override
 			public void onTap(TapEvent event) {
 				dialogFilter.show();
 			}
 		});
+		
+		view.getFilterLanguage().getTouchPanel().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogLanguage.show();
+			}
+		});
+		
 		
 		if(dialogLanguage.getMapTouchPanel().size() > 0){
 			for(final Map.Entry<String,VerticalTouchPanel> map : dialogLanguage.getMapTouchPanel().entrySet()){
@@ -79,15 +88,6 @@ public class HomeCommentActivity extends BasicActivity {
 				});
 			}
 		}
-		
-		view.getFilterPlatformView().getTouchLanguage().addTapHandler(new TapHandler() {
-			
-			@Override
-			public void onTap(TapEvent event) {
-				dialogLanguage.show();
-			}
-		});
-		
 		dialogFilter.getTouchAll().addTapHandler(new TapHandler() {
 			
 			@Override
@@ -142,11 +142,12 @@ public class HomeCommentActivity extends BasicActivity {
 	
 	private void filterLanguage(String filter){
 		dialogLanguage.hide();
-		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		if(filter.equals(language)){
 			return;
 		}
-		view.getFilterPlatformView().getHtmlLanguage().setText(filter);
+		view.getFilterLanguage().setImageLanguageSource(filter);
+		view.getFilterLanguage().getHTMLFilter().setText(filter);
 		String laguageCode = Config.getLanguage().get(filter);
 		filterData(laguageCode,TAG,INPUT);
 		
@@ -155,12 +156,12 @@ public class HomeCommentActivity extends BasicActivity {
 
 	private void handleFilterPlatform(String tag,String input){
 		dialogFilter.hide();
-		String platform = view.getFilterPlatformView().getHtmlPlatform().getText().toString().trim();
+		String platform = view.getFilterView().getHTMLFilter().getText().toString().trim();
 		if(input.equals(platform)){
 			return;
 		}
-		view.getFilterPlatformView().getHtmlPlatform().setText(input);
-		String language = view.getFilterPlatformView().getHtmlLanguage().getText().toString();
+		view.getFilterView().getHTMLFilter().setText(input);
+		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		String valueLanguage = Config.getLanguage().get(language);
 		filterData(valueLanguage,tag,input);
 	}
@@ -168,16 +169,19 @@ public class HomeCommentActivity extends BasicActivity {
 	private void filterData(String language,String tag,String filter){
 		this.TAG = tag;
 		this.INPUT = filter;
+		TrackingApp.getClientFactory().getLoadingDialog().show();
 		TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
 			
 			@Override
 			public void onSuccess(ArrayList<ItemComment> result) {
 				showItemComments(result);
+				TrackingApp.getClientFactory().getLoadingDialog().hide();
 			}
 			
 			@Override
 			public void onFailure(Throwable caught) {
 				Toaster.showToast("Get comment failed,please check your connection");
+				TrackingApp.getClientFactory().getLoadingDialog().hide();
 			}
 		});
 	}
