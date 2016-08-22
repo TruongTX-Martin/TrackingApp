@@ -16,6 +16,16 @@
     <url-pattern>/trackingapp/dataservice</url-pattern>
   </servlet-mapping>
   
+    <servlet>
+    <servlet-name>CronJobServlet</servlet-name>
+    <servlet-class>com.ks.trackingapp.server.GetDataService</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>CronJobServlet</servlet-name>
+    <url-pattern>/cronjob/getdata</url-pattern>
+  </servlet-mapping>
+  
   
   <!-- Default page to serve -->
   <welcome-file-list>

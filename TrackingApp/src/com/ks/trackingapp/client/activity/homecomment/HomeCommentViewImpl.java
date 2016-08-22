@@ -50,7 +50,7 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(true);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_HOME);
-		filterView.getHTMLFilter().setText(Config.PLATFORM_ALL);
+		filterView.getHTMLFilter().setText(Config.FILTERBY_ALL);
 		filterLanguage.getHTMLFilter().setText(Config.LANGUAGE_ENGLISH);
 		filterLanguage.setImageLanguageSource(Config.LANGUAGE_ENGLISH);
 		flowBottomLeft.add(filterView);

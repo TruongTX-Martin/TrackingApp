@@ -13,6 +13,8 @@ import com.ks.trackingapp.client.activity.login.LoginActivity;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppActivity;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefeshPlace;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshActivity;
 import com.ks.trackingapp.client.activity.register.RegisterActivity;
 import com.ks.trackingapp.client.activity.register.RegisterPlace;
 
@@ -38,6 +40,8 @@ public class PhoneActivityMapper implements ActivityMapper {
 			return new NewAppActivity(clientFactory, place);
 		}else if (place instanceof AppCommentPlace){
 			return new AppCommentActivity(clientFactory, place);
+		}else if (place instanceof PullToRefeshPlace) {
+			return new PullToRefreshActivity(clientFactory, place);
 		}
 		return null;
 	}

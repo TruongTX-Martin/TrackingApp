@@ -295,6 +295,7 @@ public class DAO extends CustomRemoteServiceServlet {
 							itemComment.setAppname(itemApp.getAppName());
 							itemComment.setAppId(itemApp.getId());
 							itemComment.setUserId(userId);
+							itemComment.setLanguage("en");
 							saveItemComment(itemComment);
 						}
 					}
@@ -391,5 +392,39 @@ public class DAO extends CustomRemoteServiceServlet {
 		}
 		return new ArrayList<>(ofy().load().type(ItemComment.class).list()); 
 	}
-		
+	
+	protected ArrayList<ItemComment> getCommentAppByTag(Long userId,Long appId,String language,String tag){
+		if(tag.equals(Config.PLATFORM_ANDROID)){
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).filter("platform",tag).list());
+		}else if(tag.equals(Config.PLATFORM_IOS)){
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform",tag).list());
+		}else if(tag.equals(Config.FILTERBY_DATE)){
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).order("-date").list());
+		}else if(tag.equals(Config.FILTERBY_RATE)){
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).order("-rating").list());
+		}else{
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).list());
+		}
+	}
+	
+	protected ItemApp appItemUpdate(ItemApp itemApp){
+		if(itemApp.isAndroid()){
+			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName() ;
+			float rating = getRating(url);
+			itemApp.setRating(rating);
+		}
+		itemApp.setIsSuccess(true);
+		ofy().save().entity(itemApp).now();
+		return itemApp;
+	}
+	protected void appItemDelete(Long appItem){
+		ofy().delete().type(ItemApp.class).id(appItem).now();
+		ArrayList<ItemComment> arrayComment = new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appItem).list());
+		if(arrayComment.size() > 0){
+			for(int i=0; i< arrayComment.size(); i++) {
+				ItemComment comment = arrayComment.get(i);
+				ofy().delete().type(ItemComment.class).id(comment.getId()).now();
+			}
+		}
+	}
 }

@@ -11,6 +11,7 @@ import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
+import com.ks.trackingapp.client.util.Toaster;
 
 public class BasicActivity extends MGWTAbstractActivity {
 	
@@ -62,7 +63,8 @@ public class BasicActivity extends MGWTAbstractActivity {
 				
 				@Override
 				public void onTap(TapEvent event) {
-					goTo(new NewAppPlace());
+					Toaster.showToast("Add new app");
+					goTo(new NewAppPlace(false,-1L));
 				}
 			}));
 			

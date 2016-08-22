@@ -29,11 +29,13 @@ public class NewAppActivity extends BasicActivity{
 	private NewAppView view;
 	private DialogOpenCommentApp dialogComment = new DialogOpenCommentApp();
 	private ItemApp currentItemApp = null;//for go to appcomment app
+	private ItemApp itemAppEdit = null;
 	private boolean isFromAll;
-	
+	private Long appId = -1L;
 	public NewAppActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
 		isFromAll = ((NewAppPlace)place).isFromAll();
+		appId = ((NewAppPlace)place).getAppId();
 	}
 	
 	
@@ -54,6 +56,9 @@ public class NewAppActivity extends BasicActivity{
 		view.getTextboxAppname().setText("");
 		view.getTextboxPakageName().setText("");
 		view.getTextboxAppleId().setText("");
+		if(appId != -1L){
+			updatePlatformItemApp(appId);
+		}
 		//handle checkbox android
 		addHandlerRegistration(view.getCheckBoxAndroid().addValueChangeHandler(new ValueChangeHandler<Boolean>() {
 			
@@ -127,11 +132,42 @@ public class NewAppActivity extends BasicActivity{
 		});
 	}
 	
+	private void updatePlatformItemApp(final Long appId){
+		new RPCCall<ItemApp>() {
 
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Get appitem failed");
+			}
+
+			@Override
+			public void onSuccess(ItemApp itemApp) {
+				if(itemApp != null){
+					itemAppEdit = itemApp;
+					view.getTextboxAppname().setText(itemApp.getAppName());
+					if(itemApp.isAndroid()){
+						view.getCheckBoxAndroid().setValue(true);
+						view.getTextboxPakageName().setText(itemApp.getPackageName());
+						view.getTextboxPakageName().setReadOnly(true);
+					}
+					if(itemApp.isIOS()){
+						view.getCheckBoxIOS().setValue(true);
+						view.getTextboxAppleId().setText(itemApp.getAppleId());
+						view.getTextboxAppleId().setReadOnly(true);
+					}
+				}
+			}
+
+			@Override
+			protected void callService(AsyncCallback<ItemApp> cb) {
+				TrackingApp.dataService.appGetFromId(appId, cb);
+			}
+		}.retry(0);;
+	}
 	private void addNewApp(){
-		String appName = view.getTextboxAppname().getText().toString();
-		String packageName = view.getTextboxPakageName().getText().toString();
-		String appleId = view.getTextboxAppleId().getText().toString();
+		String appName = view.getTextboxAppname().getText().toString().trim();
+		String packageName = view.getTextboxPakageName().getText().toString().trim();
+		String appleId = view.getTextboxAppleId().getText().toString().trim();
 		boolean isAndroid = view.getCheckBoxAndroid().getValue();
 		boolean isIOS = view.getCheckBoxIOS().getValue();
 		if(!ClientUtils.validate(appName)) {
@@ -165,6 +201,26 @@ public class NewAppActivity extends BasicActivity{
 			itemApp.setIOS(true);
 			itemApp.setAppleId(appleId);
 		}
+		//handle for user want edit appitem
+		if(itemAppEdit != null){
+			if(itemAppEdit.isAndroid() == false && isAndroid == false){
+				Toaster.showToast("Please check Android");
+				return;
+			}else{
+				itemAppEdit.setAndroid(true);
+				itemAppEdit.setPackageName(view.getTextboxPakageName().getText().toString());
+			}
+			if(itemAppEdit.isIOS() == false && isIOS == false){
+				Toaster.showToast("Please check IOS");
+				return;
+			}else{
+				itemAppEdit.setIOS(true);
+				itemAppEdit.setAppleId(view.getTextboxAppleId().getText().toString());
+			}
+			updateItemApp(itemAppEdit);
+			return;
+		}
+		//add new appItem
 		TrackingApp.dataService.appAddNew(itemApp,new AsyncCallback<ItemApp>() {
 
 			@Override
@@ -194,6 +250,22 @@ public class NewAppActivity extends BasicActivity{
 		
 	}
 	
+	private void updateItemApp(ItemApp itemApp){
+		TrackingApp.dataService.appUpdatePlatform(itemApp, new AsyncCallback<ItemApp>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Update ItemApp failed.");
+			}
+
+			@Override
+			public void onSuccess(ItemApp result) {
+				if(result.isSuccess()){
+					getCommentForApp(itemAppEdit);
+				}
+			}
+		});
+	}
 	private void getCommentForApp(final ItemApp itemApp){
 		new RPCCall<Void>() {
 
@@ -212,7 +284,7 @@ public class NewAppActivity extends BasicActivity{
 			protected void callService(AsyncCallback<Void> cb) {
 				TrackingApp.dataService.commentGetAppComment(TrackingManager.newInstance().getCurrentUser().getId(),itemApp,cb);
 			}
-		}.retry(0);;
+		}.retry(0);
 	}
 	@Override
 	protected void onBackPress() {

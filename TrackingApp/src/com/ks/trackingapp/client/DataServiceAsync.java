@@ -28,5 +28,12 @@ public interface DataServiceAsync {
 
 	void appGetFromId(Long appId, AsyncCallback<ItemApp> callback);
 
+	void getCommentAppWithTag(Long userId, Long appId, String language,String tag,
+			AsyncCallback<ArrayList<ItemComment>> callback);
+
+	void appUpdatePlatform(ItemApp itemApp, AsyncCallback<ItemApp> callback);
+
+	void appDeleteItem(Long appId, AsyncCallback<Void> callback);
+
 
 }

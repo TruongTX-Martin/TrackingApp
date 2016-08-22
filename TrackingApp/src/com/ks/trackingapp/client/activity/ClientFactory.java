@@ -8,6 +8,7 @@ import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentView;
 import com.ks.trackingapp.client.activity.login.LoginView;
 import com.ks.trackingapp.client.activity.newapp.NewAppView;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshView;
 import com.ks.trackingapp.client.activity.register.RegisterView;
 import com.ks.trackingapp.client.view.dialog.LoadingDialog;
 
@@ -25,4 +26,5 @@ public interface ClientFactory {
 	NewAppView getNewAppView();
 	AppCommentView getAppCommentView();
 	LoadingDialog getLoadingDialog();
+	PullToRefreshView getPullToRefeshView();
 }

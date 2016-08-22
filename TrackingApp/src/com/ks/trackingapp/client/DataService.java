@@ -16,10 +16,13 @@ public interface DataService extends RemoteService{
 	UserInfo userLogin(String userName,String password);
 	
 	ItemApp appAddNew(ItemApp itemApp);
+	ItemApp appUpdatePlatform(ItemApp itemApp);
 	ArrayList<ItemApp> appGetAllItem(Long userId);
 	ItemApp appGetFromId(Long appId);
+	void appDeleteItem(Long appId);
 
 	void commentGetAppComment(Long userId,ItemApp itemApp);
 	ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId);
 	ArrayList<ItemComment> commentFilterByTag(String language,Long userId,Long appId,String tag,String platform);
+	ArrayList<ItemComment> getCommentAppWithTag(Long userId, Long appId,String language,String tag);
 }

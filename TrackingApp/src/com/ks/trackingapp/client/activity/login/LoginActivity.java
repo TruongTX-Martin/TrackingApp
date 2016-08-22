@@ -11,6 +11,7 @@ import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefeshPlace;
 import com.ks.trackingapp.client.activity.register.RegisterPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.CipherDES;

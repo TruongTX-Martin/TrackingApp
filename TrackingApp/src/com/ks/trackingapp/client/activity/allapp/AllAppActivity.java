@@ -11,6 +11,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
@@ -19,14 +20,16 @@ import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.Toaster;
+import com.ks.trackingapp.client.view.dialog.DialogDelete;
 import com.ks.trackingapp.client.view.item.ItemAppView;
 import com.ks.trackingapp.shared.model.ItemApp;
 
 public class AllAppActivity extends BasicActivity{
 	
 	private ArrayList<ItemApp> listApp = new ArrayList<>();
-
+	private DialogDelete dialogDelete = new DialogDelete();
 	private AllAppView view;
+	private Long appIdDelete  = -1L;
 	public AllAppActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
 	}
@@ -41,6 +44,10 @@ public class AllAppActivity extends BasicActivity{
 	@Override
 	protected void loadData() {
 		super.loadData();
+		loadItemApps();
+	}
+	
+	private void loadItemApps(){
 		TrackingApp.dataService.appGetAllItem(TrackingManager.newInstance().getCurrentUser().getId(),new AsyncCallback<ArrayList<ItemApp>>() {
 			
 			@Override
@@ -56,7 +63,6 @@ public class AllAppActivity extends BasicActivity{
 				Toaster.showToast("Get app failed");
 			}
 		});
-		
 	}
 	
 	private void handleClickAppItem(){
@@ -71,6 +77,38 @@ public class AllAppActivity extends BasicActivity{
 					}
 				});
 				
+				itemAppView.getButtonMissAndroid().addTapHandler(new TapHandler() {
+					
+					@Override
+					public void onTap(TapEvent event) {
+						goTo(new NewAppPlace(false,map.getKey()));
+					}
+				});
+				
+				itemAppView.getButtonMissIOS().addTapHandler(new TapHandler() {
+					
+					@Override
+					public void onTap(TapEvent event) {
+						goTo(new NewAppPlace(false,map.getKey()));
+					}
+				});
+				
+				itemAppView.getButtonEdit().addTapHandler(new TapHandler() {
+					
+					@Override
+					public void onTap(TapEvent event) {
+						Toaster.showToast("edit");
+					}
+				});
+				
+				itemAppView.getButtonDelete().addTapHandler(new TapHandler() {
+					
+					@Override
+					public void onTap(TapEvent event) {
+						appIdDelete = map.getKey();
+						dialogDelete.show();
+					}
+				});
 			}
 		}
 	}
@@ -98,11 +136,48 @@ public class AllAppActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				goTo(new NewAppPlace(true));
+				goTo(new NewAppPlace(true,-1L));
 			}
 		}));
+		
+		dialogDelete.getButtonNo().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogDelete.hide();
+			}
+		});
+		
+		dialogDelete.getButtonYes().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogDelete.hide();
+				deleteItemApp();
+			}
+		});	
 	}
 	
+	private void deleteItemApp(){
+		new RPCCall<Void>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Delete ItemApp failed.");
+			}
+
+			@Override
+			public void onSuccess(Void result) {
+				Toaster.showToast("Delete ItemApp Success");
+				loadItemApps();
+			}
+
+			@Override
+			protected void callService(AsyncCallback<Void> cb) {
+				TrackingApp.dataService.appDeleteItem(appIdDelete, cb);
+			}
+		}.retry(0);;
+	}
 	@Override
 	protected void onBackPress() {
 		super.onBackPress();

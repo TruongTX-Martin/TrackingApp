@@ -17,6 +17,7 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.manager.TrackingManager;
+import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.VerticalTouchPanel;
 import com.ks.trackingapp.client.view.dialog.DialogFilterPlatform;
@@ -50,6 +51,7 @@ public class AppCommentActivity extends BasicActivity{
 	@Override
 	protected void loadData() {
 		super.loadData();
+		view.getFilterLanguage().getHTMLFilter().setText(Config.LANGUAGE_ENGLISH);
 		if(appId != -1L){
 			new RPCCall<ArrayList<ItemComment>>() {
 
@@ -132,7 +134,8 @@ public class AppCommentActivity extends BasicActivity{
 					
 					@Override
 					public void onTap(TapEvent event) {
-						filterLanguage(key);
+						String tag = view.getFilterView().getHTMLFilter().getText().toString();
+						filterLanguage(tag,key);
 					}
 				});
 			}
@@ -143,7 +146,7 @@ public class AppCommentActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterComment(Config.FILTERBY_ALL,Config.PLATFORM_ALL);
+				filterTag(Config.FILTERBY_ALL, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
 		
@@ -151,7 +154,7 @@ public class AppCommentActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterComment(Config.FILTERBY_PLATFORM,Config.PLATFORM_ANDROID);
+				filterTag(Config.PLATFORM_ANDROID, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
 		
@@ -159,7 +162,7 @@ public class AppCommentActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterComment(Config.FILTERBY_PLATFORM,Config.PLATFORM_IOS);
+				filterTag(Config.PLATFORM_IOS, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
 		
@@ -167,7 +170,7 @@ public class AppCommentActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterComment(Config.FILTERBY_DATE,Config.FILTERBY_DATE);
+				filterTag(Config.FILTERBY_DATE, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
 		
@@ -175,12 +178,27 @@ public class AppCommentActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterComment(Config.FILTERBY_RATE,Config.FILTERBY_RATE);
+				filterTag(Config.FILTERBY_RATE, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
+		
 	}
 	
-	private void filterLanguage(String filter){
+	private void filterTag(String tag, String filter){
+		dialogFilter.hide();
+		String text = view.getFilterView().getHTMLFilter().getText().toString();
+		if(tag.equals(text)){
+			return;
+		}
+		view.getFilterView().getHTMLFilter().setText(tag);
+		
+		view.getFilterLanguage().getHTMLFilter().setText(filter);
+		String laguageCode = Config.getLanguage().get(filter);
+		filterCommentByTag(TrackingManager.newInstance().getCurrentUser().getId(), appId, laguageCode,tag);
+		
+	}
+	
+	private void filterLanguage(String tag,String filter){
 		dialogLanguage.hide();
 		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		if(filter.equals(language)){
@@ -188,7 +206,31 @@ public class AppCommentActivity extends BasicActivity{
 		}
 		view.getFilterLanguage().getHTMLFilter().setText(filter);
 		String laguageCode = Config.getLanguage().get(filter);
-		filterComment(laguageCode,appId, TAG, INPUT);
+		ClientUtils.log("Language Code==========>" + tag);
+		if(tag.equals(Config.PLATFORM_IOS)){
+			laguageCode = "en";
+		}
+		filterCommentByTag(TrackingManager.newInstance().getCurrentUser().getId(), appId, laguageCode,tag);
+	}
+	
+	private void filterCommentByTag(final Long userId,final Long appId,final String languageCode,final String tag){
+		new RPCCall<ArrayList<ItemComment>>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				Toaster.showToast("Get comment failed.");
+			}
+
+			@Override
+			public void onSuccess(ArrayList<ItemComment> result) {
+				showItemComments(result);
+			}
+
+			@Override
+			protected void callService(AsyncCallback<ArrayList<ItemComment>> cb) {
+				TrackingApp.dataService.getCommentAppWithTag(userId, appId, languageCode,tag, cb);
+			}
+		}.retry(0);;
 	}
 	
 	private void handleFilterComment(String tag,String input){

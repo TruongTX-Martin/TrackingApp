@@ -54,4 +54,20 @@ public class DataServiceImpl extends DAO implements
 		return super.appGetFromAppId(appId);
 	}
 
+	@Override
+	public ArrayList<ItemComment> getCommentAppWithTag(Long userId, Long appId,
+			String language,String tag) {
+		return super.getCommentAppByTag(userId, appId, language,tag);
+	}
+
+	@Override
+	public ItemApp appUpdatePlatform(ItemApp itemApp) {
+		return super.appItemUpdate(itemApp);
+	}
+
+	@Override
+	public void appDeleteItem(Long appId) {
+		super.appItemDelete(appId);
+	}
+
 }

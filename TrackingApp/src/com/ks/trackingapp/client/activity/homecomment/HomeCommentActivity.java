@@ -51,7 +51,7 @@ public class HomeCommentActivity extends BasicActivity {
 		super.loadData();
 		String language = view.getFilterLanguage().getHTMLFilter().getText().toString();
 		String valueLanguage = Config.getLanguage().get(language);
-		filterData(valueLanguage,Config.FILTERBY_ALL,Config.PLATFORM_ALL);
+		filterData(valueLanguage,Config.FILTERBY_ALL,Config.FILTERBY_ALL);
 	}
 	
 	
@@ -92,7 +92,7 @@ public class HomeCommentActivity extends BasicActivity {
 			
 			@Override
 			public void onTap(TapEvent event) {
-				handleFilterPlatform(Config.FILTERBY_ALL,Config.PLATFORM_ALL);
+				handleFilterPlatform(Config.FILTERBY_ALL,Config.FILTERBY_ALL);
 			}
 		});
 		
@@ -150,8 +150,6 @@ public class HomeCommentActivity extends BasicActivity {
 		view.getFilterLanguage().getHTMLFilter().setText(filter);
 		String laguageCode = Config.getLanguage().get(filter);
 		filterData(laguageCode,TAG,INPUT);
-		
-		
 	}
 
 	private void handleFilterPlatform(String tag,String input){

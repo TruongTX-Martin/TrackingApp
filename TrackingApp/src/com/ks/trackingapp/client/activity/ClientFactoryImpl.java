@@ -15,6 +15,8 @@ import com.ks.trackingapp.client.activity.login.LoginView;
 import com.ks.trackingapp.client.activity.login.LoginViewImpl;
 import com.ks.trackingapp.client.activity.newapp.NewAppView;
 import com.ks.trackingapp.client.activity.newapp.NewAppViewImpl;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshImpl;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshView;
 import com.ks.trackingapp.client.activity.register.RegisterView;
 import com.ks.trackingapp.client.activity.register.RegisterViewImpl;
 import com.ks.trackingapp.client.view.dialog.LoadingDialog;
@@ -33,6 +35,7 @@ public class ClientFactoryImpl implements ClientFactory{
 	private NewAppView newAppView;
 	private AppCommentView appCommentView;
 	private LoadingDialog loadingDialog;
+	private PullToRefreshView pullToRefreshView;
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
 		placeController = new PlaceController(eventBus);
@@ -111,6 +114,14 @@ public class ClientFactoryImpl implements ClientFactory{
 			loadingDialog = new LoadingDialog();
 		}
 		return loadingDialog;
+	}
+
+	@Override
+	public PullToRefreshView getPullToRefeshView() {
+		if(pullToRefreshView == null) {
+			pullToRefreshView = new PullToRefreshImpl();
+		}
+		return pullToRefreshView;
 	}
 
 }

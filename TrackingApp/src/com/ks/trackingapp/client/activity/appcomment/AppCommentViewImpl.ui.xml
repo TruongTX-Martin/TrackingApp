@@ -69,7 +69,8 @@
 		</s:ScrollPanel>
 		<g:FlowPanel styleName="{style.flowBottom}" ui:field="flowBottom">
 			<g:FlowPanel styleName="{style.flowBottomLeft}" ui:field="flowBottomLeft"></g:FlowPanel>
-			<g:FlowPanel styleName="{style.flowBottomCenter}"></g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowBottomCenter}" ui:field="flowBottonCenter">
+			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowBottomRight}"
 				ui:field="flowBottomRight"></g:FlowPanel>
 		</g:FlowPanel>

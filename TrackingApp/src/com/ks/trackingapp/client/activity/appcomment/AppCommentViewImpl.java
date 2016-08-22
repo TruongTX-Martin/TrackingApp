@@ -16,11 +16,13 @@ import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
+import com.ks.trackingapp.client.view.BHTouchImage;
 import com.ks.trackingapp.client.view.BhHeaderPanel;
 import com.ks.trackingapp.client.view.item.FilterLanguage;
 import com.ks.trackingapp.client.view.item.FilterPlatformView;
 import com.ks.trackingapp.client.view.item.FilterView;
 import com.ks.trackingapp.client.view.item.ItemCommentView;
+import com.ks.trackingapp.client.view.item.SettingView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
 
@@ -32,6 +34,7 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	interface AppCommentViewImplUiBinder extends
 			UiBinder<Widget, AppCommentViewImpl> {
 	}
+	
 
 	protected @UiField
 	MSearchBox searchbox;
@@ -39,7 +42,7 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	ScrollPanel scrollPanel;
 	protected @UiField
 	FlowPanel panelComment,flowBottom;
-	protected @UiField FlowPanel flowBottomLeft,flowBottomRight;
+	protected @UiField FlowPanel flowBottomLeft,flowBottomRight,flowBottonCenter;
 	
 	private FilterView filterView = new FilterView();
 	private FilterLanguage filterLanguage = new FilterLanguage();
@@ -48,8 +51,8 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 		this.layoutBasic.getScrollPanel().add(uiBinder.createAndBindUi(this));
 		this.layoutBasic.getHeaderPanel().showNavigation(false);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_APPCOMMENT);
-		this.layoutBasic.getHeaderPanel().getRightPanel().setWidth("120px");
-		filterView.getHTMLFilter().setText(Config.PLATFORM_ALL);
+		this.layoutBasic.getHeaderPanel().getRightPanel().getElement().getStyle().setMarginRight(10, Unit.PX);
+		filterView.getHTMLFilter().setText(Config.FILTERBY_ALL);
 		filterLanguage.setImageLanguageSource(Config.LANGUAGE_ENGLISH);
 		flowBottomLeft.add(filterView);
 		flowBottomRight.add(filterLanguage);
@@ -108,6 +111,6 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	public FilterView getFilterView() {
 		return filterView;
 	}
-	
+
 
 }

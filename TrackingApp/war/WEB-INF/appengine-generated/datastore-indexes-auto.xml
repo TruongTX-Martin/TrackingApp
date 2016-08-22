@@ -1,35 +1,19 @@
-<!-- Indices written at Sat, 20 Aug 2016 17:05:14 ICT -->
+<!-- Indices written at Mon, 22 Aug 2016 18:06:22 ICT -->
 
 <datastore-indexes>
-
-    <!-- Used 5 times in query history -->
-    <datastore-index kind="ItemComment" ancestor="false" source="auto">
-        <property name="language" direction="asc"/>
-        <property name="userId" direction="asc"/>
-        <property name="rating" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 3 times in query history -->
-    <datastore-index kind="ItemComment" ancestor="false" source="auto">
-        <property name="language" direction="asc"/>
-        <property name="userId" direction="asc"/>
-        <property name="date" direction="desc"/>
-    </datastore-index>
 
     <!-- Used 2 times in query history -->
     <datastore-index kind="ItemComment" ancestor="false" source="auto">
         <property name="appId" direction="asc"/>
         <property name="language" direction="asc"/>
-        <property name="userId" direction="asc"/>
-        <property name="date" direction="desc"/>
+        <property name="rating" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 4 times in query history -->
+    <!-- Used 3 times in query history -->
     <datastore-index kind="ItemComment" ancestor="false" source="auto">
         <property name="appId" direction="asc"/>
         <property name="language" direction="asc"/>
-        <property name="userId" direction="asc"/>
-        <property name="rating" direction="desc"/>
+        <property name="date" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>

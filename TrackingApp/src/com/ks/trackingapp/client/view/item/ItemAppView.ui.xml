@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:f="urn:import:com.ks.trackingapp.client.view.item" xmlns:v="urn:import:com.ks.trackingapp.client.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:f="urn:import:com.ks.trackingapp.client.view.item"
+	xmlns:v="urn:import:com.ks.trackingapp.client.view" xmlns:b="urn:import:com.googlecode.mgwt.ui.client.widget.button">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -25,6 +26,7 @@
 	.panelAndroidApp {
 		display: inline-block;
 		width: 35%;
+		vertical-align: middle;
 	}
 	
 	.htmlAndroid {
@@ -36,7 +38,8 @@
 	
 	.panelAndroidRating {
 		display: inline-block;
-		width: 45%
+		width: 45%;
+		vertical-align: middle;
 	}
 	
 	.panelIOS {
@@ -46,6 +49,7 @@
 	.panelIOSApp {
 		display: inline-block;
 		width: 35%;
+		vertical-align: middle;
 	}
 	
 	.htmlIOS {
@@ -58,6 +62,7 @@
 	.panelIOSRating {
 		display: inline-block;
 		width: 45%;
+		vertical-align: middle;
 	}
 	
 	.flowseparator {
@@ -65,15 +70,74 @@
 		height: 1px;
 		background-color: #ffffff;
 	}
-	.panelIOSRate{
+	
+	.panelIOSRate {
 		display: inline-block;
 		width: 20%;
+		vertical-align: middle;
 	}
-	.htmlIOSRate{
+	
+	.htmlIOSRate {
 		color: #ffffff;
 		font-size: 15px;
 		text-align: center;
-}
+	}
+	
+	.btnMiss {
+		background-color: #152727;
+		color: #ffffff;
+		text-align: center;
+		font-size: 1.2em;
+		margin-right: 5px;
+		margin-bottom: 3px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 4px;
+	}
+	
+	.panelButton {
+		width: 100%;
+	}
+	
+	.panelButtonEdit {
+		display: inline-block;
+		width: 50%;
+	}
+	
+	.panelButtonDelete {
+		display: inline-block;
+		width: 50%;
+	}
+	
+	.buttonEdit {
+		background-color: #152727;
+		color: #ffffff;
+		text-align: center;
+		font-size: 1.2em;
+		margin-right: 5px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 4px;
+		width: 40%;
+		float: left;
+		margin-left: 10px;
+		margin-top: 3px;
+	}
+	
+	.buttonDelete {
+		background-color: #152727;
+		color: #ffffff;
+		text-align: center;
+		font-size: 1.2em;
+		margin-right: 5px;
+		padding-top: 5px;
+		padding-bottom: 5px;
+		border-radius: 4px;
+		width: 40%;
+		float: right;
+		margin-right: 10px;
+		margin-top: 3px;
+	}
 	</ui:style>
 
 
@@ -82,7 +146,7 @@
 			<g:FlowPanel ui:field="panelAppname" styleName="{style.panelAppname}">
 				<g:HTML ui:field="htmlAppName" styleName="{style.htmlAppName}">AppName</g:HTML>
 			</g:FlowPanel>
-	
+
 			<g:FlowPanel ui:field="panelAndroid" styleName="{style.panelAndroid}">
 				<g:FlowPanel ui:field="panelAndroidApp" styleName="{style.panelAndroidApp}">
 					<g:HTML ui:field="htmlAndroid" styleName="{style.htmlAndroid}">Android</g:HTML>
@@ -90,10 +154,10 @@
 				<g:FlowPanel ui:field="panelAndroidRating" styleName="{style.panelAndroidRating}">
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="panelAndroidRate" styleName="{style.panelIOSRate}">
-					<g:HTML ui:field="htmlAndroidRate" styleName="{style.htmlIOSRate}"></g:HTML>
+					<b:Button ui:field="btnMissAndroid" styleName="{style.btnMiss}">Miss</b:Button>
 				</g:FlowPanel>
 			</g:FlowPanel>
-	
+
 			<g:FlowPanel ui:field="panelIOS" styleName="{style.panelIOS}">
 				<g:FlowPanel ui:field="panelIOSApp" styleName="{style.panelIOSApp}">
 					<g:HTML ui:field="htmlIOS" styleName="{style.htmlIOS}">IOS</g:HTML>
@@ -101,7 +165,15 @@
 				<g:FlowPanel ui:field="panelIOSRating" styleName="{style.panelIOSRating}">
 				</g:FlowPanel>
 				<g:FlowPanel ui:field="panelIOSRate" styleName="{style.panelIOSRate}">
-					<g:HTML ui:field="htmlIOSRate" styleName="{style.htmlIOSRate}"></g:HTML>
+					<b:Button ui:field="btnMissIOS" styleName="{style.btnMiss}">Miss</b:Button>
+				</g:FlowPanel>
+			</g:FlowPanel>
+			<g:FlowPanel styleName="{style.panelButton}">
+				<g:FlowPanel styleName="{style.panelButtonEdit}">
+					<b:Button styleName="{style.buttonEdit}" ui:field="btnEdit">Edit</b:Button>
+				</g:FlowPanel>
+				<g:FlowPanel styleName="{style.panelButtonDelete}">
+					<b:Button styleName="{style.buttonDelete}" ui:field="btnDelete">Delete</b:Button>
 				</g:FlowPanel>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowseparator}" />
