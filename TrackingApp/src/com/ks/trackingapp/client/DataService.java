@@ -25,4 +25,6 @@ public interface DataService extends RemoteService{
 	ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId);
 	ArrayList<ItemComment> commentFilterByTag(String language,Long userId,Long appId,String tag,String platform);
 	ArrayList<ItemComment> getCommentAppWithTag(Long userId, Long appId,String language,String tag);
+	void commentDeleteAll();
+	void appItemDeleteAll();
 }

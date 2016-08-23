@@ -78,6 +78,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 				mapItemApp.put(list.get(i).getId(), appView);
 			}
 		}
+		scrollPanel.refresh();
 	}
 
 	@Override

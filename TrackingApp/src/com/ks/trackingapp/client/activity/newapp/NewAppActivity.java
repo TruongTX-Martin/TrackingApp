@@ -1,11 +1,15 @@
 package com.ks.trackingapp.client.activity.newapp;
 
+import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.google.gwt.user.client.ui.FormPanel;
+import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
+import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.ks.trackingapp.client.RPCCall;
@@ -130,6 +134,62 @@ public class NewAppActivity extends BasicActivity{
 				addNewApp();
 			}
 		});
+		view.getButtonDeleteComment().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				// TODO Auto-generated method stub
+				TrackingApp.dataService.commentDeleteAll(new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Toaster.showToast("Delete failed");
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						Toaster.showToast("Delete all comment success");
+					}
+				});
+			}
+		});
+		
+		view.getButtonDeleteApp().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				// TODO Auto-generated method stub
+				TrackingApp.dataService.appItemDeleteAll(new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Toaster.showToast("Delete failed");
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						Toaster.showToast("Delete all app success");
+					}
+				});
+			}
+		});
+//		view.getFormPanel().addSubmitHandler(new FormPanel.SubmitHandler() {
+//			public void onSubmit(SubmitEvent event) {
+//				if (!"".equalsIgnoreCase(view.getFileUpload().getFilename())) {
+//					TrackingApp.getClientFactory().getLoadingDialog().show();
+//					Toaster.showToast("Upload" + "tracking-dot-qt3men.appspot.com/" +"uploadfile");
+//					view.getFormPanel().setAction("http://127.0.0.1:8888/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
+//				} else {
+//					Toaster.showToast("Please choose file upload");
+//				}
+//			}
+//		});
+//		view.getFormPanel().addSubmitCompleteHandler(new FormPanel.SubmitCompleteHandler() {
+//			public void onSubmitComplete(SubmitCompleteEvent event) {
+//				TrackingApp.getClientFactory().getLoadingDialog().hide();
+//				goTo(new HomeCommentPlace());
+//			}
+//		});
 	}
 	
 	private void updatePlatformItemApp(final Long appId){

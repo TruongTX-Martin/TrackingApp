@@ -9,10 +9,17 @@ import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.logging.Logger;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import com.google.gwt.thirdparty.json.JSONArray;
 import com.google.gwt.thirdparty.json.JSONObject;
+import com.googlecode.objectify.Key;
 import com.googlecode.objectify.ObjectifyService;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.shared.Config;
@@ -72,6 +79,9 @@ public class DAO extends CustomRemoteServiceServlet {
 	private void saveUserInfo(UserInfo userInfo){
 		ofy().save().entity(userInfo).now();
 	}
+	protected ArrayList<UserInfo> getAllUser(){
+		return new ArrayList<>(ofy().load().type(UserInfo.class).list());
+	}
 	protected UserInfo userLogin(String userName,String password){
 		UserInfo userResult = ofy().load().type(UserInfo.class).filter("userName", userName).first().now();
 		if(userResult == null){
@@ -97,22 +107,6 @@ public class DAO extends CustomRemoteServiceServlet {
 			appName.setAddFailedForReason(Config.APPITEM_APPNAME_EXITS);
 			return appName;
 		}
-//		if(itemApp.isAndroid()) {
-//			ItemApp appAndroid = ofy().load().type(ItemApp.class).filter("packageName", itemApp.getPackageName()).first().now();
-//			if(appAndroid != null){
-//				appAndroid.setIsSuccess(false);
-//				appAndroid.setAddFailedForReason(Config.APPITEM_PACKAGENAME_EXITS);
-//				return appAndroid;
-//			}
-//		}
-//		if(itemApp.isIOS()){
-//			ItemApp appIOS = ofy().load().type(ItemApp.class).filter("appleId", itemApp.getAppleId()).first().now();
-//			if(appIOS != null){
-//				appIOS.setIsSuccess(false);
-//				appIOS.setAddFailedForReason(Config.APPITEM_APPLEID_EXITS);
-//				return appIOS;
-//			}
-//		}
 		if(itemApp.isAndroid()){
 			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName() ;
 			float rating = getRating(url);
@@ -124,35 +118,38 @@ public class DAO extends CustomRemoteServiceServlet {
 		return itemApp;
 	}
 	private float getRating(String url) {
-		float rating = 0.0f;
+		float rate = 0.0f;
 		try {
-			URL website = new URL(url);
-			URLConnection connection = website.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
-
-			StringBuilder response = new StringBuilder();
-			String inputLine;
-			String result = "";
-			while ((inputLine = in.readLine()) != null) {
-				result += inputLine.toString() + "\n";
-			}
-			in.close();
-			result = result.substring(result.indexOf(TAG_START),
-					result.indexOf(TAG_END));
-			if(result.contains("<div")){
-				String[] array = result.split("<div");
-				for (int i=0; i< array.length; i++) {
-					String item = array[i];
-					if(item.contains("class=\"score\"")) {
-						String rateString = item.substring(item.indexOf(">")+1, item.length()-7).trim();
-						rating = Float.valueOf(rateString.replace(",", "."));
-					}
-				}
-			}
+			Document doc = Jsoup.connect(url).get();
+			String rating = doc.select("div[class=score]").get(0).attr("aria-label");
+			rate = getRatingFromString(rating);
+//			URL website = new URL(url);
+//			URLConnection connection = website.openConnection();
+//			BufferedReader in = new BufferedReader(new InputStreamReader(
+//					connection.getInputStream()));
+//
+//			StringBuilder response = new StringBuilder();
+//			String inputLine;
+//			String result = "";
+//			while ((inputLine = in.readLine()) != null) {
+//				result += inputLine.toString() + "\n";
+//			}
+//			in.close();
+//			result = result.substring(result.indexOf("itemtype=\"http://schema.org/AggregateRating\">"),
+//					result.indexOf(TAG_END));
+//			if(result.contains("<div")){
+//				String[] array = result.split("<div");
+//				for (int i=0; i< array.length; i++) {
+//					String item = array[i];
+//					if(item.contains("class=\"score\"")) {
+//						String rateString = item.substring(item.indexOf(">")+1, item.length()-7).trim();
+//						rating = Float.valueOf(rateString.replace(",", "."));
+//					}
+//				}
+//			}
 		} catch (Exception e) {
 		}
-		return rating;
+		return rate;
 	}
 	protected void getCommentApp(Long userId,ItemApp itemApp){
 		if(itemApp.isAndroid()){
@@ -172,65 +169,94 @@ public class DAO extends CustomRemoteServiceServlet {
 	private void getCommentAndroid(Long userId,ItemApp itemApp,String language){
 		try {
 			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName()+"&hl=" + language ;
-			URL website = new URL(url);
-			URLConnection connection = website.openConnection();
-			BufferedReader in = new BufferedReader(new InputStreamReader(
-					connection.getInputStream()));
-
-			StringBuilder response = new StringBuilder();
-			String inputLine;
-			String result = "";
-			while ((inputLine = in.readLine()) != null) {
-				result += inputLine.toString() + "\n";
-			}
-			in.close();
-			result = result.substring(result.indexOf(TAG_START),
-					result.indexOf(TAG_END));
-			if (result.contains(TAG_CONTAINT)) {
-				String[] arrayDiv = result
-						.split(TAG_CONTAINT);
-				if(arrayDiv.length > 0){
-					for (int a =0; a < arrayDiv.length; a++) {
-						String item = arrayDiv[a];
-						String rating = "",comment = "",date = "";
-						if (item.contains("<div") ) {
-							String[] arrayItem = item.split("<div");
-							for (int i = 0; i < arrayItem.length; i++) {
-								String classEntity = arrayItem[i];
-								if (classEntity.contains(TAG_DATE)) {
-									date = classEntity.substring(classEntity.indexOf("<span class=\"review-date\">")+26, classEntity.indexOf("</span> <a class=\"reviews-permalink\""));
-								}
-								if (classEntity.contains(TAG_RATING)) {
-									rating = classEntity.substring(classEntity.indexOf("aria-label=\"")+12, classEntity.length()-2);
-								}
-								if (classEntity.contains(TAG_COMMENT)) {
-									String title = classEntity.substring(classEntity.indexOf("<span class=\"review-title\">") +27, classEntity.indexOf("</span>"));
-									String content  = classEntity.substring(classEntity.indexOf("</span>")+7,classEntity.length());
-									if(validate(title)) {
-										comment = title + "-" + content;
-									}else{
-										comment = content;
-									}
-								}
-							}
-						}
-						
-						if(validate(rating) && validate(comment) && validate(date)){
-							ItemComment itemComment = new ItemComment();
-							itemComment.setPlatform(Config.PLATFORM_ANDROID);
-							itemComment.setAppname(itemApp.getAppName());
-							itemComment.setAppId(itemApp.getId());
-							itemComment.setRating(getRatingFromString(rating));
-							itemComment.setComment(comment.trim());
-							itemComment.setDate(date);
-							itemComment.setUserId(userId);
-							itemComment.setLanguage(language);
-							saveItemComment(itemComment);
-						}
-						
-					}
+			Document doc = Jsoup.connect(url).get();
+			Elements items = doc.select("div[class=single-review]");
+			for(Element itemElement : items) {
+				Elements header = itemElement.select("div[class=review-header]");
+				
+				
+				Element reviewInfo = header.select("div[class=review-info]").get(0);
+				String date = reviewInfo.select("span[class=review-date]").text();
+				Element rateElement = reviewInfo.select("div[class=review-info-star-rating]").get(0);
+				String rate = rateElement.select("div[class=tiny-star star-rating-non-editable-container]").attr("aria-label");
+				
+				Elements body = itemElement.select("div[class=review-body with-review-wrapper]");
+				String comment = "";
+				for(Element bodyElement : body) {
+					comment = bodyElement.text();
+				}
+				if(validate(rate) && validate(comment) && validate(date)){
+					ItemComment itemComment = new ItemComment();
+					itemComment.setPlatform(Config.PLATFORM_ANDROID);
+					itemComment.setAppname(itemApp.getAppName());
+					itemComment.setAppId(itemApp.getId());
+					itemComment.setRating(getRatingFromString(rate));
+					itemComment.setComment(comment.trim());
+					itemComment.setDate(date);
+					itemComment.setUserId(userId);
+					itemComment.setLanguage(language);
+					saveItemComment(itemComment);
 				}
 			}
+//			URL website = new URL(url);
+//			URLConnection connection = website.openConnection();
+//			BufferedReader in = new BufferedReader(new InputStreamReader(
+//					connection.getInputStream()));
+//
+//			StringBuilder response = new StringBuilder();
+//			String inputLine;
+//			String result = "";
+//			while ((inputLine = in.readLine()) != null) {
+//				result += inputLine.toString() + "\n";
+//			}
+//			in.close();
+//			result = result.substring(result.indexOf(TAG_START),
+//					result.indexOf(TAG_END));
+//			if (result.contains(TAG_CONTAINT)) {
+//				String[] arrayDiv = result
+//						.split(TAG_CONTAINT);
+//				if(arrayDiv.length > 0){
+//					for (int a =0; a < arrayDiv.length; a++) {
+//						String item = arrayDiv[a];
+//						String rating = "",comment = "",date = "";
+//						if (item.contains("<div") ) {
+//							String[] arrayItem = item.split("<div");
+//							for (int i = 0; i < arrayItem.length; i++) {
+//								String classEntity = arrayItem[i];
+//								if (classEntity.contains(TAG_DATE)) {
+//									date = classEntity.substring(classEntity.indexOf("<span class=\"review-date\">")+26, classEntity.indexOf("</span> <a class=\"reviews-permalink\""));
+//								}
+//								if (classEntity.contains(TAG_RATING)) {
+//									rating = classEntity.substring(classEntity.indexOf("aria-label=\"")+12, classEntity.length()-2);
+//								}
+//								if (classEntity.contains(TAG_COMMENT)) {
+//									String title = classEntity.substring(classEntity.indexOf("<span class=\"review-title\">") +27, classEntity.indexOf("</span>"));
+//									String content  = classEntity.substring(classEntity.indexOf("</span>")+7,classEntity.length());
+//									if(validate(title)) {
+//										comment = title + "-" + content;
+//									}else{
+//										comment = content;
+//									}
+//								}
+//							}
+//						}
+//						
+//						if(validate(rating) && validate(comment) && validate(date)){
+//							ItemComment itemComment = new ItemComment();
+//							itemComment.setPlatform(Config.PLATFORM_ANDROID);
+//							itemComment.setAppname(itemApp.getAppName());
+//							itemComment.setAppId(itemApp.getId());
+//							itemComment.setRating(getRatingFromString(rating));
+//							itemComment.setComment(comment.trim());
+//							itemComment.setDate(date);
+//							itemComment.setUserId(userId);
+//							itemComment.setLanguage(language);
+//							saveItemComment(itemComment);
+//						}
+//						
+//					}
+//				}
+//			}
 
 		} catch (Exception e) {
 			log.warning("Exception while get comment android" + e.getMessage());
@@ -364,6 +390,9 @@ public class DAO extends CustomRemoteServiceServlet {
 	protected ArrayList<ItemApp> appGetAllItem(Long userId){
 		return new ArrayList<>(ofy().load().type(ItemApp.class).filter("userId", userId).list());
 	}
+	protected ArrayList<ItemApp> appGetAllItem(){
+		return new ArrayList<>(ofy().load().type(ItemApp.class).list());
+	}
 	
 	protected ArrayList<ItemComment> commentGetFromAppId(Long userId,Long appId){
 		return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", "en").list());
@@ -426,5 +455,14 @@ public class DAO extends CustomRemoteServiceServlet {
 				ofy().delete().type(ItemComment.class).id(comment.getId()).now();
 			}
 		}
+	}
+	protected void commentDeleteAll(){
+		List<Key<ItemComment>> keys = ofy().load().type(ItemComment.class).keys().list();
+		ofy().delete().keys(keys).now();
+	}
+	
+	protected void appItemDeleteAll(){
+		List<Key<ItemApp>> keys = ofy().load().type(ItemApp.class).keys().list();
+		ofy().delete().keys(keys).now();
 	}
 }

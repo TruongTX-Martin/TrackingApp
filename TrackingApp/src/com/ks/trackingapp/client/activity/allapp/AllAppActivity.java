@@ -3,6 +3,10 @@ package com.ks.trackingapp.client.activity.allapp;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gwt.event.dom.client.TouchCancelEvent;
+import com.google.gwt.event.dom.client.TouchCancelHandler;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchEndHandler;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -69,10 +73,10 @@ public class AllAppActivity extends BasicActivity{
 		if(view.getMapItemApp().size() > 0){
 			for(final Map.Entry<Long,ItemAppView> map : view.getMapItemApp().entrySet()){
 				ItemAppView itemAppView = map.getValue();
-				itemAppView.getMainPanel().addTapHandler(new TapHandler() {
+				itemAppView.getMainPanel().addTouchEndHandler(new TouchEndHandler() {
 					
 					@Override
-					public void onTap(TapEvent event) {
+					public void onTouchEnd(TouchEndEvent event) {
 						goTo(new AppCommentPlace(map.getKey()));
 					}
 				});

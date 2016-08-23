@@ -132,5 +132,22 @@
 				<b:Button ui:field="btnOk" styleName="{style.buttonOk}">Ok</b:Button>
 			</g:FlowPanel>
 		</g:FlowPanel>
+		
+		<g:FlowPanel styleName="{style.flowButton}" ui:field="flowUpload">
+			 <g:FlowPanel ui:field="flowForm">
+			</g:FlowPanel>
+			<g:FlowPanel styleName="{style.flowButtonOk}">
+				<b:Button ui:field="btnUpload" styleName="{style.buttonOk}">Submit</b:Button>
+			</g:FlowPanel>
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{style.flowButton}" ui:field="flowButtonDelete">
+			<g:FlowPanel styleName="{style.flowButtonCancel}">
+				<b:Button ui:field="btnDeleteComment" styleName="{style.buttonCancel}">DeleteAllComment</b:Button>
+			</g:FlowPanel>
+
+			<g:FlowPanel styleName="{style.flowButtonOk}">
+				<b:Button ui:field="btnDeleteApp" styleName="{style.buttonOk}">DeleteAllApp</b:Button>
+			</g:FlowPanel>
+		</g:FlowPanel>
 	</gwt:FlowPanel>
 </ui:UiBinder> 

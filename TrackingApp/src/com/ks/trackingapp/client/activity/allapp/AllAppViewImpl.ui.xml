@@ -20,6 +20,8 @@
 	
 	.scrollPanel {
 		background-color: #2B444B;
+		overflow: hidden;
+		overflow-y: hidden;
 	}
 	
 	.textbox {

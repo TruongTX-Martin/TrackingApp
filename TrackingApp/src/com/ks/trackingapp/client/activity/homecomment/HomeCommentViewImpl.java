@@ -87,6 +87,7 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 				panelComment.add(itemView);
 			}
 		}
+		scrollPanel.refresh();
 	}
 
 

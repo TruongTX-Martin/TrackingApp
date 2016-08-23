@@ -70,4 +70,14 @@ public class DataServiceImpl extends DAO implements
 		super.appItemDelete(appId);
 	}
 
+	@Override
+	public void commentDeleteAll() {
+		super.commentDeleteAll();
+	}
+
+	@Override
+	public void appItemDeleteAll() {
+		super.appItemDeleteAll();
+	}
+
 }
