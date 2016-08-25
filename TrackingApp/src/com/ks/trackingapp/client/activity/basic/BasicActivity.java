@@ -13,6 +13,7 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
+import com.ks.trackingapp.client.plugin.CallPlugin;
 import com.ks.trackingapp.client.util.Toaster;
 
 public class BasicActivity extends MGWTAbstractActivity {
@@ -45,6 +46,7 @@ public class BasicActivity extends MGWTAbstractActivity {
 				
 				@Override
 				public void onTap(TapEvent event) {
+					CallPlugin.hideKeyBoard();
 					if(basicView.getSlidingMenu().isShowing()){
 						basicView.getSlidingMenu().hide();
 					}else{

@@ -38,8 +38,8 @@
 	<entry-point class='com.ks.trackingapp.client.TrackingApp' />
 	
 	
-	<set-property name="mgwt.user.agent" value="mobile" />
-	<set-property name="mgwt.density" value="xhigh" />
+ 	<set-property name="mgwt.user.agent" value="mobile" />
+	<set-property name="mgwt.density" value="xhigh" /> 
 	
 	<add-linker name="permutationmaplinker" />
 	<set-configuration-property name="CssResource.obfuscationPrefix" value="" />

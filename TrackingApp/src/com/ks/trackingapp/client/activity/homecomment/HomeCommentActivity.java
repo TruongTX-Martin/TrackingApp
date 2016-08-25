@@ -13,6 +13,7 @@ import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
+import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
@@ -202,24 +203,26 @@ public class HomeCommentActivity extends BasicActivity {
 		filterData(valueLanguage,tag,input);
 	}
 	
-	private void filterData(String language,String tag,String filter){
+	private void filterData(final String language,final String tag,final String filter){
 		this.TAG = tag;
 		this.INPUT = filter;
-		TrackingApp.getClientFactory().getLoadingDialog().show();
-		TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter, new AsyncCallback<ArrayList<ItemComment>>() {
-			
-			@Override
-			public void onSuccess(ArrayList<ItemComment> result) {
-				showItemComments(result);
-				TrackingApp.getClientFactory().getLoadingDialog().hide();
-			}
-			
+		new RPCCall<ArrayList<ItemComment>>() {
+
 			@Override
 			public void onFailure(Throwable caught) {
 				Toaster.showToast("Get comment failed,please check your connection");
-				TrackingApp.getClientFactory().getLoadingDialog().hide();
 			}
-		});
+
+			@Override
+			public void onSuccess(ArrayList<ItemComment> result) {
+				showItemComments(result);
+			}
+
+			@Override
+			protected void callService(AsyncCallback<ArrayList<ItemComment>> cb) {
+				TrackingApp.dataService.commentFilterByTag(language,TrackingManager.newInstance().getCurrentUser().getId(),-1L,tag,filter,cb); 
+			}
+		}.retry(0);;
 	}
 	
 	private void showItemComments(ArrayList<ItemComment> list){

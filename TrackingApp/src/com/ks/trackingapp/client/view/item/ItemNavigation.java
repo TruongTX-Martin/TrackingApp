@@ -32,8 +32,8 @@ public class ItemNavigation extends Composite {
 
 	public void setText(String text){
 		htmlTitle.setText(text);
-		htmlTitle.getElement().getStyle().setWidth(30, Unit.PX);
-		htmlTitle.getElement().getStyle().setHeight(30, Unit.PX);
+		htmlTitle.getElement().getStyle().setWidth(20, Unit.PX);
+		htmlTitle.getElement().getStyle().setHeight(20, Unit.PX);
 		imgIcon.getElement().getStyle().setMarginTop(10, Unit.PX);
 		imgIcon.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		imgExtend.setVisible(false);

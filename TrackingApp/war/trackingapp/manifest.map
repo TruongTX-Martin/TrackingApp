@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?><permutations>
-<permutation name="84A5AF16D674D3163BA4FEFAD9F7A726">
-<phonegap.env>no</phonegap.env>
-</permutation>
-<permutation name="343A0DD0C0052F40BC6428681396A990">
+<permutation name="F5C133197A946EEE36F891A0F8C32188">
 <phonegap.env>yes</phonegap.env>
+</permutation>
+<permutation name="8D1A48240C3905FAEE968F3C268D0F98">
+<phonegap.env>no</phonegap.env>
 </permutation>
 </permutations>
