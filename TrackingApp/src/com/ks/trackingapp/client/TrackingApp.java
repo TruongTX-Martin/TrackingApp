@@ -3,6 +3,7 @@ package com.ks.trackingapp.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.gwtphonegap.client.PhoneGap;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableEvent;
@@ -15,6 +16,7 @@ import com.googlecode.gwtphonegap.client.event.PauseEvent;
 import com.googlecode.gwtphonegap.client.event.PauseHandler;
 import com.googlecode.gwtphonegap.client.event.ResumeEvent;
 import com.googlecode.gwtphonegap.client.event.ResumeHandler;
+import com.googlecode.gwtphonegap.client.util.PhonegapUtil;
 import com.googlecode.mgwt.mvp.client.AnimatingActivityManager;
 import com.googlecode.mgwt.ui.client.MGWT;
 import com.googlecode.mgwt.ui.client.MGWTSettings;
@@ -28,6 +30,7 @@ import com.ks.trackingapp.client.activity.PhoneAnimationMapper;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.util.ClientUtils;
+import com.ks.trackingapp.shared.Config;
 
 /**
  * Entry point classes define <code>onModuleLoad()</code>.
@@ -84,6 +87,12 @@ public class TrackingApp implements EntryPoint {
 		return clientFactory;
 	}
 	private void startApp() {
+		if(phoneGap.isPhoneGapDevice()) {
+			PhonegapUtil.prepareService((ServiceDefTarget)dataService, Config.APP_HOST_DOMAIN , "trackingapp/dataservice");
+		}else {
+			
+		}
+		
 		ViewPort viewPort = new MGWTSettings.ViewPort();
 		MGWTSettings settings = new MGWTSettings();
 		settings.setViewPort(viewPort);

@@ -25,7 +25,7 @@ public class FilterLanguage extends Composite{
 
 	public FilterLanguage() {
 		initWidget(uiBinder.createAndBindUi(this));
-		htmlFilter.setText(Config.LANGUAGE_ENGLISH);
+		htmlFilter.setText(Config.LANGUAGE_1ENGLISH);
 		imageFilter.setSize("30px", "30px");
 		flowImage.add(imageFilter);
 	}
@@ -38,25 +38,23 @@ public class FilterLanguage extends Composite{
 		return touchPanel;
 	}
 	public void setImageLanguageSource(String language){
-		if(language.equals(Config.LANGUAGE_ENGLISH)) {
+		if(language.equals(Config.LANGUAGE_1ENGLISH)) {
 			imageFilter = new BHTouchImage("images/language/ic_english.png");
-		}else if(language.equals(Config.LANGUAGE_MALAY)) {
+		}else if (language.equals(Config.LANGUAGE_2FRENCH)){
+			imageFilter = new BHTouchImage("images/language/ic_franch.png");
+		}else if(language.equals(Config.LANGUAGE_3MALAY)) {
 			imageFilter = new BHTouchImage("images/language/ic_malay.png");
-		}else if(language.equals(Config.LANGUAGE_INDO)) {
+		}else if(language.equals(Config.LANGUAGE_4INDO)) {
 			imageFilter = new BHTouchImage("images/language/ic_indo.png");
-		}else if(language.equals(Config.LANGUAGE_PORTUGUESE)) {
+		}else if(language.equals(Config.LANGUAGE_5PORTUGUESE)) {
 			imageFilter = new BHTouchImage("images/language/ic_portuges.png");
-		}else if(language.equals(Config.LANGUAGE_BENGALI)) {
-			imageFilter = new BHTouchImage("images/language/ic_bengali.png");
-		}else if(language.equals(Config.LANGUAGE_ARABIC)) {
-			imageFilter = new BHTouchImage("images/language/ic_arabic.png");
-		}else if(language.equals(Config.LANGUAGE_RUSSIAN)) {
-			imageFilter = new BHTouchImage("images/language/ic_russian.png");
-		}else if(language.equals(Config.LANGUAGE_SPANISH)) {
+		}else if(language.equals(Config.LANGUAGE_6GERMANY)) {
+			imageFilter = new BHTouchImage("images/language/ic_germany.png");
+		}else if(language.equals(Config.LANGUAGE_7SPANISH)) {
 			imageFilter = new BHTouchImage("images/language/ic_spanish.png");
-		}else if(language.equals(Config.LANGUAGE_CHINESE)) {
+		}else if(language.equals(Config.LANGUAGE_8CHINESE)) {
 			imageFilter = new BHTouchImage("images/language/ic_chinese.png");
-		}else if(language.equals(Config.LANGUAGE_VIETNAMESE)) {
+		}else if(language.equals(Config.LANGUAGE_9VIETNAMESE)) {
 			imageFilter = new BHTouchImage("images/language/ic_vietnamese.png");
 		}
 		imageFilter.setSize("30px", "30px");

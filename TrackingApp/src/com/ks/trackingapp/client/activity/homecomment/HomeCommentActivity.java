@@ -11,22 +11,27 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.VerticalTouchPanel;
+import com.ks.trackingapp.client.view.dialog.DialogExitApp;
 import com.ks.trackingapp.client.view.dialog.DialogFilterPlatform;
 import com.ks.trackingapp.client.view.dialog.DialogSelectLanguage;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 public class HomeCommentActivity extends BasicActivity {
 
 	private HomeCommentView view;
 	private DialogFilterPlatform dialogFilter = new DialogFilterPlatform();
 	private DialogSelectLanguage dialogLanguage = new DialogSelectLanguage();
+	private DialogExitApp dialogExitApp = new DialogExitApp();
 	private ArrayList<ItemComment> listItemComment = new ArrayList<>();
 	
 	
@@ -43,6 +48,13 @@ public class HomeCommentActivity extends BasicActivity {
 		view = clientFactory.getHomeCommentView();
 		super.start(panel, eventBus,view);
 		panel.setWidget(view);
+		setUserLogin();
+	}
+	private void setUserLogin(){
+		UserInfo userInfo = TrackingManager.newInstance().getCurrentUser();
+		if(userInfo != null) {
+			view.getSlidingMenu().getButtonUser().setText("Hello,"+userInfo.getUserName());
+		}
 	}
 	
 	
@@ -138,6 +150,32 @@ public class HomeCommentActivity extends BasicActivity {
 			}
 		});
 		
+		view.getScrollPanel().addScrollEndHandler(new Handler() {
+			
+			@Override
+			public void onScrollEnd(ScrollEndEvent event) {
+				if(view.getScrollPanel().getY() == view.getScrollPanel().getMaxScrollY()) {
+					view.getScrollPanel().refresh();
+				}
+			}
+		});
+		dialogExitApp.getBtNo().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogExitApp.hide();
+			}
+		});
+		
+		dialogExitApp.getBtYes().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				dialogExitApp.hide();
+				TrackingApp.phoneGap.exitApp();
+			}
+		});
+		
 	}
 	
 	private void filterLanguage(String filter){
@@ -201,5 +239,15 @@ public class HomeCommentActivity extends BasicActivity {
 			}
 		}
 		view.showItemComment(arrayList);
+	}
+	
+	@Override
+	protected void onBackPress() {
+		super.onBackPress();
+		if (view.getSlidingMenu().isShowing()){
+			view.getSlidingMenu().hide();
+			return;
+		}
+		dialogExitApp.show();
 	}
 }

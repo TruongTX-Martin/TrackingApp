@@ -15,6 +15,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
@@ -102,6 +104,9 @@ public class AllAppActivity extends BasicActivity{
 					@Override
 					public void onTap(TapEvent event) {
 						Toaster.showToast("edit");
+						NewAppPlace appPlace = new NewAppPlace(false,  map.getKey());
+						appPlace.setIsEdit(true);
+						goTo(appPlace);
 					}
 				});
 				
@@ -133,6 +138,7 @@ public class AllAppActivity extends BasicActivity{
 						}
 					}
 					view.showItemApp(array);
+					handleClickAppItem();
 				}
 			}
 		});
@@ -160,6 +166,16 @@ public class AllAppActivity extends BasicActivity{
 				deleteItemApp();
 			}
 		});	
+		
+		view.getScrollPanel().addScrollEndHandler(new Handler() {
+			
+			@Override
+			public void onScrollEnd(ScrollEndEvent event) {
+				if(view.getScrollPanel().getY() == view.getScrollPanel().getMaxScrollY()) {
+					view.getScrollPanel().refresh();
+				}
+			}
+		});
 	}
 	
 	private void deleteItemApp(){
@@ -174,6 +190,18 @@ public class AllAppActivity extends BasicActivity{
 			public void onSuccess(Void result) {
 				Toaster.showToast("Delete ItemApp Success");
 				loadItemApps();
+				TrackingApp.dataService.commentDeleteByAppId(appIdDelete, new AsyncCallback<Void>() {
+
+					@Override
+					public void onFailure(Throwable caught) {
+						Toaster.showToast("Delete app's comment failled");
+					}
+
+					@Override
+					public void onSuccess(Void result) {
+						Toaster.showToast("Delete app's comment success");
+					}
+				});
 			}
 
 			@Override

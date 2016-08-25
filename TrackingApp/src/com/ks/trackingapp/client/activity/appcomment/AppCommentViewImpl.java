@@ -53,10 +53,11 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_APPCOMMENT);
 		this.layoutBasic.getHeaderPanel().getRightPanel().getElement().getStyle().setMarginRight(10, Unit.PX);
 		filterView.getHTMLFilter().setText(Config.FILTERBY_ALL);
-		filterLanguage.setImageLanguageSource(Config.LANGUAGE_ENGLISH);
+		filterLanguage.setImageLanguageSource(Config.LANGUAGE_1ENGLISH);
 		flowBottomLeft.add(filterView);
 		flowBottomRight.add(filterLanguage);
 		refreshScrollView();
+		scrollPanel.setBounce(false);
 	}
 
 	private void refreshScrollView() {
@@ -110,6 +111,11 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	@Override
 	public FilterView getFilterView() {
 		return filterView;
+	}
+
+	@Override
+	public ScrollPanel getScrollPanel() {
+		return scrollPanel;
 	}
 
 

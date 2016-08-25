@@ -1,5 +1,7 @@
 package com.ks.trackingapp.shared.model;
 
+import java.util.Date;
+
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -19,7 +21,7 @@ public class ItemComment implements IBasic {
 	Long appId;
 	private @Index Long userId;
 	private @Index
-	String date;
+	Date date;
 	private @Index
 	int rating;
 	private @Index String language;
@@ -41,6 +43,7 @@ public class ItemComment implements IBasic {
 		return id;
 	}
 	
+	
 	public void setLanguage(String language) {
 		this.language = language;
 	}
@@ -48,7 +51,7 @@ public class ItemComment implements IBasic {
 		return language;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
@@ -60,7 +63,7 @@ public class ItemComment implements IBasic {
 		return appId;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 

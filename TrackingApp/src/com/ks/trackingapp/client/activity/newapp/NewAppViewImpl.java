@@ -52,13 +52,6 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_ADDAPP);
 		btnCheck.setPixelSize(40, 40);
 		initFileUpload();
-		if(TrackingManager.newInstance().getCurrentUser().getUserName().equals("admin")) {
-			flowUpload.setVisible(true);
-			flowButtonDelete.setVisible(true);
-		}else{
-			flowUpload.setVisible(false);
-			flowButtonDelete.setVisible(false);
-		}
 	}
 
 	private void initFileUpload() {
@@ -86,7 +79,7 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 					TrackingApp.getClientFactory().getLoadingDialog().show();
 					Toaster.showToast("Upload" + GWT.getHostPageBaseURL() +"uploadfile");
 					//http://tracking-dot-qt3men.appspot.com/
-					formPanel.setAction("http://127.0.0.1:8888/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
+					formPanel.setAction("http://tracking-dot-qt3men.appspot.com/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
 				} else {
 					Toaster.showToast("Please choose file upload");
 				}
@@ -175,6 +168,16 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 	@Override
 	public Button getButtonDeleteApp() {
 		return btnDeleteApp;
+	}
+
+	@Override
+	public FlowPanel getFlowPanelUpload() {
+		return flowUpload;
+	}
+
+	@Override
+	public FlowPanel getFlowPanelDelete() {
+		return flowButtonDelete;
 	}
 
 }

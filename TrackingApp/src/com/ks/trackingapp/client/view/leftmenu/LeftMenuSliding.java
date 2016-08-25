@@ -17,7 +17,8 @@ public class LeftMenuSliding extends SlidingPanel{
 	
 	private VerticalPanel mainTopicsPanel;
 	private HorizontalPanel userInfoPanel;
-	private ItemNavigation btnAddApp = new ItemNavigation("images/ic_allapp.png", "Add New App");
+	private ItemNavigation btnUser = new ItemNavigation("images/ic_user.png", "User");
+	private ItemNavigation btnAddApp = new ItemNavigation("images/ic_addapp.png", "Add New App");
 	private ItemNavigation btnAllApp = new ItemNavigation("images/ic_allapp.png", "All App");
 	private ItemNavigation btnLogout = new ItemNavigation("images/ic_signout.png", "Logout");
 	
@@ -34,6 +35,7 @@ public class LeftMenuSliding extends SlidingPanel{
 		mainTopicsPanel = new VerticalPanel();
 		mainPanel.add(userInfoPanel);
 //		mainPanel.add(btnHome);
+		mainPanel.add(btnUser);
 		mainPanel.add(btnAddApp);
 		mainPanel.add(btnAllApp);
 		mainPanel.add(btnLogout);
@@ -75,6 +77,9 @@ public class LeftMenuSliding extends SlidingPanel{
 		this.getElement().getStyle().setPosition(Position.ABSOLUTE);
 		this.getElement().getStyle().setTop(0, Unit.PX);
 		this.getElement().getStyle().setLeft(-widthPanel, Unit.PX);
+	}
+	public ItemNavigation getButtonUser(){
+		return btnUser;
 	}
 	
 	public ItemNavigation getButtonAddApp() {

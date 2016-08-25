@@ -1,6 +1,7 @@
 package com.ks.trackingapp.client.view.item;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.i18n.client.DateTimeFormat;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -17,7 +18,7 @@ public class ItemCommentView extends Composite {
 
 	interface ItemCommentViewUiBinder extends UiBinder<Widget, ItemCommentView> {
 	}
-
+	private DateTimeFormat format = DateTimeFormat.getFormat("dd-MM-yyyy");
 	protected @UiField
 	HTML htmlAppname, htmlDate, htmlPlatform, htmlComment;
 	protected @UiField FlowPanel flowRating;
@@ -28,7 +29,7 @@ public class ItemCommentView extends Composite {
 	
 	public void showView(ItemComment comment) {
 		htmlAppname.setText(comment.getAppname());
-		htmlDate.setText(comment.getDate());
+		htmlDate.setText(format.format(comment.getDate()));
 		StarRating rate = new StarRating(comment.getRating(), 5);
 		flowRating.add(rate);
 		htmlPlatform.setText(comment.getPlatform());

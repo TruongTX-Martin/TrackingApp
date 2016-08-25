@@ -3,9 +3,6 @@ package com.ks.trackingapp.client.activity.allapp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import org.gwtbootstrap3.client.ui.TextBox;
-
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.core.client.Scheduler;
 import com.google.gwt.core.client.Scheduler.ScheduledCommand;
@@ -47,6 +44,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 		btnAdd.getElement().getStyle().setMarginRight(10, Unit.PX);
 		this.layoutBasic.getHeaderPanel().getRightPanel().add(btnAdd);
 		refreshScrollView();
+		scrollPanel.setBounce(false);
 	}
 	
 	private void refreshScrollView() {
@@ -62,6 +60,7 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	@Override
 	public void showItemApp(ArrayList<ItemApp> list) {
 		panelApps.clear();
+		mapItemApp.clear();
 		if(list == null || list.size() == 0){
 			HTML html = new HTML("You don't have any app.");
 			html.getElement().getStyle().setTextAlign(TextAlign.CENTER);
@@ -94,6 +93,11 @@ public class AllAppViewImpl extends BasicViewImpl implements AllAppView {
 	@Override
 	public BHTouchImage getButtonAddNew() {
 		return btnAdd;
+	}
+
+	@Override
+	public ScrollPanel getScrollPanel() {
+		return scrollPanel;
 	}
 
 }

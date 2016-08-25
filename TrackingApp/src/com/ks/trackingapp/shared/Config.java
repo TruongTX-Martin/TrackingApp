@@ -21,7 +21,7 @@ public class Config {
 	public static final String ITEMSCREEN_ALLAPP = "All App";
 	public static final String ITEMSCREEN_APPCOMMENT = "App's Comment";
 	public static final String ITEMSCREEN_ADDAPP = "Add New App";
-	public static final String ITEMSCREEN_HOME = "Home";
+	public static final String ITEMSCREEN_HOME = "All Comment";
 	
 	//Tag for filter
 	public static final String FILTERBY_PLATFORM = "Platform";
@@ -41,32 +41,28 @@ public class Config {
 	
 	
 	
-	public static final String LANGUAGE_ENGLISH = "Enlish";
-	public static final String LANGUAGE_FRENCH = "French";
-	public static final String LANGUAGE_MALAY = "Malay";
-	public static final String LANGUAGE_INDO = "Indonesia";
-	public static final String LANGUAGE_PORTUGUESE = "Portuguese";
-	public static final String LANGUAGE_BENGALI = "Bengali";
-	public static final String LANGUAGE_ARABIC = "Arabic";
-	public static final String LANGUAGE_RUSSIAN = "Russian";
-	public static final String LANGUAGE_SPANISH = "Spanish";
-	public static final String LANGUAGE_CHINESE = "Chinese";
-	public static final String LANGUAGE_VIETNAMESE = "Vietnamese";
+	public static final String LANGUAGE_1ENGLISH = "Enlish";
+	public static final String LANGUAGE_2FRENCH = "French";
+	public static final String LANGUAGE_3MALAY = "Malay";
+	public static final String LANGUAGE_4INDO = "Indonesia";
+	public static final String LANGUAGE_5PORTUGUESE = "Portuguese";
+	public static final String LANGUAGE_6GERMANY = "Germany";
+	public static final String LANGUAGE_7SPANISH = "Spanish";
+	public static final String LANGUAGE_8CHINESE = "Chinese";
+	public static final String LANGUAGE_9VIETNAMESE = "Vietnamese";
 	
 	//Config for language 
 	public static Map<String, String> getLanguage(){
 		Map<String, String> map = new HashMap<>();
-		map.put("French", "fr");
-		map.put("Malay", "ms");
-		map.put("Indonesia", "id");
-		map.put("Portuguese", "pt");
-		map.put("Bengali", "bn");
-		map.put("Arabic", "ar");
-		map.put("Russian", "ru");
-		map.put("Spanish", "es");
-		map.put("Enlish", "en");
-		map.put("Chinese", "zh");
-		map.put("Vietnamese", "vi");
+		map.put(LANGUAGE_2FRENCH, "fr");
+		map.put(LANGUAGE_3MALAY, "ms");
+		map.put(LANGUAGE_4INDO, "id");
+		map.put(LANGUAGE_5PORTUGUESE, "pt");
+		map.put(LANGUAGE_6GERMANY, "de");
+		map.put(LANGUAGE_7SPANISH, "es");
+		map.put(LANGUAGE_1ENGLISH, "en");
+		map.put(LANGUAGE_8CHINESE, "zh");
+		map.put(LANGUAGE_9VIETNAMESE, "vi");
 		return map;
 	}
 	public static List<String> getListKeyLanguage(){
@@ -83,4 +79,6 @@ public class Config {
 		}
 		return listValue;
 	}
+	
+	public static final String APP_HOST_DOMAIN = "https://tracking-dot-qt3men.appspot.com/";
 }

@@ -1,2 +1,0 @@
-serviceClass: com.ks.trackingapp.client.DataService
-path: B05FDB11AD1BBFEFB2E9BC452D886F2B.gwt.rpc

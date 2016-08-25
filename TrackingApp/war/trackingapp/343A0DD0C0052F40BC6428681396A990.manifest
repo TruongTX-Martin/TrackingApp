@@ -1,0 +1,33 @@
+CACHE MANIFEST
+# Unique id #1472123508480.0.5688070502021587
+
+CACHE:
+# Static app files
+
+# GWT compiled files
+trackingapp/trackingapp.nocache.js
+trackingapp/fonts/glyphicons-halflings-regular.ttf
+trackingapp/trackingapp.devmode.js
+trackingapp/fonts/fontawesome-webfont.woff2
+trackingapp/css/font-awesome-4.4.0.min.cache.css
+trackingapp/fonts/FontAwesome.otf
+trackingapp/css/bootstrap-3.3.5.min.cache.css
+trackingapp/fonts/glyphicons-halflings-regular.eot
+trackingapp/343A0DD0C0052F40BC6428681396A990.cache.js
+trackingapp/fonts/fontawesome-webfont.svg
+trackingapp/fonts/glyphicons-halflings-regular.woff
+trackingapp/js/jquery-1.11.3.min.cache.js
+trackingapp/fonts/glyphicons-halflings-regular.svg
+trackingapp/fonts/glyphicons-halflings-regular.woff2
+trackingapp/clear.cache.gif
+trackingapp/fonts/fontawesome-webfont.woff
+trackingapp/fonts/fontawesome-webfont.ttf
+trackingapp/css/bootstrap-theme-3.3.5.min.cache.css
+trackingapp/js/bootstrap-3.3.5.min.cache.js
+trackingapp/fonts/fontawesome-webfont.eot
+trackingapp/compilation-mappings.txt
+
+
+# All other resources require the client to be online.
+NETWORK:
+*

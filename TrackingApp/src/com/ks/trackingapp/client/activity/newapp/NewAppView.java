@@ -4,6 +4,7 @@ import org.gwtbootstrap3.client.ui.TextBox;
 
 import com.google.gwt.user.client.ui.CheckBox;
 import com.google.gwt.user.client.ui.FileUpload;
+import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.FormPanel;
 import com.googlecode.mgwt.ui.client.widget.button.Button;
 import com.ks.trackingapp.client.activity.basic.BasicView;
@@ -24,4 +25,6 @@ public interface NewAppView extends BasicView{
 	Button getButtonDeleteApp();
 	FormPanel getFormPanel();
 	FileUpload getFileUpload();
+	FlowPanel getFlowPanelUpload();
+	FlowPanel getFlowPanelDelete();
 }

@@ -39,5 +39,7 @@ public interface DataServiceAsync {
 
 	void appItemDeleteAll(AsyncCallback<Void> callback);
 
+	void commentDeleteByAppId(Long appId, AsyncCallback<Void> callback);
+
 
 }

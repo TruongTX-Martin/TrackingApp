@@ -1,15 +1,11 @@
 package com.ks.trackingapp.client.activity.newapp;
 
-import com.google.gwt.core.client.GWT;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
-import com.google.gwt.user.client.ui.FormPanel;
-import com.google.gwt.user.client.ui.FormPanel.SubmitCompleteEvent;
-import com.google.gwt.user.client.ui.FormPanel.SubmitEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.ks.trackingapp.client.RPCCall;
@@ -35,10 +31,12 @@ public class NewAppActivity extends BasicActivity{
 	private ItemApp currentItemApp = null;//for go to appcomment app
 	private ItemApp itemAppEdit = null;
 	private boolean isFromAll;
+	private boolean isEdit;
 	private Long appId = -1L;
 	public NewAppActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
 		isFromAll = ((NewAppPlace)place).isFromAll();
+		isEdit = ((NewAppPlace)place).isEdit();
 		appId = ((NewAppPlace)place).getAppId();
 	}
 	
@@ -190,6 +188,20 @@ public class NewAppActivity extends BasicActivity{
 //				goTo(new HomeCommentPlace());
 //			}
 //		});
+		hideView();
+	}
+	
+	private void hideView(){
+		UserInfo currentUser = TrackingManager.newInstance().getCurrentUser();
+		String userName = currentUser.getUserName();
+		Toaster.showToast("CurrentUser:" + userName);
+		if(currentUser.getUserName().equals("admin")){
+			view.getFlowPanelUpload().setVisible(true);
+			view.getFlowPanelDelete().setVisible(true);
+		}else{
+			view.getFlowPanelUpload().setVisible(false);
+			view.getFlowPanelDelete().setVisible(false);
+		}
 	}
 	
 	private void updatePlatformItemApp(final Long appId){
@@ -214,6 +226,10 @@ public class NewAppActivity extends BasicActivity{
 						view.getCheckBoxIOS().setValue(true);
 						view.getTextboxAppleId().setText(itemApp.getAppleId());
 						view.getTextboxAppleId().setReadOnly(true);
+					}
+					if(isEdit){
+						view.getTextboxPakageName().setReadOnly(false);
+						view.getTextboxAppleId().setReadOnly(false);
 					}
 				}
 			}
@@ -280,6 +296,7 @@ public class NewAppActivity extends BasicActivity{
 			updateItemApp(itemAppEdit);
 			return;
 		}
+		TrackingApp.getClientFactory().getLoadingDialog().show();
 		//add new appItem
 		TrackingApp.dataService.appAddNew(itemApp,new AsyncCallback<ItemApp>() {
 
@@ -350,6 +367,10 @@ public class NewAppActivity extends BasicActivity{
 	protected void onBackPress() {
 		super.onBackPress();
 		if(isFromAll){
+			goTo(new AllAppPlace());
+			return;
+		}
+		if(isEdit) {
 			goTo(new AllAppPlace());
 			return;
 		}

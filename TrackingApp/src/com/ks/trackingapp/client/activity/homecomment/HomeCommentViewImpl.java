@@ -22,6 +22,7 @@ import com.ks.trackingapp.client.view.item.FilterView;
 import com.ks.trackingapp.client.view.item.ItemCommentView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 public class HomeCommentViewImpl extends BasicViewImpl implements
 		HomeCommentView {
@@ -51,11 +52,12 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 		this.layoutBasic.getHeaderPanel().showNavigation(true);
 		this.layoutBasic.getHeaderPanel().setCenter(Config.ITEMSCREEN_HOME);
 		filterView.getHTMLFilter().setText(Config.FILTERBY_ALL);
-		filterLanguage.getHTMLFilter().setText(Config.LANGUAGE_ENGLISH);
-		filterLanguage.setImageLanguageSource(Config.LANGUAGE_ENGLISH);
+		filterLanguage.getHTMLFilter().setText(Config.LANGUAGE_1ENGLISH);
+		filterLanguage.setImageLanguageSource(Config.LANGUAGE_1ENGLISH);
 		flowBottomLeft.add(filterView);
 		flowBottomRight.add(filterLanguage);
 		refreshScrollView();
+		scrollPanel.setBounce(false);
 	}
 
 	private void refreshScrollView() {
@@ -104,6 +106,11 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 	@Override
 	public FilterLanguage getFilterLanguage() {
 		return filterLanguage;
+	}
+
+	@Override
+	public ScrollPanel getScrollPanel() {
+		return scrollPanel;
 	}
 
 }

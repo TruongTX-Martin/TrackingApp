@@ -11,6 +11,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
+import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
@@ -51,7 +53,7 @@ public class AppCommentActivity extends BasicActivity{
 	@Override
 	protected void loadData() {
 		super.loadData();
-		view.getFilterLanguage().getHTMLFilter().setText(Config.LANGUAGE_ENGLISH);
+		view.getFilterLanguage().getHTMLFilter().setText(Config.LANGUAGE_1ENGLISH);
 		if(appId != -1L){
 			new RPCCall<ArrayList<ItemComment>>() {
 
@@ -181,7 +183,15 @@ public class AppCommentActivity extends BasicActivity{
 				filterTag(Config.FILTERBY_RATE, view.getFilterLanguage().getHTMLFilter().getText().toString());
 			}
 		});
-		
+		view.getScrollPanel().addScrollEndHandler(new Handler() {
+			
+			@Override
+			public void onScrollEnd(ScrollEndEvent event) {
+				if(view.getScrollPanel().getY() == view.getScrollPanel().getMaxScrollY()) {
+					view.getScrollPanel().refresh();
+				}
+			}
+		});
 	}
 	
 	private void filterTag(String tag, String filter){

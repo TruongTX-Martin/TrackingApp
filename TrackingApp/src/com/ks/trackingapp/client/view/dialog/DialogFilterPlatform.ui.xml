@@ -8,7 +8,7 @@
 	
 	.mailPanel {
 		width: 200px;
-		height: 250px;
+		height: 240px;
 		vertical-align: middle;
 		background-color: #2B444B;
 		border: 1px solid #ffffff;

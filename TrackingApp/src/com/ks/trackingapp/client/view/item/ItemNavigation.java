@@ -1,6 +1,7 @@
 package com.ks.trackingapp.client.view.item;
 
 import com.google.gwt.core.client.GWT;
+import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.uibinder.client.UiBinder;
 import com.google.gwt.uibinder.client.UiField;
 import com.google.gwt.user.client.ui.Composite;
@@ -29,7 +30,14 @@ public class ItemNavigation extends Composite {
 		imgExtend.setUrl("images/ic_extend.png");
 	}
 
-	
+	public void setText(String text){
+		htmlTitle.setText(text);
+		htmlTitle.getElement().getStyle().setWidth(30, Unit.PX);
+		htmlTitle.getElement().getStyle().setHeight(30, Unit.PX);
+		imgIcon.getElement().getStyle().setMarginTop(10, Unit.PX);
+		imgIcon.getElement().getStyle().setMarginBottom(10, Unit.PX);
+		imgExtend.setVisible(false);
+	}
 	
 	public VerticalTouchPanel getTouchPanel(){
 		return touchPanel;

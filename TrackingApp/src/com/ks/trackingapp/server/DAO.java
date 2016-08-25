@@ -6,10 +6,12 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.logging.Logger;
 
 import org.jsoup.Jsoup;
@@ -42,6 +44,8 @@ public class DAO extends CustomRemoteServiceServlet {
 	private final String TAG_CONTAINT = "<a class=\"id-no-nav play-button tiny\" href=\"#\" target=\"_blank\">";
 	SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
 	SimpleDateFormat formatter = new  SimpleDateFormat("dd/MM/yyyy");
+	DateFormat dateFormatEnglish = new SimpleDateFormat("MMMM dd, yyyy");
+	DateFormat dateFormatVietnamese = new SimpleDateFormat("dd-MM-yyyy");
 	static {
 		ObjectifyService.register(UserInfo.class);
 		ObjectifyService.register(ItemApp.class);
@@ -181,10 +185,7 @@ public class DAO extends CustomRemoteServiceServlet {
 				String rate = rateElement.select("div[class=tiny-star star-rating-non-editable-container]").attr("aria-label");
 				
 				Elements body = itemElement.select("div[class=review-body with-review-wrapper]");
-				String comment = "";
-				for(Element bodyElement : body) {
-					comment = bodyElement.text();
-				}
+				String comment = body.select("span[class=review-title]").text();
 				if(validate(rate) && validate(comment) && validate(date)){
 					ItemComment itemComment = new ItemComment();
 					itemComment.setPlatform(Config.PLATFORM_ANDROID);
@@ -192,75 +193,44 @@ public class DAO extends CustomRemoteServiceServlet {
 					itemComment.setAppId(itemApp.getId());
 					itemComment.setRating(getRatingFromString(rate));
 					itemComment.setComment(comment.trim());
-					itemComment.setDate(date);
+					itemComment.setDate(convertStringToDate(date, language));
 					itemComment.setUserId(userId);
 					itemComment.setLanguage(language);
 					saveItemComment(itemComment);
 				}
 			}
-//			URL website = new URL(url);
-//			URLConnection connection = website.openConnection();
-//			BufferedReader in = new BufferedReader(new InputStreamReader(
-//					connection.getInputStream()));
-//
-//			StringBuilder response = new StringBuilder();
-//			String inputLine;
-//			String result = "";
-//			while ((inputLine = in.readLine()) != null) {
-//				result += inputLine.toString() + "\n";
-//			}
-//			in.close();
-//			result = result.substring(result.indexOf(TAG_START),
-//					result.indexOf(TAG_END));
-//			if (result.contains(TAG_CONTAINT)) {
-//				String[] arrayDiv = result
-//						.split(TAG_CONTAINT);
-//				if(arrayDiv.length > 0){
-//					for (int a =0; a < arrayDiv.length; a++) {
-//						String item = arrayDiv[a];
-//						String rating = "",comment = "",date = "";
-//						if (item.contains("<div") ) {
-//							String[] arrayItem = item.split("<div");
-//							for (int i = 0; i < arrayItem.length; i++) {
-//								String classEntity = arrayItem[i];
-//								if (classEntity.contains(TAG_DATE)) {
-//									date = classEntity.substring(classEntity.indexOf("<span class=\"review-date\">")+26, classEntity.indexOf("</span> <a class=\"reviews-permalink\""));
-//								}
-//								if (classEntity.contains(TAG_RATING)) {
-//									rating = classEntity.substring(classEntity.indexOf("aria-label=\"")+12, classEntity.length()-2);
-//								}
-//								if (classEntity.contains(TAG_COMMENT)) {
-//									String title = classEntity.substring(classEntity.indexOf("<span class=\"review-title\">") +27, classEntity.indexOf("</span>"));
-//									String content  = classEntity.substring(classEntity.indexOf("</span>")+7,classEntity.length());
-//									if(validate(title)) {
-//										comment = title + "-" + content;
-//									}else{
-//										comment = content;
-//									}
-//								}
-//							}
-//						}
-//						
-//						if(validate(rating) && validate(comment) && validate(date)){
-//							ItemComment itemComment = new ItemComment();
-//							itemComment.setPlatform(Config.PLATFORM_ANDROID);
-//							itemComment.setAppname(itemApp.getAppName());
-//							itemComment.setAppId(itemApp.getId());
-//							itemComment.setRating(getRatingFromString(rating));
-//							itemComment.setComment(comment.trim());
-//							itemComment.setDate(date);
-//							itemComment.setUserId(userId);
-//							itemComment.setLanguage(language);
-//							saveItemComment(itemComment);
-//						}
-//						
-//					}
-//				}
-//			}
 
 		} catch (Exception e) {
 			log.warning("Exception while get comment android" + e.getMessage());
 		}
+	}
+	private Date convertStringToDate(String date,String locale){
+		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, new Locale(locale));
+		try {
+			Date formattedDate = df.parse(date);
+			System.out.println("Date====>"+formattedDate);
+			return formattedDate;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return new Date();
+	}
+	
+	private Date getDateFromStringVietNamese(String input){
+		String day = input.substring(input.indexOf("Ngày")+4,input.indexOf("tháng"));
+		String month = input.substring(input.indexOf("tháng") +5,input.indexOf("năm"));
+		String year = input.substring(input.indexOf("năm")+3,input.length());
+		System.out.println("Day:" + day);
+		System.out.println("Month:" + month);
+		System.out.println("Year:" + year);
+		String date = day.trim() + "-" + month.trim() + "-" + year.trim();
+		Date date2 = null;
+		try {
+			date2  = dateFormatVietnamese.parse(date);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		return date2;
 	}
 	
 	private int getRatingFromString(String rating){	
@@ -349,7 +319,7 @@ public class DAO extends CustomRemoteServiceServlet {
 		}
 		return title;
 	}
-	public String getDate(JSONObject mJSON){
+	public Date getDate(JSONObject mJSON){
 		Date date = new Date();
 		if (mJSON.has("im:releaseDate")) {
 			String dateString = getValueLabel(mJSON, "im:releaseDate");
@@ -358,7 +328,7 @@ public class DAO extends CustomRemoteServiceServlet {
 			} catch (Exception e) {
 			}
 		}
-		return formatter.format(date);
+		return date;
 	}
 	public String getComment(JSONObject mJSON) {
 		String comment = getValueLabel(mJSON, "content");
@@ -400,9 +370,9 @@ public class DAO extends CustomRemoteServiceServlet {
 	protected ArrayList<ItemComment> commentFilterByTag(String language,Long userId,Long appId,String tag,String platform){
 		if(appId != -1){
 			if(tag.equals(Config.FILTERBY_ALL)){
-				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).filter("language", language).list());
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).filter("language", language).order("-date").list());
 			}else if(tag.equals(Config.FILTERBY_PLATFORM)){
-				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).filter("platform", platform).filter("language", language).list());
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).filter("platform", platform).filter("language", language).order("-date").list());
 			}else if(tag.equals(Config.FILTERBY_DATE)){
 				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("appId", appId).order("-date").filter("language", language).list());
 			}else if(tag.equals(Config.FILTERBY_RATE)){
@@ -410,29 +380,30 @@ public class DAO extends CustomRemoteServiceServlet {
 			}
 		}else{
 			if(tag.equals(Config.FILTERBY_ALL)){
-				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("language", language).list());
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("language", language).order("-date").list());
 			}else if(tag.equals(Config.FILTERBY_PLATFORM)){
-				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("platform", platform).filter("language", language).list());
+				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).filter("platform", platform).filter("language", language).order("-date").list());
 			}else if(tag.equals(Config.FILTERBY_DATE)){
 				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).order("-date").filter("language", language).list());
+				
 			}else if(tag.equals(Config.FILTERBY_RATE)){
 				return new ArrayList<>(ofy().load().type(ItemComment.class).filter("userId", userId).order("-rating").filter("language", language).list());
 			}
 		}
-		return new ArrayList<>(ofy().load().type(ItemComment.class).list()); 
+		return new ArrayList<>(ofy().load().type(ItemComment.class).order("-date").list()); 
 	}
 	
 	protected ArrayList<ItemComment> getCommentAppByTag(Long userId,Long appId,String language,String tag){
 		if(tag.equals(Config.PLATFORM_ANDROID)){
-			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).filter("platform",tag).list());
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).filter("platform",tag).order("-date").list());
 		}else if(tag.equals(Config.PLATFORM_IOS)){
-			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform",tag).list());
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform",tag).order("-date").list());
 		}else if(tag.equals(Config.FILTERBY_DATE)){
 			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).order("-date").list());
 		}else if(tag.equals(Config.FILTERBY_RATE)){
 			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).order("-rating").list());
 		}else{
-			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).list());
+			return new ArrayList<>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("language", language).order("-date").list());
 		}
 	}
 	
@@ -464,5 +435,13 @@ public class DAO extends CustomRemoteServiceServlet {
 	protected void appItemDeleteAll(){
 		List<Key<ItemApp>> keys = ofy().load().type(ItemApp.class).keys().list();
 		ofy().delete().keys(keys).now();
+	}
+	protected void commentDeleteByAppId(Long appId){
+		List<ItemComment> keys = ofy().load().type(ItemComment.class).filter("appId", appId).list();
+		if(keys.size() > 0){
+			for (ItemComment comment : keys) {
+				ofy().delete().entity(comment).now();
+			}
+		}
 	}
 }

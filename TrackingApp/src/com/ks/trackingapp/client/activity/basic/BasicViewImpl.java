@@ -74,6 +74,7 @@ public class BasicViewImpl  implements BasicView{
 				layoutBasic.getScrollPanel().refresh();
 			}
 		});
+		this.layoutBasic.getScrollPanel().setAutoHandleResize(true);
 	}
 
 	@Override

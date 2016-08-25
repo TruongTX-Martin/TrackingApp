@@ -3,12 +3,14 @@ package com.ks.trackingapp.client.activity.basic;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedEvent;
+import com.googlecode.gwtphonegap.client.event.BackButtonPressedHandler;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
 import com.googlecode.mgwt.mvp.client.MGWTAbstractActivity;
+import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
-import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
 import com.ks.trackingapp.client.util.Toaster;
@@ -83,6 +85,12 @@ public class BasicActivity extends MGWTAbstractActivity {
 				@Override
 				public void onTap(TapEvent event) {
 					goTo(new LoginPlace());
+				}
+			}));
+			addHandlerRegistration(TrackingApp.phoneGap.getEvent().getBackButton().addBackButtonPressedHandler(new BackButtonPressedHandler() {
+				@Override
+				public void onBackButtonPressed(BackButtonPressedEvent event) {
+					onBackPress();
 				}
 			}));
 		}
