@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.Map;
 
 import com.google.gwt.event.dom.client.TouchCancelEvent;
-import com.google.gwt.event.dom.client.TouchCancelHandler;
 import com.google.gwt.event.dom.client.TouchEndEvent;
 import com.google.gwt.event.dom.client.TouchEndHandler;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -15,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.RPCCall;
@@ -75,14 +77,14 @@ public class AllAppActivity extends BasicActivity{
 		if(view.getMapItemApp().size() > 0){
 			for(final Map.Entry<Long,ItemAppView> map : view.getMapItemApp().entrySet()){
 				ItemAppView itemAppView = map.getValue();
-				itemAppView.getMainPanel().addTouchEndHandler(new TouchEndHandler() {
+				addHandlerRegistration(itemAppView.getMainPanel().addTapHandler(new TapHandler() {
 					
 					@Override
-					public void onTouchEnd(TouchEndEvent event) {
+					public void onTap(TapEvent event) {
 						goTo(new AppCommentPlace(map.getKey()));
 					}
-				});
-				
+				}));
+	
 				itemAppView.getButtonMissAndroid().addTapHandler(new TapHandler() {
 					
 					@Override
@@ -128,12 +130,12 @@ public class AllAppActivity extends BasicActivity{
 			
 			@Override
 			public void onValueChange(ValueChangeEvent<String> event) {
-				String value = view.getTextBoxSearch().getText().toString();
+				String value = view.getTextBoxSearch().getText().toString().toLowerCase();
 				if(value.length() > 0 && listApp.size() > 0){
 					ArrayList<ItemApp> array = new ArrayList<>();
 					for (int i=0; i< listApp.size(); i++){
 						ItemApp app = listApp.get(i);
-						if(app.getAppName().contains(value)){
+						if(app.getAppName().toLowerCase().contains(value)){
 							array.add(app);
 						}
 					}

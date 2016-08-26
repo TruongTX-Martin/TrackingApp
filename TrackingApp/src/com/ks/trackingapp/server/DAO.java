@@ -286,6 +286,7 @@ public class DAO extends CustomRemoteServiceServlet {
 							}else{
 								itemComment.setComment(getComment(jsonObject));
 							}
+							itemComment.setIdComment(getIdComment(jsonObject));
 							itemComment.setRating(getRating(jsonObject));
 							itemComment.setPlatform(Config.PLATFORM_IOS);
 							itemComment.setAppname(itemApp.getAppName());
@@ -300,6 +301,14 @@ public class DAO extends CustomRemoteServiceServlet {
 		} catch (Exception e) {
 			log.warning("Exception while getcomment iso :"+ e.getMessage() );
 		}
+	}
+	public String getIdComment (JSONObject mJSON) {
+		String idComment = "";
+		try {
+			idComment = getValueLabel(mJSON, "id").trim();
+		} catch (Exception e) {
+		}
+		return idComment;
 	}
 	public int getRating(JSONObject mJSON) {
 		int rate = 0;
@@ -350,10 +359,22 @@ public class DAO extends CustomRemoteServiceServlet {
 	}
 	
 	private void saveItemComment(ItemComment comment){
-		ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).first().now();
-		if(itemComment != null){
-			return;
+		if(comment.getPlatform().equals(Config.PLATFORM_ANDROID)) {
+			ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).filter("date", comment.getDate()).first().now();
+			if(itemComment != null) {
+				return;
+			}
 		}
+		if(comment.getPlatform().equals(Config.PLATFORM_IOS)) {
+			ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("idComment", comment.getIdComment()).first().now();
+			if(itemComment != null){
+				return;
+			}
+		}
+//		ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).first().now();
+//		if(itemComment != null){
+//			return;
+//		}
 		ofy().save().entity(comment).now();
 	}
 	

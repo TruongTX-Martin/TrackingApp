@@ -58,7 +58,9 @@ public class LoginActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				CallPlugin.hideKeyBoard();
+				if(TrackingApp.phoneGap.isPhoneGapDevice()){
+					CallPlugin.hideKeyBoard();
+				}
 				handleLogin();
 			}
 		}));

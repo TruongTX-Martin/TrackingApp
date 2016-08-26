@@ -101,7 +101,7 @@ public class AppCommentActivity extends BasicActivity{
 						ArrayList<ItemComment> array = new ArrayList<>();
 						for (int i=0; i< listComment.size(); i++) {
 							ItemComment item = listComment.get(i);
-							if(item.getComment().contains(event.getValue().toString())) {
+							if(item.getComment().toLowerCase().contains(event.getValue().toString())) {
 								array.add(item);
 							}
 						}

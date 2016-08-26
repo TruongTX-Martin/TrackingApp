@@ -37,6 +37,18 @@
 		<servlet-name>uploadfile</servlet-name>
 		<url-pattern>/uploadfile</url-pattern>
 	</servlet-mapping>
+	
+	
+	<!--Admob util  -->
+	<servlet>
+		<servlet-name>admob</servlet-name>
+		<servlet-class>com.ks.trackingapp.server.AdmobUtilServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>admob</servlet-name>
+		<url-pattern>/admob</url-pattern>
+	</servlet-mapping>
 	<!-- Default page to serve -->
 	<welcome-file-list>
 		<welcome-file>TrackingApp.html</welcome-file>

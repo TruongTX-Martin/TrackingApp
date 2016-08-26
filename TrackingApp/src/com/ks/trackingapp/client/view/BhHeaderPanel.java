@@ -24,7 +24,7 @@ public class BhHeaderPanel extends HorizontalPanel {
 	public BhHeaderPanel() {
 		this.addStyleName("bh-header-panel");
 		this.setHeight(height + "px");
-		btnBack.setPixelSize(height,height);
+		btnBack.setPixelSize(40,40);
 		btnNavigation.setPixelSize(height,height);
 		leftPanel.setWidth("50px");
 		rightPanel.setWidth("50px");

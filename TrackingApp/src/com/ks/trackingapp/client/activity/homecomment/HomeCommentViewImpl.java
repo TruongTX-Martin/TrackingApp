@@ -14,6 +14,7 @@ import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
+import com.googlecode.mgwt.ui.client.widget.touch.TouchPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.view.item.FilterLanguage;
@@ -42,6 +43,7 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 	MSearchBox textbox;
 	@UiField FlowPanel flowBottom;
 	protected @UiField FlowPanel flowBottomLeft,flowBottomRight;
+	protected @UiField TouchPanel homeViewPanel;
 	private int HEIGHT_TEXTBOX = 50;
 	private int HEIGHT_BOTTOM = 50;
 	private FilterPlatformView filterPlatformView = new FilterPlatformView();
@@ -111,6 +113,11 @@ public class HomeCommentViewImpl extends BasicViewImpl implements
 	@Override
 	public ScrollPanel getScrollPanel() {
 		return scrollPanel;
+	}
+
+	@Override
+	public TouchPanel getHomePanelview() {
+		return homeViewPanel;
 	}
 
 }

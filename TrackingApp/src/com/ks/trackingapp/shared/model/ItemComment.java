@@ -24,6 +24,7 @@ public class ItemComment implements IBasic {
 	Date date;
 	private @Index
 	int rating;
+	private @Index String idComment;
 	private @Index String language;
 
 	public ItemComment() {
@@ -38,6 +39,13 @@ public class ItemComment implements IBasic {
 		return userId;
 	}
 
+	public void setIdComment(String idComment) {
+		this.idComment = idComment;
+	}
+	
+	public String getIdComment() {
+		return idComment;
+	}
 
 	public Long getId() {
 		return id;

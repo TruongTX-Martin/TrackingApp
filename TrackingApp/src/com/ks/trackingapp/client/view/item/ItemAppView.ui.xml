@@ -140,13 +140,12 @@
 	}
 	</ui:style>
 
-
-	<v:VerticalTouchPanel ui:field="mainPanel" width="100%">
+<v:VerticalTouchPanel ui:field="mainPanel" width="100%">
 		<g:FlowPanel ui:field="panelMain">
+			
 			<g:FlowPanel ui:field="panelAppname" styleName="{style.panelAppname}">
 				<g:HTML ui:field="htmlAppName" styleName="{style.htmlAppName}">AppName</g:HTML>
 			</g:FlowPanel>
-
 			<g:FlowPanel ui:field="panelAndroid" styleName="{style.panelAndroid}">
 				<g:FlowPanel ui:field="panelAndroidApp" styleName="{style.panelAndroidApp}">
 					<g:HTML ui:field="htmlAndroid" styleName="{style.htmlAndroid}">Android</g:HTML>
@@ -178,5 +177,5 @@
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowseparator}" />
 		</g:FlowPanel>
-	</v:VerticalTouchPanel>
+		</v:VerticalTouchPanel>
 </ui:UiBinder> 

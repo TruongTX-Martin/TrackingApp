@@ -81,4 +81,5 @@ public class Config {
 	}
 	
 	public static final String APP_HOST_DOMAIN = "https://tracking-dot-qt3men.appspot.com/";
+	public static final String APP_ADMOB_DOMAIN = "https://tracking-dot-qt3men.appspot.com/";
 }

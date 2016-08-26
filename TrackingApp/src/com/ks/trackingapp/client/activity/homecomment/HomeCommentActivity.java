@@ -3,6 +3,11 @@ package com.ks.trackingapp.client.activity.homecomment;
 import java.util.ArrayList;
 import java.util.Map;
 
+import com.google.gwt.dom.client.Touch;
+import com.google.gwt.event.dom.client.TouchCancelEvent;
+import com.google.gwt.event.dom.client.TouchEndEvent;
+import com.google.gwt.event.dom.client.TouchMoveEvent;
+import com.google.gwt.event.dom.client.TouchStartEvent;
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
@@ -11,6 +16,7 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
+import com.googlecode.mgwt.dom.client.event.touch.TouchHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.RPCCall;
@@ -18,7 +24,9 @@ import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.manager.TrackingManager;
+import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
+import com.ks.trackingapp.client.view.KSDialogOverlay;
 import com.ks.trackingapp.client.view.VerticalTouchPanel;
 import com.ks.trackingapp.client.view.dialog.DialogExitApp;
 import com.ks.trackingapp.client.view.dialog.DialogFilterPlatform;
@@ -177,6 +185,15 @@ public class HomeCommentActivity extends BasicActivity {
 			}
 		});
 		
+		addHandlerRegistration(view.getHomePanelview().addTapHandler(new TapHandler() {
+			
+			@Override
+			public void onTap(TapEvent event) {
+				view.getSlidingMenu().hide();
+			}
+		}));
+		
+		
 	}
 	
 	private void filterLanguage(String filter){
@@ -248,7 +265,11 @@ public class HomeCommentActivity extends BasicActivity {
 	protected void onBackPress() {
 		super.onBackPress();
 		if (view.getSlidingMenu().isShowing()){
+			ClientUtils.log("Slidding is showing");
 			view.getSlidingMenu().hide();
+			return;
+		}
+		if(KSDialogOverlay.dialogOverlay != null){
 			return;
 		}
 		dialogExitApp.show();

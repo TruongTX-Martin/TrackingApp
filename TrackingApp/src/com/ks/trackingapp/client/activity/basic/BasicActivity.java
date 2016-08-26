@@ -1,5 +1,7 @@
 package com.ks.trackingapp.client.activity.basic;
 
+import com.google.gwt.core.client.Scheduler;
+import com.google.gwt.core.client.Scheduler.ScheduledCommand;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
@@ -14,6 +16,8 @@ import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
 import com.ks.trackingapp.client.plugin.CallPlugin;
+import com.ks.trackingapp.client.util.AdmobUtil;
+import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
 
 public class BasicActivity extends MGWTAbstractActivity {
@@ -46,7 +50,9 @@ public class BasicActivity extends MGWTAbstractActivity {
 				
 				@Override
 				public void onTap(TapEvent event) {
-					CallPlugin.hideKeyBoard();
+					if(TrackingApp.phoneGap.isPhoneGapDevice()) {
+						CallPlugin.hideKeyBoard();
+					}
 					if(basicView.getSlidingMenu().isShowing()){
 						basicView.getSlidingMenu().hide();
 					}else{
@@ -96,8 +102,29 @@ public class BasicActivity extends MGWTAbstractActivity {
 				}
 			}));
 		}
+		//create admob
+		try{
+			showAdmobBanner();
+		} catch (Exception e) {
+			
+		}
 	}
 	
+	protected void showAdmobBanner() {
+		ClientUtils.log("Basic Activity- show admob");
+		if (!TrackingApp.phoneGap.isPhoneGapDevice()) {
+			return;
+		}
+		if(ClientUtils.isOnline()){
+			Scheduler.get().scheduleDeferred(new ScheduledCommand() {
+				@Override
+				public void execute() {
+					AdmobUtil.showInterstitialFunc();
+				}
+			});
+		} else {
+		}
+	}
 	protected void loadData(){
 	}
 	

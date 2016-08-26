@@ -10,6 +10,8 @@ import com.googlecode.gwtphonegap.client.PhoneGapAvailableEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapAvailableHandler;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutEvent;
 import com.googlecode.gwtphonegap.client.PhoneGapTimeoutHandler;
+import com.googlecode.gwtphonegap.client.event.OffLineEvent;
+import com.googlecode.gwtphonegap.client.event.OffLineHandler;
 import com.googlecode.gwtphonegap.client.event.OnlineEvent;
 import com.googlecode.gwtphonegap.client.event.OnlineHandler;
 import com.googlecode.gwtphonegap.client.event.PauseEvent;
@@ -29,6 +31,7 @@ import com.ks.trackingapp.client.activity.PhoneActivityMapper;
 import com.ks.trackingapp.client.activity.PhoneAnimationMapper;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
+import com.ks.trackingapp.client.util.AdmobUtil;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.shared.Config;
 
@@ -63,8 +66,15 @@ public class TrackingApp implements EntryPoint {
 
 					@Override
 					public void onOnlineEvent(OnlineEvent event) {
+						AdmobUtil.prepareAds();
 					}
 				});
+		phoneGap.getEvent().getOffLineHandler().addOfflineHandler(new OffLineHandler() {
+			
+			@Override
+			public void onOffLine(OffLineEvent event) {
+			}
+		});
 		phoneGap.getEvent().getResumeHandler()
 				.addResumeHandler(new ResumeHandler() {
 					@Override
@@ -92,6 +102,8 @@ public class TrackingApp implements EntryPoint {
 		}else {
 			
 		}
+		//create admob
+		AdmobUtil.prepareAds();
 		
 		ViewPort viewPort = new MGWTSettings.ViewPort();
 		MGWTSettings settings = new MGWTSettings();
