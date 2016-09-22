@@ -74,7 +74,9 @@ public class BasicActivity extends MGWTAbstractActivity {
 				@Override
 				public void onTap(TapEvent event) {
 					Toaster.showToast("Add new app");
-					goTo(new NewAppPlace(false,-1L));
+					NewAppPlace newPlace = new NewAppPlace(false);
+					newPlace.setAppId(-1L);
+					goTo(newPlace);
 				}
 			}));
 			

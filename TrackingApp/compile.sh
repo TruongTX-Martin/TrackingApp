@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 echo "Begin"
 echo "copy GWT.xml file"
-cordovaProject="/home/truongtechno/MyProject/CordovaProject/AppTracker"
-gwtProject="/home/truongtechno/MyProject/TrackingApp/TrackingApp"
+cordovaProject="/home/truongtechno/MyCordovaPlugin/CordovaTrackingApp/platforms/android"
+gwtProject="/home/truongtechno/Temporary/TrackingApp-master/TrackingApp"
 ant -f build.xml
 
 
@@ -34,10 +34,10 @@ cp -r $gwtProject/war/rollups/ $cordovaProject/www
 
 echo "copy file done"
 #cd $cordovaProject
-sudo apt-get install oracle-java8-set-default
-cd $cordovaProject	
-cordova build android
-cd /home/truongtechno/MyProject/CordovaProject/AppTracker/platforms/android/build/outputs/apk
-adb install android-debug.apk
-sudo apt-get install oracle-java7-set-default
+#sudo apt-get install oracle-java8-set-default
+#cd $cordovaProject	
+#cordova build android
+#cd /home/truongtechno/MyProject/CordovaProject/AppTracker/platforms/android/build/outputs/apk
+#adb install android-debug.apk
+#sudo apt-get install oracle-java7-set-default
 echo "Done! enjoy result ^^"

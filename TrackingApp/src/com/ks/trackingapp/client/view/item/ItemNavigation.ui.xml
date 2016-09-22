@@ -17,6 +17,10 @@
 	
 	.imgIcon {
 		padding: 5px;
+		width: 30px;
+   		height: 30px;
+        margin-top: 10px;
+        margin-bottom: 10px;
 	}
 	
 	.flowTitle {
@@ -39,9 +43,10 @@
 		float: right;
 	}
 	.flowSeparate{
-		width: 100%;
+		width: 95%;
 		height: 0.5px;
 		background-color: #ffffff;
+    	margin-left: 6px;
 	}
 	</ui:style>
 

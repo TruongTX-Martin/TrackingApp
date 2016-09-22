@@ -38,6 +38,36 @@
 		<url-pattern>/uploadfile</url-pattern>
 	</servlet-mapping>
 	
+	<!-- Get comment servlet -->
+	<servlet>
+		<servlet-name>getcomment</servlet-name>
+		<servlet-class>com.ks.trackingapp.server.GetCommentServlet</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>getcomment</servlet-name>
+		<url-pattern>/getcomment</url-pattern>
+	</servlet-mapping>
+	
+	<filter>
+		<filter-name>ObjectifyFilter</filter-name>
+		<filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>ObjectifyFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<filter>
+		<filter-name>CORSFilter</filter-name>
+		<filter-class>com.ks.trackingapp.server.CORSFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CORSFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
 	
 	<!--Admob util  -->
 	<servlet>

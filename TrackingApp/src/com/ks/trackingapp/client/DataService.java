@@ -1,6 +1,7 @@
 package com.ks.trackingapp.client;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
@@ -28,4 +29,6 @@ public interface DataService extends RemoteService{
 	void commentDeleteByAppId(Long appId);
 	void commentDeleteAll();
 	void appItemDeleteAll();
+	List<ItemComment> getCommentByLanguage(String language);
+	List<ItemComment> getCommentAppNewsts(Long userId,ItemApp app);
 }

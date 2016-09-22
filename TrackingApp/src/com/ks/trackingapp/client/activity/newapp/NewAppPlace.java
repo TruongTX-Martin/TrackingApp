@@ -7,16 +7,14 @@ public class NewAppPlace extends BasicPlace{
 	private boolean isFromAll;
 	private Long appId;
 	private boolean isEdit;
-	public NewAppPlace(boolean isFromAll,Long appId) {
+	public NewAppPlace(boolean isFromAll) {
 		super();
 		this.isFromAll = isFromAll;
-		this.appId = appId;
-	}
-	
-	public NewAppPlace() {
-		super();
 	}
 
+	public void setAppId(Long appId) {
+		this.appId = appId;
+	}
 	
 	public void setIsEdit(boolean edit){
 		this.isEdit = edit;

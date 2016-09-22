@@ -79,8 +79,10 @@ public class NewAppViewImpl extends BasicViewImpl implements NewAppView {
 					TrackingApp.getClientFactory().getLoadingDialog().show();
 					Toaster.showToast("Upload" + GWT.getHostPageBaseURL() +"uploadfile");
 					//http://tracking-dot-qt3men.appspot.com/
-					formPanel.setAction("http://tracking-dot-qt3men.appspot.com/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
+//					formPanel.setAction("http://test-dot-trackingapp-144102.appspot.com/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
+					formPanel.setAction("http://127.0.0.1:8888/" +"uploadfile?userId="+TrackingManager.newInstance().getCurrentUser().getId());
 				} else {
+					
 					Toaster.showToast("Please choose file upload");
 				}
 			}

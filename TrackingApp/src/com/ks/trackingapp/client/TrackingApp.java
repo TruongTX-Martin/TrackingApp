@@ -3,6 +3,7 @@ package com.ks.trackingapp.client;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.core.client.GWT;
 import com.google.gwt.place.shared.PlaceHistoryHandler;
+import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.ServiceDefTarget;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.gwtphonegap.client.PhoneGap;
@@ -98,9 +99,16 @@ public class TrackingApp implements EntryPoint {
 	}
 	private void startApp() {
 		if(phoneGap.isPhoneGapDevice()) {
-			PhonegapUtil.prepareService((ServiceDefTarget)dataService, Config.APP_HOST_DOMAIN , "trackingapp/dataservice");
-		}else {
 			
+			PhonegapUtil.prepareService((ServiceDefTarget)dataService, Config.APP_HOST_DOMAIN , "trackingapp/dataservice");
+		
+		}else if(Window.Location.getHref().contains(":8888")) {
+			ServiceDefTarget serviceDef = (ServiceDefTarget)dataService;
+			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "/trackingapp/dataservice");
+		}
+		else {
+			ServiceDefTarget serviceDef = (ServiceDefTarget)dataService;
+			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "/trackingapp/dataservice");
 		}
 		//create admob
 		AdmobUtil.prepareAds();

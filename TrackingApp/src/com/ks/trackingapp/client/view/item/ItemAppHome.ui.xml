@@ -1,0 +1,81 @@
+<!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
+<ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view">
+	<ui:style>
+	.important {
+		font-weight: bold;
+	}
+	
+	.flowAppLeft {
+		width: 70%;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.flowAppRight {
+		width: 30%;
+		display: inline-block;
+		vertical-align: middle;
+	}
+	
+	.htmlTitleApp {
+		color: #ffffff;
+		font-size: 1.3em;
+		margin-left: 10px;
+		margin-top: 10px;
+	}
+	
+	.htmlDetail {
+		color: #ffffff;
+		font-size: 1.1em;
+		float: right;
+		margin-right: 10px;
+		text-decoration: underline;
+	}
+	
+	.imgExtend {
+		width: 25px;
+		height: 25px;
+	}
+	
+	.mainPanel {
+		background-color: #2C434D;
+	}
+	
+	.flowSeparate {
+		width: 95%;
+		height: 1px;
+		background-color: #ffffff;
+		margin-left: 10px;
+	}
+	
+	.flowStar {
+		margin-left: 10px;
+		margin-bottom: 10px
+	}
+	
+	.flowComment {
+		padding-left: 15px;
+	}
+	</ui:style>
+	<g:FlowPanel styleName="{style.mainPanel}">
+		<g:FlowPanel ui:field="flowApp">
+			<g:FlowPanel styleName="{style.flowAppLeft}">
+				<g:HTML styleName="{style.htmlTitleApp}" ui:field="htmlTitleApp" />
+				<g:FlowPanel ui:field="flowStar" styleName="{style.flowStar}">
+				</g:FlowPanel>
+			</g:FlowPanel>
+
+			<g:FlowPanel styleName="{style.flowAppRight}">
+				<v:VerticalTouchPanel width="100%" ui:field="touchDetail">
+					<g:HTML styleName="{style.htmlDetail}">Detail</g:HTML>
+				</v:VerticalTouchPanel>
+				<v:VerticalTouchPanel width="100%" ui:field="touchExtend">
+				</v:VerticalTouchPanel>
+			</g:FlowPanel>
+		</g:FlowPanel>
+		<g:FlowPanel ui:field="flowComment" styleName="{style.flowComment}">
+		</g:FlowPanel>
+		<g:FlowPanel styleName="{style.flowSeparate}" />
+	</g:FlowPanel>
+</ui:UiBinder> 
