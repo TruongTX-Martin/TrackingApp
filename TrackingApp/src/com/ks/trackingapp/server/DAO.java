@@ -483,6 +483,18 @@ public class DAO extends CustomRemoteServiceServlet {
 		}
 		return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("platform", platfrom).filter("rating", rate).offset(offset).limit(limit).order("-date").list());
 	}
+	public int getCountRateAndPlatform(String platfrom,int rate){
+		if(platfrom.contains("all")){
+			return ofy().load().type(ItemComment.class).filter("rating", rate).count();
+		}
+		return ofy().load().type(ItemComment.class).filter("platform", platfrom).filter("rating", rate).count();
+	}
+	public int getCountFromPlatform(Long appId,String platform,int rate){
+		if(platform.contains("all")){
+			return ofy().load().type(ItemComment.class).filter("appId", appId).filter("rating", rate).count();
+		}
+		return ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform", platform).filter("rating", rate).count();
+	}
 	public ArrayList<ItemComment> getCommentFromPlatform(Long appId,String platform,int rate,int offset,int limit){
 		if(platform.contains("all")){
 			return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("rating", rate).offset(offset).limit(limit).order("-date").list());

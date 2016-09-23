@@ -75,12 +75,7 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	public void showCommentApp(ArrayList<ItemComment> list) {
 		panelComment.clear();
 		if(list == null || list.size() == 0) {
-			HTML html = new HTML("Your app don't have any comment.");
-			html.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-			html.getElement().getStyle().setPadding(10, Unit.PX);
-			html.getElement().getStyle().setFontSize(1.4, Unit.EM);
-			html.getElement().getStyle().setColor("#ffffff");
-			panelComment.add(html);
+			ClientUtils.showHTML("Your app don't have any comment.", panelComment);
 			return;
 		}else {
 			for (int i=0; i< list.size() ; i++){

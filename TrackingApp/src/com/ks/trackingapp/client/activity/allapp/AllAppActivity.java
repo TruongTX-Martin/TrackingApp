@@ -27,12 +27,14 @@ import com.ks.trackingapp.client.activity.basic.BasicActivity;
 import com.ks.trackingapp.client.activity.home.HomePlace;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
+import com.ks.trackingapp.client.data.UserInfoManager;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.dialog.DialogDelete;
 import com.ks.trackingapp.client.view.item.ItemAppView;
 import com.ks.trackingapp.shared.model.ItemApp;
+import com.ks.trackingapp.shared.model.UserInfo;
 
 public class AllAppActivity extends BasicActivity{
 	
@@ -55,6 +57,18 @@ public class AllAppActivity extends BasicActivity{
 	protected void loadData() {
 		super.loadData();
 		loadItemApps();
+		new UserInfoManager().getData(new AsyncCallback<UserInfo>() {
+
+			@Override
+			public void onFailure(Throwable caught) {
+				ClientUtils.log("Get userinfo failed");
+			}
+
+			@Override
+			public void onSuccess(UserInfo result) {
+				ClientUtils.log("Get userinfo success:" + result.getUserName());
+			}
+		});
 	}
 	
 	private void loadItemApps(){

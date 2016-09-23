@@ -14,6 +14,9 @@ public class Config {
 	public static final int PLATFORM_ANDROID_VALUE = 1;
 	public static final Long NULL_ID = -1L;
 	
+	public static final String SQL_SPLITTER = "lt_zs";
+	public static final int STATUS_DELETE = -1;
+	
 	
 	//Item screen
 	public static final String ITEMSCREEN_LOGIN = "Login";

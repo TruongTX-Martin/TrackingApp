@@ -20,13 +20,13 @@ public class FilterView extends Composite  {
 	}
 
 	protected @UiField HTML htmlFilter;
-	protected @UiField FlowPanel flowImage;
+//	protected @UiField FlowPanel flowImage;
 	protected @UiField VerticalTouchPanel touchPanel;
 	private BHTouchImage imageFilter = new BHTouchImage("images/ic_filter.png");
 	public FilterView() {
 		initWidget(uiBinder.createAndBindUi(this));
 		imageFilter.setSize("30px", "30px");
-		flowImage.add(imageFilter);
+//		flowImage.add(imageFilter);
 		htmlFilter.setText(Config.FILTERBY_ALL);
 	}
 	

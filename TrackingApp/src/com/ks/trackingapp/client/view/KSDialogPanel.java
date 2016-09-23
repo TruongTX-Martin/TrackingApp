@@ -36,7 +36,7 @@ import com.ks.trackingapp.shared.Config;
 	 * Customize KSDialogPanel 
 	 * author:7buon
 	 */
-import com.ks.trackingapp.shared.model.IBasic;
+import com.ks.trackingapp.shared.interfacemodel.IBasic;
 
 public class KSDialogPanel {
    private Modal modal = new Modal();

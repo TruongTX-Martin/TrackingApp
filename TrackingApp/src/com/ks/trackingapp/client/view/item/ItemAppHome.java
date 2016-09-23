@@ -47,13 +47,14 @@ public class ItemAppHome extends Composite {
 		flowStar.add(rating);
 		flowComment.clear();
 		if(list.size() > 0){
-			for(int i=0; i< list.size(); i++) {
+			int max  = list.size() > 10 ? 10: list.size();
+			for(int i=0; i< max; i++) {
 				ItemCommentView commentView = new ItemCommentView();
 				commentView.showView(list.get(i));
 				if(i == 0){
 					commentView.showTopSeparate();
 				}
-				if(i == list.size() -1){
+				if(i == max -1){
 					commentView.hideSeparate();
 				}
 				flowComment.add(commentView);

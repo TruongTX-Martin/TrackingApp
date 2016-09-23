@@ -1,6 +1,7 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view"
+	xmlns:t="urn:import:com.googlecode.mgwt.ui.client.widget.touch">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -11,10 +12,12 @@
 		background-color: #2C434D;
 	}
 	</ui:style>
-	<g:FlowPanel>
-		<v:KSScrollPanel ui:field="panelScroll" styleName="{style.panelScroll}">
-			<g:FlowPanel ui:field="flowComment">
-			</g:FlowPanel>
-		</v:KSScrollPanel>
-	</g:FlowPanel>
+	<t:TouchPanel width="100%" ui:field="touchMainPanel">
+		<g:FlowPanel>
+			<v:KSScrollPanel ui:field="panelScroll" styleName="{style.panelScroll}">
+				<g:FlowPanel ui:field="flowComment">
+				</g:FlowPanel>
+			</v:KSScrollPanel>
+		</g:FlowPanel>
+	</t:TouchPanel>
 </ui:UiBinder> 
