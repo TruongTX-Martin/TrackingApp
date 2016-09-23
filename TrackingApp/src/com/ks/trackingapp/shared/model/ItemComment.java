@@ -10,31 +10,31 @@ import com.googlecode.objectify.annotation.Index;
 @Entity
 public class ItemComment implements IBasic {
 
-	private @Id
-	Long id;
+	private @Id Long id;
 	private String title;
+	@Index
 	private String comment;
 	@Index
 	private String platform;
+	@Index
 	private String appname;
-	private @Index
-	Long appId;
+	private @Index Long appId;
 	private @Index Long userId;
-	private @Index
-	Date date;
-	private @Index
-	int rating;
+	private @Index Date date;
+	private @Index int rating;
 	private @Index String idComment;
 	private @Index String language;
+	@Index
+	private String userName = null;
+	private String avatar = "";
 
 	public ItemComment() {
 	}
 
-
-	
 	public void setUserId(Long userId) {
 		this.userId = userId;
 	}
+
 	public Long getUserId() {
 		return userId;
 	}
@@ -42,19 +42,35 @@ public class ItemComment implements IBasic {
 	public void setIdComment(String idComment) {
 		this.idComment = idComment;
 	}
-	
+
 	public String getIdComment() {
 		return idComment;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
+	public String getUserName() {
+		return userName;
 	}
 
 	public Long getId() {
 		return id;
 	}
-	
-	
+
 	public void setLanguage(String language) {
 		this.language = language;
 	}
+
 	public String getLanguage() {
 		return language;
 	}

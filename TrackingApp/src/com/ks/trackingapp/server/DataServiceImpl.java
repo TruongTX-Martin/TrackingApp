@@ -1,6 +1,7 @@
 package com.ks.trackingapp.server;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.ks.trackingapp.client.DataService;
 import com.ks.trackingapp.shared.model.ItemApp;
@@ -83,6 +84,16 @@ public class DataServiceImpl extends DAO implements
 	@Override
 	public void commentDeleteByAppId(Long appId) {
 		super.commentDeleteByAppId(appId);
+	}
+
+	@Override
+	public List<ItemComment> getCommentByLanguage(String language) {
+		return super.getCommentByLangauge(language);
+	}
+
+	@Override
+	public List<ItemComment> getCommentAppNewsts(Long userId, ItemApp app) {
+		return super.getCommentNewsts(userId, app);
 	}
 
 }

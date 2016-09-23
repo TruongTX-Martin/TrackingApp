@@ -24,9 +24,11 @@ import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
+import com.ks.trackingapp.client.activity.home.HomePlace;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.newapp.NewAppPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
+import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
 import com.ks.trackingapp.client.view.dialog.DialogDelete;
 import com.ks.trackingapp.client.view.item.ItemAppView;
@@ -81,7 +83,10 @@ public class AllAppActivity extends BasicActivity{
 					
 					@Override
 					public void onTap(TapEvent event) {
-						goTo(new AppCommentPlace(map.getKey()));
+						ClientUtils.log("ItemAppId====>" + map.getKey());
+						AppCommentPlace commentPlace = new AppCommentPlace(map.getKey());
+						commentPlace.setPlacePrevious(place);
+						goTo(commentPlace);
 					}
 				}));
 	
@@ -89,7 +94,9 @@ public class AllAppActivity extends BasicActivity{
 					
 					@Override
 					public void onTap(TapEvent event) {
-						goTo(new NewAppPlace(false,map.getKey()));
+						NewAppPlace appPlace = new NewAppPlace(false);
+						appPlace.setAppId(map.getKey());
+						goTo(appPlace);
 					}
 				});
 				
@@ -97,7 +104,9 @@ public class AllAppActivity extends BasicActivity{
 					
 					@Override
 					public void onTap(TapEvent event) {
-						goTo(new NewAppPlace(false,map.getKey()));
+						NewAppPlace appPlace = new NewAppPlace(false);
+						appPlace.setAppId(map.getKey());
+						goTo(appPlace);
 					}
 				});
 				
@@ -105,8 +114,8 @@ public class AllAppActivity extends BasicActivity{
 					
 					@Override
 					public void onTap(TapEvent event) {
-						Toaster.showToast("edit");
-						NewAppPlace appPlace = new NewAppPlace(false,  map.getKey());
+						NewAppPlace appPlace = new NewAppPlace(false);
+						appPlace.setAppId(map.getKey());
 						appPlace.setIsEdit(true);
 						goTo(appPlace);
 					}
@@ -148,7 +157,9 @@ public class AllAppActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-				goTo(new NewAppPlace(true,-1L));
+				NewAppPlace appPlace = new NewAppPlace(true);
+				appPlace.setAppId(-1L);
+				goTo(appPlace);
 			}
 		}));
 		
@@ -215,7 +226,7 @@ public class AllAppActivity extends BasicActivity{
 	@Override
 	protected void onBackPress() {
 		super.onBackPress();
-		goTo(new HomeCommentPlace());
+		goTo(new HomePlace());
 	}
 	
 	

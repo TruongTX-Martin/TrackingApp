@@ -24,9 +24,8 @@ public class ItemNavigation extends Composite {
 	public ItemNavigation(String src,String title) {
 		initWidget(uiBinder.createAndBindUi(this));
 		imgIcon.setUrl(src);
-		imgIcon.setSize("40px", "40px");
 		htmlTitle.setText(title);
-		imgExtend.setSize("20px", "20px");
+		imgExtend.setSize("15px", "15px");
 		imgExtend.setUrl("images/ic_extend.png");
 	}
 
@@ -34,8 +33,6 @@ public class ItemNavigation extends Composite {
 		htmlTitle.setText(text);
 		htmlTitle.getElement().getStyle().setWidth(20, Unit.PX);
 		htmlTitle.getElement().getStyle().setHeight(20, Unit.PX);
-		imgIcon.getElement().getStyle().setMarginTop(10, Unit.PX);
-		imgIcon.getElement().getStyle().setMarginBottom(10, Unit.PX);
 		imgExtend.setVisible(false);
 	}
 	

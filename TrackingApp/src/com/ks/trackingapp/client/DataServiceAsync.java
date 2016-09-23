@@ -1,6 +1,7 @@
 package com.ks.trackingapp.client;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.ks.trackingapp.shared.model.ItemApp;
@@ -40,6 +41,12 @@ public interface DataServiceAsync {
 	void appItemDeleteAll(AsyncCallback<Void> callback);
 
 	void commentDeleteByAppId(Long appId, AsyncCallback<Void> callback);
+
+	void getCommentByLanguage(String language,
+			AsyncCallback<List<ItemComment>> callback);
+
+	void getCommentAppNewsts(Long userId, ItemApp app,
+			AsyncCallback<List<ItemComment>> callback);
 
 
 }
