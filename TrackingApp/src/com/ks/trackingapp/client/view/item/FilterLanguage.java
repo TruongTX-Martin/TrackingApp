@@ -19,7 +19,7 @@ public class FilterLanguage extends Composite{
 	interface FilterLanguageUiBinder extends UiBinder<Widget, FilterLanguage> {
 	}
 	protected @UiField HTML htmlFilter;
-	protected @UiField FlowPanel flowImage;
+//	protected @UiField FlowPanel flowImage;
 	protected @UiField VerticalTouchPanel touchPanel;
 	private BHTouchImage imageFilter = new BHTouchImage("images/ic_language.png");
 
@@ -27,7 +27,7 @@ public class FilterLanguage extends Composite{
 		initWidget(uiBinder.createAndBindUi(this));
 		htmlFilter.setText(Config.LANGUAGE_1ENGLISH);
 		imageFilter.setSize("30px", "30px");
-		flowImage.add(imageFilter);
+//		flowImage.add(imageFilter);
 	}
 	
 	public HTML getHTMLFilter(){
@@ -36,6 +36,13 @@ public class FilterLanguage extends Composite{
 	
 	public VerticalTouchPanel getTouchPanel(){
 		return touchPanel;
+	}
+	public void showImage(boolean isShow){
+		if(isShow){
+			imageFilter.setVisible(true);
+		}else{
+			imageFilter.setVisible(false);
+		}
 	}
 	public void setImageLanguageSource(String language){
 		if(language.equals(Config.LANGUAGE_1ENGLISH)) {
@@ -58,8 +65,8 @@ public class FilterLanguage extends Composite{
 			imageFilter = new BHTouchImage("images/language/ic_vietnamese.png");
 		}
 		imageFilter.setSize("30px", "30px");
-		flowImage.clear();
-		flowImage.add(imageFilter);
+//		flowImage.clear();
+//		flowImage.add(imageFilter);
 	}
 	
 

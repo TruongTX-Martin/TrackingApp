@@ -4,7 +4,9 @@ import java.util.Date;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
+import com.ks.trackingapp.shared.interfacemodel.IBasic;
 
 @SuppressWarnings("serial")
 @Entity
@@ -27,6 +29,8 @@ public class ItemComment implements IBasic {
 	@Index
 	private String userName = null;
 	private String avatar = "";
+	
+	
 
 	public ItemComment() {
 	}
@@ -133,6 +137,12 @@ public class ItemComment implements IBasic {
 
 	public void setRating(int rating) {
 		this.rating = rating;
+	}
+
+	@Override
+	public int getStatus() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -137,6 +137,9 @@ public class BasicActivity extends MGWTAbstractActivity {
 		clientFactory.getPlaceController().goTo(newPlace);
 	}
 	protected void onBackPress(){
-		basicView.getSlidingMenu().hide();
+		if(basicView.getSlidingMenu().isShowing()){
+			basicView.getSlidingMenu().hide();
+			return;
+		}
 	}
 }

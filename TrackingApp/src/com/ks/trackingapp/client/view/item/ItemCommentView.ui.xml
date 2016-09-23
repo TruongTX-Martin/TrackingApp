@@ -35,7 +35,7 @@
 	}
 	
 	.flowPlatform {
-		width: 10%;
+		width: 15%;
 		display: inline-block;
 		vertical-align: middle;
 	}

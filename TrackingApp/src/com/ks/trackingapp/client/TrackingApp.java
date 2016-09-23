@@ -30,8 +30,8 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.ClientFactoryImpl;
 import com.ks.trackingapp.client.activity.PhoneActivityMapper;
 import com.ks.trackingapp.client.activity.PhoneAnimationMapper;
-import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
+import com.ks.trackingapp.client.sqlite.SQLiteDatabaseHelper;
 import com.ks.trackingapp.client.util.AdmobUtil;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.shared.Config;
@@ -45,6 +45,8 @@ public class TrackingApp implements EntryPoint {
 	public static PhoneGap phoneGap = GWT.create(PhoneGap.class);
 	public static ClientFactory clientFactory = new ClientFactoryImpl();
 	public static final DataServiceAsync dataService = GWT.create(DataService.class);
+	public static SQLiteDatabaseHelper sqLiteDatabaseHelper = null;
+
 	
 	@Override
 	public void onModuleLoad() {
@@ -101,14 +103,16 @@ public class TrackingApp implements EntryPoint {
 		if(phoneGap.isPhoneGapDevice()) {
 			
 			PhonegapUtil.prepareService((ServiceDefTarget)dataService, Config.APP_HOST_DOMAIN , "trackingapp/dataservice");
-		
+			if(sqLiteDatabaseHelper == null) {
+				sqLiteDatabaseHelper = new SQLiteDatabaseHelper();
+			}
 		}else if(Window.Location.getHref().contains(":8888")) {
-			ServiceDefTarget serviceDef = (ServiceDefTarget)dataService;
-			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "/trackingapp/dataservice");
+//			ServiceDefTarget serviceDef = (ServiceDefTarget)dataService;
+//			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "trackingapp/dataservice");
 		}
 		else {
 			ServiceDefTarget serviceDef = (ServiceDefTarget)dataService;
-			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "/trackingapp/dataservice");
+			serviceDef.setServiceEntryPoint(Config.APP_HOST_DOMAIN + "trackingapp/dataservice");
 		}
 		//create admob
 		AdmobUtil.prepareAds();
