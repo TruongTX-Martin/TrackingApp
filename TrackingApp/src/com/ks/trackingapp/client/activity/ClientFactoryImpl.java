@@ -9,16 +9,14 @@ import com.ks.trackingapp.client.activity.appcomment.AppCommentView;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentViewImpl;
 import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
-import com.ks.trackingapp.client.activity.home.HomeView;
-import com.ks.trackingapp.client.activity.home.HomeViewImpl;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentView;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentViewImpl;
 import com.ks.trackingapp.client.activity.login.LoginView;
 import com.ks.trackingapp.client.activity.login.LoginViewImpl;
 import com.ks.trackingapp.client.activity.newapp.NewAppView;
 import com.ks.trackingapp.client.activity.newapp.NewAppViewImpl;
-import com.ks.trackingapp.client.activity.pulltoload.PullToLoadView;
-import com.ks.trackingapp.client.activity.pulltoload.PullToLoadViewImpl;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshImpl;
+import com.ks.trackingapp.client.activity.pulltorefresh.PullToRefreshView;
 import com.ks.trackingapp.client.activity.register.RegisterView;
 import com.ks.trackingapp.client.activity.register.RegisterViewImpl;
 import com.ks.trackingapp.client.view.dialog.LoadingDialog;
@@ -37,8 +35,7 @@ public class ClientFactoryImpl implements ClientFactory{
 	private NewAppView newAppView;
 	private AppCommentView appCommentView;
 	private LoadingDialog loadingDialog;
-	private PullToLoadView pullToLoadView;
-	private HomeView homeView;
+	private PullToRefreshView pullToRefreshView;
 	public ClientFactoryImpl() {
 		eventBus = new SimpleEventBus();
 		placeController = new PlaceController(eventBus);
@@ -120,19 +117,11 @@ public class ClientFactoryImpl implements ClientFactory{
 	}
 
 	@Override
-	public PullToLoadView getPullToLoadView() {
-		if(pullToLoadView == null) {
-			pullToLoadView = new PullToLoadViewImpl();
+	public PullToRefreshView getPullToRefeshView() {
+		if(pullToRefreshView == null) {
+			pullToRefreshView = new PullToRefreshImpl();
 		}
-		return pullToLoadView;
-	}
-
-	@Override
-	public HomeView getHomeView() {
-		if(homeView == null){
-			homeView = new HomeViewImpl();
-		}
-		return homeView;
+		return pullToRefreshView;
 	}
 
 }

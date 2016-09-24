@@ -10,9 +10,8 @@ import com.ks.trackingapp.client.RPCCall;
 import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
-import com.ks.trackingapp.client.activity.home.HomePlace;
+import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.register.RegisterPlace;
-import com.ks.trackingapp.client.data.UserInfoManager;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.plugin.CallPlugin;
 import com.ks.trackingapp.client.util.CipherDES;
@@ -98,8 +97,7 @@ public class LoginActivity extends BasicActivity{
 				if(userResult.isSuccess()){
 					TrackingManager.newInstance().setCurrentUser(userResult);
 					Toaster.showToast("Hello," + userResult.getUserView());
-					new UserInfoManager().insertData(userResult);
-					goTo(new HomePlace());
+					goTo(new HomeCommentPlace());
 				}else{
 					if(userResult.getLoginFailtReason() == Config.USER_ACCOUNT_NOTEXITS){
 						Toaster.showToast("Account not exits, please type correct your account or register new account.");

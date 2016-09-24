@@ -27,7 +27,7 @@ public class BhHeaderPanel extends HorizontalPanel {
 		btnBack.setPixelSize(40,40);
 		btnNavigation.setPixelSize(height,height);
 		leftPanel.setWidth("50px");
-		rightPanel.setWidth("100px");
+		rightPanel.setWidth("50px");
 		leftPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		rightPanel.setVerticalAlignment(HasVerticalAlignment.ALIGN_MIDDLE);
 		rightPanel.setHorizontalAlignment(HasHorizontalAlignment.ALIGN_RIGHT);

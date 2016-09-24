@@ -14,9 +14,6 @@ public class Config {
 	public static final int PLATFORM_ANDROID_VALUE = 1;
 	public static final Long NULL_ID = -1L;
 	
-	public static final String SQL_SPLITTER = "lt_zs";
-	public static final int STATUS_DELETE = -1;
-	
 	
 	//Item screen
 	public static final String ITEMSCREEN_LOGIN = "Login";
@@ -44,7 +41,7 @@ public class Config {
 	
 	
 	
-	public static final String LANGUAGE_1ENGLISH = "English";
+	public static final String LANGUAGE_1ENGLISH = "Enlish";
 	public static final String LANGUAGE_2FRENCH = "French";
 	public static final String LANGUAGE_3MALAY = "Malay";
 	public static final String LANGUAGE_4INDO = "Indonesia";
@@ -83,7 +80,6 @@ public class Config {
 		return listValue;
 	}
 	
-	public static final String APP_HOST_DOMAIN = "https://test-dot-trackingapp-144102.appspot.com/";
-	public static final String APP_ADMOB_DOMAIN = "https://test-dot-trackingapp-144102.appspot.com/";
-	public static final String APP_TEST_DOMAIN = "https://test-dot-trackingapp-144102.appspot.com/";
+	public static final String APP_HOST_DOMAIN = "https://tracking-dot-qt3men.appspot.com/";
+	public static final String APP_ADMOB_DOMAIN = "https://tracking-dot-qt3men.appspot.com/";
 }

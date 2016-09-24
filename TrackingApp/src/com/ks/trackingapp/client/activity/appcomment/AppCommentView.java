@@ -3,8 +3,6 @@ package com.ks.trackingapp.client.activity.appcomment;
 import java.util.ArrayList;
 
 import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicView;
 import com.ks.trackingapp.client.view.BHTouchImage;
@@ -23,6 +21,4 @@ public interface AppCommentView extends BasicView{
 	FilterView getFilterView();
 	FilterLanguage getFilterLanguage();
 	ScrollPanel getScrollPanel();
-	PullPanel getPullPanel();
-	PullArrowHeader getPullHeader();
 }

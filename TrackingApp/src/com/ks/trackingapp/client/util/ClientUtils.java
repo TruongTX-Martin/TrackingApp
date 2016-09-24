@@ -2,8 +2,6 @@ package com.ks.trackingapp.client.util;
 
 import com.google.gwt.canvas.client.Canvas;
 import com.google.gwt.dom.client.ImageElement;
-import com.google.gwt.dom.client.Style.TextAlign;
-import com.google.gwt.dom.client.Style.Unit;
 import com.google.gwt.event.dom.client.ErrorEvent;
 import com.google.gwt.event.dom.client.ErrorHandler;
 import com.google.gwt.event.dom.client.LoadEvent;
@@ -11,8 +9,6 @@ import com.google.gwt.event.dom.client.LoadHandler;
 import com.google.gwt.json.client.JSONObject;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.FlowPanel;
-import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Image;
 import com.google.gwt.user.client.ui.RootPanel;
 import com.googlecode.gwtphonegap.client.connection.Connection;
@@ -33,15 +29,6 @@ public class ClientUtils {
 		var hash = $wnd.md5(s);
 		return hash;
 	}-*/;
-	public static void showHTML(String text,FlowPanel panel){
-		panel.clear();
-		HTML html = new HTML(text);
-		html.getElement().getStyle().setTextAlign(TextAlign.CENTER);
-		html.getElement().getStyle().setPadding(10, Unit.PX);
-		html.getElement().getStyle().setFontSize(1.4, Unit.EM);
-		html.getElement().getStyle().setColor("#ffffff");
-		panel.add(html);
-	}
 
 	public static native void hideKeyboard() /*-{
 		//$wnd.console.log("Hide keyboard");

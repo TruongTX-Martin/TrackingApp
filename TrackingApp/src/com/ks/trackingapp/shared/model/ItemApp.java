@@ -4,7 +4,6 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Ignore;
 import com.googlecode.objectify.annotation.Index;
-import com.ks.trackingapp.shared.interfacemodel.IBasic;
 
 @SuppressWarnings("serial")
 @Entity
@@ -119,11 +118,6 @@ public class ItemApp implements IBasic {
 
 	public void setAppleId(String appleId) {
 		this.appleId = appleId;
-	}
-
-	@Override
-	public int getStatus() {
-		return 0;
 	}
 
 }

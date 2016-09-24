@@ -5,6 +5,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -169,8 +170,7 @@ public class DAO extends CustomRemoteServiceServlet {
 	protected ItemApp appGetFromAppId(Long appId){
 		return ofy().load().type(ItemApp.class).id(appId).now();
 	}
-	private List<ItemComment> getCommentAndroid(Long userId,ItemApp itemApp,String language){
-		List<ItemComment> list = new ArrayList<ItemComment>();
+	private void getCommentAndroid(Long userId,ItemApp itemApp,String language){
 		try {
 			String url = "https://play.google.com/store/apps/details?id=" + itemApp.getPackageName()+"&hl=" + language ;
 			Document doc = Jsoup.connect(url).get();
@@ -186,9 +186,6 @@ public class DAO extends CustomRemoteServiceServlet {
 				
 				Elements body = itemElement.select("div[class=review-body with-review-wrapper]");
 				String comment = body.select("span[class=review-title]").text();
-				String avatarElement = itemElement.select("span[class=responsive-img author-image]").select("span[class=responsive-img author-image]").toString();
-				String userName = itemElement.select("span[class=author-name]").text();
-				String avatar = avatarElement.substring(avatarElement.lastIndexOf("url(")+4, avatarElement.length() -10);
 				if(validate(rate) && validate(comment) && validate(date)){
 					ItemComment itemComment = new ItemComment();
 					itemComment.setPlatform(Config.PLATFORM_ANDROID);
@@ -199,9 +196,6 @@ public class DAO extends CustomRemoteServiceServlet {
 					itemComment.setDate(convertStringToDate(date, language));
 					itemComment.setUserId(userId);
 					itemComment.setLanguage(language);
-					itemComment.setUserName(userName);
-					itemComment.setAvatar(avatar);
-					list.add(itemComment);
 					saveItemComment(itemComment);
 				}
 			}
@@ -209,7 +203,6 @@ public class DAO extends CustomRemoteServiceServlet {
 		} catch (Exception e) {
 			log.warning("Exception while get comment android" + e.getMessage());
 		}
-		return list;
 	}
 	private Date convertStringToDate(String date,String locale){
 		DateFormat df = DateFormat.getDateInstance(DateFormat.LONG, new Locale(locale));
@@ -255,8 +248,7 @@ public class DAO extends CustomRemoteServiceServlet {
 	    return (c >= '0' && c <= '9');
 	}
 	
-	private List<ItemComment> getCommentIOS(Long userId,ItemApp itemApp){
-		List<ItemComment> list = new ArrayList<ItemComment>();
+	private void getCommentIOS(Long userId,ItemApp itemApp){
 		String result = "";
 		String urlString = "https://itunes.apple.com/us/rss/customerreviews/id="
 				+ itemApp.getAppleId() + "/sortBy=mostRecent/json";
@@ -271,15 +263,13 @@ public class DAO extends CustomRemoteServiceServlet {
 				buffer.append(chars, 0, read);
 			}
 			result = buffer.toString();
-			list.addAll(getItemCommentFromJson(userId,result,itemApp));
+			getItemCommentFromJson(userId,result,itemApp);
 		} catch (Exception e) {
 			log.warning("Exception while get comment ios" + e.getMessage());
 		}
-		return list;
 	}
 	
-	private List<ItemComment> getItemCommentFromJson(Long userId,String jsonString,ItemApp itemApp){
-		List<ItemComment> list = new ArrayList<ItemComment>();
+	private void getItemCommentFromJson(Long userId,String jsonString,ItemApp itemApp){
 		try {
 			JSONObject object = new JSONObject(jsonString);
 			if(object.has("feed")) {
@@ -303,7 +293,6 @@ public class DAO extends CustomRemoteServiceServlet {
 							itemComment.setAppId(itemApp.getId());
 							itemComment.setUserId(userId);
 							itemComment.setLanguage("en");
-							list.add(itemComment);
 							saveItemComment(itemComment);
 						}
 					}
@@ -312,7 +301,6 @@ public class DAO extends CustomRemoteServiceServlet {
 		} catch (Exception e) {
 			log.warning("Exception while getcomment iso :"+ e.getMessage() );
 		}
-		return list;
 	}
 	public String getIdComment (JSONObject mJSON) {
 		String idComment = "";
@@ -372,14 +360,14 @@ public class DAO extends CustomRemoteServiceServlet {
 	
 	private void saveItemComment(ItemComment comment){
 		if(comment.getPlatform().equals(Config.PLATFORM_ANDROID)) {
-			List<ItemComment> itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).filter("date", comment.getDate()).list();
-			if(itemComment.size() > 0) {
+			ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("comment", comment.getComment()).filter("date", comment.getDate()).first().now();
+			if(itemComment != null) {
 				return;
 			}
 		}
 		if(comment.getPlatform().equals(Config.PLATFORM_IOS)) {
-			List<ItemComment> itemComment = ofy().load().type(ItemComment.class).filter("idComment", comment.getIdComment()).list();
-			if(itemComment.size() > 0){
+			ItemComment itemComment = ofy().load().type(ItemComment.class).filter("appname", comment.getAppname()).filter("idComment", comment.getIdComment()).first().now();
+			if(itemComment != null){
 				return;
 			}
 		}
@@ -476,46 +464,5 @@ public class DAO extends CustomRemoteServiceServlet {
 				ofy().delete().entity(comment).now();
 			}
 		}
-	}
-	public ArrayList<ItemComment> getCommentRateAndPlatform(String platfrom,int rate,int offset,int limit){
-		if(platfrom.contains("all")){
-			return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("rating", rate).offset(offset).limit(limit).order("-date").list());
-		}
-		return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("platform", platfrom).filter("rating", rate).offset(offset).limit(limit).order("-date").list());
-	}
-	public int getCountRateAndPlatform(String platfrom,int rate){
-		if(platfrom.contains("all")){
-			return ofy().load().type(ItemComment.class).filter("rating", rate).count();
-		}
-		return ofy().load().type(ItemComment.class).filter("platform", platfrom).filter("rating", rate).count();
-	}
-	public int getCountFromPlatform(Long appId,String platform,int rate){
-		if(platform.contains("all")){
-			return ofy().load().type(ItemComment.class).filter("appId", appId).filter("rating", rate).count();
-		}
-		return ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform", platform).filter("rating", rate).count();
-	}
-	public ArrayList<ItemComment> getCommentFromPlatform(Long appId,String platform,int rate,int offset,int limit){
-		if(platform.contains("all")){
-			return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("rating", rate).offset(offset).limit(limit).order("-date").list());
-		}
-		return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("appId", appId).filter("platform", platform).filter("rating", rate).offset(offset).limit(limit).order("-date").list());
-	}
-	public ArrayList<ItemComment> getCommentByLangauge(String language){
-		return new ArrayList<ItemComment>(ofy().load().type(ItemComment.class).filter("language", language).list());
-	}
-	protected List<ItemComment> getCommentNewsts(Long userId,ItemApp itemApp){
-		ArrayList<ItemComment> list = new ArrayList<ItemComment>();
-		if(itemApp.isAndroid()){
-			//get comment android
-			for(int i=0; i< Config.getValueLanguage().size(); i++){
-				list.addAll(getCommentAndroid(userId,itemApp,Config.getValueLanguage().get(i)));
-			}
-		}
-		if(itemApp.isIOS()){
-			//get comment ios
-			list.addAll(getCommentIOS(userId,itemApp));
-		}
-		return list;
 	}
 }

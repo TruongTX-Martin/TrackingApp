@@ -1,20 +1,16 @@
 package com.ks.trackingapp.client.activity.appcomment;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
 import com.google.gwt.event.logical.shared.ValueChangeEvent;
 import com.google.gwt.event.logical.shared.ValueChangeHandler;
 import com.google.gwt.event.shared.EventBus;
 import com.google.gwt.place.shared.Place;
-import com.google.gwt.user.client.Timer;
 import com.google.gwt.user.client.rpc.AsyncCallback;
 import com.google.gwt.user.client.ui.AcceptsOneWidget;
 import com.googlecode.mgwt.dom.client.event.tap.TapEvent;
 import com.googlecode.mgwt.dom.client.event.tap.TapHandler;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowStandardHandler.PullActionHandler;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollEndEvent.Handler;
 import com.ks.trackingapp.client.RPCCall;
@@ -22,7 +18,6 @@ import com.ks.trackingapp.client.TrackingApp;
 import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
-import com.ks.trackingapp.client.activity.home.HomePlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
@@ -43,7 +38,6 @@ public class AppCommentActivity extends BasicActivity{
 	
 	private String TAG = "";
 	private String INPUT = "";
-	private ItemApp currentApp;
 	public AppCommentActivity(ClientFactory clientFactory, Place place) {
 		super(clientFactory, place);
 		appId = ((AppCommentPlace)place).getAppId();
@@ -60,20 +54,24 @@ public class AppCommentActivity extends BasicActivity{
 	protected void loadData() {
 		super.loadData();
 		view.getFilterLanguage().getHTMLFilter().setText(Config.LANGUAGE_1ENGLISH);
-		TrackingApp.dataService.appGetFromId(appId, new AsyncCallback<ItemApp>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				ClientUtils.log("Get app failed");
-			}
-
-			@Override
-			public void onSuccess(ItemApp result) {
-				currentApp = result;
-			}
-		});
 		if(appId != -1L){
-			loadComment();
+			new RPCCall<ArrayList<ItemComment>>() {
+
+				@Override
+				public void onFailure(Throwable caught) {
+					Toaster.showToast("Get comment failed");
+				}
+
+				@Override
+				public void onSuccess(ArrayList<ItemComment> result) {
+					showItemComments(result);
+				}
+
+				@Override
+				protected void callService(AsyncCallback<ArrayList<ItemComment>> callback) {
+					TrackingApp.dataService.commentGetFromAppId(TrackingManager.newInstance().getCurrentUser().getId(),appId, callback);
+				}
+			}.retry(0);;
 			//get App name
 			TrackingApp.dataService.appGetFromId(appId, new AsyncCallback<ItemApp>() {
 
@@ -90,29 +88,6 @@ public class AppCommentActivity extends BasicActivity{
 				}
 			});
 		}
-	}
-	
-	
-	private void loadComment(){
-		new RPCCall<ArrayList<ItemComment>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				Toaster.showToast("Get comment failed");
-				view.getPullPanel().refresh();
-			}
-
-			@Override
-			public void onSuccess(ArrayList<ItemComment> result) {
-				showItemComments(result);
-				view.getPullPanel().refresh();
-			}
-
-			@Override
-			protected void callService(AsyncCallback<ArrayList<ItemComment>> callback) {
-				TrackingApp.dataService.commentGetFromAppId(TrackingManager.newInstance().getCurrentUser().getId(),appId, callback);
-			}
-		}.retry(0);;
 	}
 	@Override
 	protected void handleEvent() {
@@ -217,51 +192,8 @@ public class AppCommentActivity extends BasicActivity{
 				}
 			}
 		});
-		
-		pullToLoad();
-	}
-	private void pullToLoad(){
-		PullArrowStandardHandler  headerPanler = new PullArrowStandardHandler(view.getPullHeader(), view.getPullPanel());
-		headerPanler.setPullActionHandler(new PullActionHandler() {
-			
-			@Override
-			public void onPullAction(AsyncCallback<Void> callback) {
-				new Timer() {
-
-					@Override
-					public void run() {
-						//request new data
-						loadNewstsComment();
-						pullToLoad();
-					}
-				}.schedule(1000);
-			}
-		});
-		view.getPullPanel().setHeaderPullHandler(headerPanler);
 	}
 	
-	private void loadNewstsComment(){
-		ClientUtils.log("Pull to load new comment start");
-		new RPCCall<List<ItemComment>>() {
-
-			@Override
-			public void onFailure(Throwable caught) {
-				ClientUtils.log("Pull to load new comment failed");
-			}
-
-			@Override
-			public void onSuccess(List<ItemComment> result) {
-				ClientUtils.log("Pull to load new comment success");
-				showItemComments(new ArrayList<ItemComment>(result));
-				view.getPullPanel().refresh();
-			}
-
-			@Override
-			protected void callService(AsyncCallback<List<ItemComment>> cb) {
-				TrackingApp.dataService.getCommentAppNewsts(TrackingManager.newInstance().getCurrentUser().getId(), currentApp, cb);
-			}
-		}.retry(1);;
-	}
 	private void filterTag(String tag, String filter){
 		dialogFilter.hide();
 		String text = view.getFilterView().getHTMLFilter().getText().toString();
@@ -352,11 +284,8 @@ public class AppCommentActivity extends BasicActivity{
 	
 	@Override
 	protected void onBackPress() {
-		if(place !=null && ((AppCommentPlace)place).getPlacePrevious() != null){
-			goTo(((AppCommentPlace)place).getPlacePrevious());
-			return;
-		}
-		goTo(new HomePlace());
+		super.onBackPress();
+		goTo(new AllAppPlace());
 	}
 
 }

@@ -74,9 +74,7 @@ public class BasicActivity extends MGWTAbstractActivity {
 				@Override
 				public void onTap(TapEvent event) {
 					Toaster.showToast("Add new app");
-					NewAppPlace newPlace = new NewAppPlace(false);
-					newPlace.setAppId(-1L);
-					goTo(newPlace);
+					goTo(new NewAppPlace(false,-1L));
 				}
 			}));
 			
@@ -137,9 +135,6 @@ public class BasicActivity extends MGWTAbstractActivity {
 		clientFactory.getPlaceController().goTo(newPlace);
 	}
 	protected void onBackPress(){
-		if(basicView.getSlidingMenu().isShowing()){
-			basicView.getSlidingMenu().hide();
-			return;
-		}
+		basicView.getSlidingMenu().hide();
 	}
 }

@@ -14,10 +14,8 @@ import com.ks.trackingapp.client.activity.ClientFactory;
 import com.ks.trackingapp.client.activity.allapp.AllAppPlace;
 import com.ks.trackingapp.client.activity.appcomment.AppCommentPlace;
 import com.ks.trackingapp.client.activity.basic.BasicActivity;
-import com.ks.trackingapp.client.activity.home.HomePlace;
 import com.ks.trackingapp.client.activity.homecomment.HomeCommentPlace;
 import com.ks.trackingapp.client.activity.login.LoginPlace;
-import com.ks.trackingapp.client.activity.pulltoload.PullToLoadPlace;
 import com.ks.trackingapp.client.manager.TrackingManager;
 import com.ks.trackingapp.client.util.ClientUtils;
 import com.ks.trackingapp.client.util.Toaster;
@@ -123,8 +121,7 @@ public class NewAppActivity extends BasicActivity{
 			
 			@Override
 			public void onTap(TapEvent event) {
-//				goTo(new HomeCommentPlace());
-				goTo(new PullToLoadPlace());
+				goTo(new HomeCommentPlace());
 			}
 		});
 		
@@ -377,7 +374,7 @@ public class NewAppActivity extends BasicActivity{
 			goTo(new AllAppPlace());
 			return;
 		}
-		goTo(new HomePlace());
+		goTo(new HomeCommentPlace());
 	}
 
 }

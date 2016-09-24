@@ -1,6 +1,6 @@
 <!DOCTYPE ui:UiBinder SYSTEM "http://dl.google.com/gwt/DTD/xhtml.ent">
 <ui:UiBinder xmlns:ui="urn:ui:com.google.gwt.uibinder"
-	xmlns:g="urn:import:com.google.gwt.user.client.ui" xmlns:v="urn:import:com.ks.trackingapp.client.view">
+	xmlns:g="urn:import:com.google.gwt.user.client.ui">
 	<ui:style>
 	.important {
 		font-weight: bold;
@@ -11,7 +11,7 @@
 	}
 	
 	.flowAppname {
-		width: 55%;
+		width: 40%;
 		display: inline-block;;
 		vertical-align: middle;
 		padding-top: 2px;
@@ -20,11 +20,12 @@
 	.htmlAppname {
 		color: #ffffff;
 		font-size: 17px;
+		font-weight: bold;
 		margin-left: 10px;
 	}
 	
 	.flowDate {
-		width: 30%;
+		width: 45%;
 		display: inline-block;
 		vertical-align: middle;
 	}
@@ -70,31 +71,17 @@
 		margin-left: 5px;
 		margin-right: 5px;
 	}
-	.flowLeft{
-		width: 3%;
-		display: inline-block;
-		vertical-align: middle;
-	}
-	.flowRight{
-		width: 95%;
-		display: inline-block;
-		vertical-align: middle;
-	}
 	</ui:style>
 
 	<g:FlowPanel>
-		<g:FlowPanel styleName="{style.lineSeparator}" ui:field="flowSeparateTop"/>
-		<g:FlowPanel ui:field="flowLeft" styleName="{style.flowLeft}">
-		</g:FlowPanel>
-		<g:FlowPanel ui:field="flowRight" styleName="{style.flowRight}">
-			<g:FlowPanel styleName="{style.flowTitle}">
+		<g:FlowPanel styleName="{style.flowTitle}">
 			<g:FlowPanel styleName="{style.flowAppname}">
 				<g:HTML styleName="{style.htmlAppname}" ui:field="htmlAppname"></g:HTML>
 			</g:FlowPanel>
 			<g:FlowPanel styleName="{style.flowDate}">
 				<g:HTML styleName="{style.htmlDate}" ui:field="htmlDate"></g:HTML>
 			</g:FlowPanel>
-			<g:FlowPanel styleName="{style.flowPlatform}" ui:field="flowPlatform">
+			<g:FlowPanel styleName="{style.flowPlatform}">
 				<g:HTML styleName="{style.htmlPlatform}" ui:field="htmlPlatform"></g:HTML>
 			</g:FlowPanel>
 		</g:FlowPanel>
@@ -102,9 +89,7 @@
 		<g:FlowPanel styleName="{style.flowComment}">
 			<g:HTML styleName="{style.htmlComment}" ui:field="htmlComment"></g:HTML>
 		</g:FlowPanel>
-		</g:FlowPanel>
-		
-		<g:FlowPanel styleName="{style.lineSeparator}" ui:field="flowSeparate"/>
+		<g:FlowPanel styleName="{style.lineSeparator}" />
 	</g:FlowPanel>
 
 </ui:UiBinder> 

@@ -1,7 +1,7 @@
 package com.ks.trackingapp.client.event;
 
 import com.google.gwt.event.shared.GwtEvent;
-import com.ks.trackingapp.shared.interfacemodel.IBasic;
+import com.ks.trackingapp.shared.model.IBasic;
 
 public class DeleteObjectEvent extends GwtEvent<DeleteObjectEventHandler>{
 	

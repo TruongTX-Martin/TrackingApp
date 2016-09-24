@@ -17,9 +17,6 @@ public class BasicPlace extends Place {
 	public Place getPreviousPlace() {
 		return previousPlace;
 	}
-	public void setPreviousPlace(Place previousPlace) {
-		this.previousPlace = previousPlace;
-	}
 
 	public String getToken() {
 		return this.token;

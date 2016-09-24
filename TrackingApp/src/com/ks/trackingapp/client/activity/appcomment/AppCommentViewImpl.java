@@ -13,15 +13,16 @@ import com.google.gwt.user.client.ui.FlowPanel;
 import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.Widget;
 import com.googlecode.mgwt.ui.client.widget.input.search.MSearchBox;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullArrowHeader;
-import com.googlecode.mgwt.ui.client.widget.panel.pull.PullPanel;
 import com.googlecode.mgwt.ui.client.widget.panel.scroll.ScrollPanel;
 import com.ks.trackingapp.client.activity.basic.BasicViewImpl;
 import com.ks.trackingapp.client.util.ClientUtils;
+import com.ks.trackingapp.client.view.BHTouchImage;
 import com.ks.trackingapp.client.view.BhHeaderPanel;
 import com.ks.trackingapp.client.view.item.FilterLanguage;
+import com.ks.trackingapp.client.view.item.FilterPlatformView;
 import com.ks.trackingapp.client.view.item.FilterView;
 import com.ks.trackingapp.client.view.item.ItemCommentView;
+import com.ks.trackingapp.client.view.item.SettingView;
 import com.ks.trackingapp.shared.Config;
 import com.ks.trackingapp.shared.model.ItemComment;
 
@@ -33,6 +34,8 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	interface AppCommentViewImplUiBinder extends
 			UiBinder<Widget, AppCommentViewImpl> {
 	}
+	
+
 	protected @UiField
 	MSearchBox searchbox;
 	protected @UiField
@@ -40,8 +43,6 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	protected @UiField
 	FlowPanel panelComment,flowBottom;
 	protected @UiField FlowPanel flowBottomLeft,flowBottomRight,flowBottonCenter;
-	protected @UiField PullPanel pullPanel;
-	private PullArrowHeader arrowHeader = new PullArrowHeader();
 	
 	private FilterView filterView = new FilterView();
 	private FilterLanguage filterLanguage = new FilterLanguage();
@@ -57,7 +58,6 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 		flowBottomRight.add(filterLanguage);
 		refreshScrollView();
 		scrollPanel.setBounce(false);
-		pullPanel.setHeader(arrowHeader);
 	}
 
 	private void refreshScrollView() {
@@ -75,13 +75,18 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	public void showCommentApp(ArrayList<ItemComment> list) {
 		panelComment.clear();
 		if(list == null || list.size() == 0) {
-			ClientUtils.showHTML("Your app don't have any comment.", panelComment);
+			HTML html = new HTML("Your app don't have any comment.");
+			html.getElement().getStyle().setTextAlign(TextAlign.CENTER);
+			html.getElement().getStyle().setPadding(10, Unit.PX);
+			html.getElement().getStyle().setFontSize(1.4, Unit.EM);
+			html.getElement().getStyle().setColor("#ffffff");
+			panelComment.add(html);
 			return;
 		}else {
 			for (int i=0; i< list.size() ; i++){
 				ItemComment comment = list.get(i);
 				ItemCommentView commentView = new ItemCommentView();
-				commentView.showCommentApp(comment);
+				commentView.showView(comment);
 				panelComment.add(commentView);
 			}
 			
@@ -111,16 +116,6 @@ public class AppCommentViewImpl extends BasicViewImpl implements AppCommentView 
 	@Override
 	public ScrollPanel getScrollPanel() {
 		return scrollPanel;
-	}
-
-	@Override
-	public PullPanel getPullPanel() {
-		return pullPanel;
-	}
-
-	@Override
-	public PullArrowHeader getPullHeader() {
-		return arrowHeader;
 	}
 
 

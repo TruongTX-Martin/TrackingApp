@@ -22,6 +22,5 @@ public class TrackingManager {
 	public UserInfo getCurrentUser() {
 		return currentUser;
 	}
-	
 
 }
